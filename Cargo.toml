@@ -1,6 +1,6 @@
 [package]
 name = "leaflet"
-version = "0.0.0"
+version = "0.1.0"
 authors = ["slowtec GmbH <post@slowtec.de>"]
 license = "MIT/Apache-2.0"
 description = "A wasm-bindgen wrapper for Leaflet.js"
