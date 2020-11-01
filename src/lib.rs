@@ -147,6 +147,9 @@ extern "C" {
     #[wasm_bindgen(method, getter)]
     pub fn latlng(this: &MouseEvent) -> LatLng;
 
+    #[wasm_bindgen(method, getter)]
+    pub fn target(this: &MouseEvent) -> JsValue;
+
     // Rectangle
 
     #[derive(Debug)]
