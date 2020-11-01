@@ -136,6 +136,9 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn setLatLng(this: &Marker, latlng: &LatLng);
 
+    #[wasm_bindgen(method)]
+    pub fn on(this: &Marker, event_name: &str, handler: &JsValue);
+
     // MouseEvent
 
     #[derive(Debug, Clone)]
