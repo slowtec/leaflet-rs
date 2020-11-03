@@ -1,4 +1,5 @@
 use wasm_bindgen::prelude::*;
+use js_sys::Object;
 
 #[wasm_bindgen]
 extern "C" {
@@ -12,6 +13,14 @@ extern "C" {
 
     #[wasm_bindgen(method)]
     pub fn addTo(this: &mapboxGL, map: &Map);
+
+    // Evented
+
+    #[derive(Debug, Clone)]
+    pub type Evented;
+
+    #[wasm_bindgen(method)]
+    pub fn on(this: &Evented, kind: &str, handler: &JsValue);
 
     // Icon
 
@@ -57,7 +66,8 @@ extern "C" {
 
     // Layer
 
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
+    #[wasm_bindgen(extends = Evented)]
     pub type Layer;
 
     #[wasm_bindgen(method)]
@@ -123,7 +133,7 @@ extern "C" {
 
     // Marker
 
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     #[wasm_bindgen(extends = Layer)]
     pub type Marker;
 
@@ -142,13 +152,25 @@ extern "C" {
     // MouseEvent
 
     #[derive(Debug, Clone)]
+    #[wasm_bindgen(extends = Event)]
     pub type MouseEvent;
 
     #[wasm_bindgen(method, getter)]
     pub fn latlng(this: &MouseEvent) -> LatLng;
 
     #[wasm_bindgen(method, getter)]
-    pub fn target(this: &MouseEvent) -> JsValue;
+    pub fn originalEvent(this: &MouseEvent) -> web_sys::Event;
+
+    // Event
+
+    #[derive(Debug, Clone)]
+    pub type Event;
+
+    #[wasm_bindgen(method, getter)]
+    pub fn target(this: &Event) -> Object;
+
+    #[wasm_bindgen(method, getter)]
+    pub fn sourceTarget(this: &Event) -> Object;
 
     // Rectangle
 
