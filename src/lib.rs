@@ -1,5 +1,6 @@
-use wasm_bindgen::prelude::*;
 use js_sys::Object;
+use wasm_bindgen::prelude::*;
+use web_sys::HtmlElement;
 
 #[wasm_bindgen]
 extern "C" {
@@ -100,6 +101,9 @@ extern "C" {
 
     #[wasm_bindgen(constructor, js_namespace = L)]
     pub fn new(id: &str, options: &JsValue) -> Map;
+
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new_with_element(el: &HtmlElement, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method)]
     pub fn getBounds(this: &Map) -> LatLngBounds;
