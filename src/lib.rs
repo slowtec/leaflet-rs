@@ -106,6 +106,9 @@ extern "C" {
     pub fn new_with_element(el: &HtmlElement, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method)]
+    pub fn setView(this: &Map, center: &LatLng, zoom: f64);
+
+    #[wasm_bindgen(method)]
     pub fn getBounds(this: &Map) -> LatLngBounds;
 
     #[wasm_bindgen(method)]
