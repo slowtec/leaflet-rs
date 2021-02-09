@@ -8,12 +8,9 @@ wrapper for
 
 ```toml
 [dependencies]
-leaflet = "*"
-
-[patch.crates-io.leaflet]
-git = "https://github.com/kartevonmorgen/leaflet-rs"
+leaflet = "0.1"
 ```
 
 ## License
 
-Copyright (c) 2020 [slowtec GmbH](https://slowtec.de)
+Copyright (c) 2020 - 2021 [slowtec GmbH](https://slowtec.de)
