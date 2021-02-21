@@ -179,10 +179,34 @@ extern "C" {
     #[wasm_bindgen(method, getter)]
     pub fn sourceTarget(this: &Event) -> Object;
 
-    // Rectangle
+    // Polyline
 
     #[derive(Debug)]
     #[wasm_bindgen(extends = Layer)]
+    pub type Polyline;
+
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new(latlngs: Vec<JsValue>) -> Polyline;
+
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new_with_options(latlngs: Vec<JsValue>, options: &JsValue) -> Polyline;
+
+    // Polygon
+
+    #[derive(Debug)]
+    #[wasm_bindgen(extends = Polyline)]
+    pub type Polygon;
+
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new(latlngs: Vec<JsValue>) -> Polygon;
+
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new_with_options(latlngs: Vec<JsValue>, options: &JsValue) -> Polygon;
+
+    // Rectangle
+
+    #[derive(Debug)]
+    #[wasm_bindgen(extends = Polygon)]
     pub type Rectangle;
 
     #[wasm_bindgen(constructor, js_namespace = L)]
@@ -190,6 +214,18 @@ extern "C" {
 
     #[wasm_bindgen(constructor, js_namespace = L)]
     pub fn new_with_options(bounds: &LatLngBounds, options: &JsValue) -> Rectangle;
+
+    // Circle
+
+    #[derive(Debug)]
+    #[wasm_bindgen(extends = Layer)]
+    pub type Circle;
+
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new(latlng: &LatLng) -> Circle;
+
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new_with_options(latlng: &LatLng, options: &JsValue) -> Circle;
 
     // TileLayer
 
