@@ -31,6 +31,20 @@ extern "C" {
     #[wasm_bindgen(constructor, js_namespace = L)]
     pub fn new(options: &JsValue) -> Icon;
 
+    // Point
+
+    #[derive(Debug)]
+    pub type Point;
+
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new(x: u32, y: u32) -> Point;
+
+    #[wasm_bindgen(method, getter)]
+    pub fn x(this: &Point) -> u32;
+
+    #[wasm_bindgen(method, getter)]
+    pub fn y(this: &Point) -> u32;
+
     // LatLng
 
     #[derive(Debug)]
@@ -108,6 +122,9 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn setView(this: &Map, center: &LatLng, zoom: f64);
 
+    #[wasm_bindgen(method, js_name = setView)]
+    pub fn setViewWithOptions(this: &Map, center: &LatLng, zoom: f64, options: &JsValue);
+
     #[wasm_bindgen(method)]
     pub fn getBounds(this: &Map) -> LatLngBounds;
 
@@ -121,10 +138,61 @@ extern "C" {
     pub fn getZoomScale(this: &Map, toZoom: f64, fromZoom: f64) -> f64;
 
     #[wasm_bindgen(method)]
+    pub fn setZoom(this: &Map, zoom: f64);
+
+    #[wasm_bindgen(method, js_name = setZoom)]
+    pub fn setZoomWithOptions(this: &Map, zoom: f64, options: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn zoomIn(this: &Map, delta: f64);
+
+    #[wasm_bindgen(method, js_name = zoomIn)]
+    pub fn zoomInWithOptions(this: &Map, delta: f64, options: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn zoomOut(this: &Map, delta: f64);
+
+    #[wasm_bindgen(method, js_name = zoomOut)]
+    pub fn zoomOutWithOptions(this: &Map, delta: f64, options: &JsValue);
+
+    #[wasm_bindgen(method, js_name = setZoomAround)]
+    pub fn setZoomAroundLatLng(this: &Map, latlng: &LatLng, zoom: f64);
+
+    #[wasm_bindgen(method, js_name = setZoomAround)]
+    pub fn setZoomAroundLatLngWithOptions(this: &Map, latlng: &LatLng, zoom: f64, options: &JsValue);
+
+    #[wasm_bindgen(method, js_name = setZoomAround)]
+    pub fn setZoomAroundPoint(this: &Map, offset: &Point, zoom: f64);
+
+    #[wasm_bindgen(method, js_name = setZoomAround)]
+    pub fn setZoomAroundPointWithOptions(this: &Map, offset: &Point, zoom: f64, options: &JsValue);
+
+    #[wasm_bindgen(method)]
     pub fn fitBounds(this: &Map, bounds: &LatLngBounds);
+
+    #[wasm_bindgen(method, js_name = fitBounds)]
+    pub fn fitBoundsWithOptions(this: &Map, bounds: &LatLngBounds, options: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn fitWorld(this: &Map);
+
+    #[wasm_bindgen(method, js_name = fitWorld)]
+    pub fn fitWorldWithOptions(this: &Map, options: &JsValue);
 
     #[wasm_bindgen(method)]
     pub fn on(this: &Map, kind: &str, handler: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn panTo(this: &Map, latlng: &LatLng);
+
+    #[wasm_bindgen(method, js_name = panTo)]
+    pub fn panToWithOptions(this: &Map, latlng: &LatLng, options: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn panBy(this: &Map, point: &Point);
+
+    #[wasm_bindgen(method, js_name = panBy)]
+    pub fn panByWithOptions(this: &Map, point: &Point, options: &JsValue);
 
     #[wasm_bindgen(method)]
     pub fn flyTo(this: &Map, latlng: &LatLng, zoom: f64);
@@ -137,6 +205,36 @@ extern "C" {
 
     #[wasm_bindgen(method, js_name = flyToBounds)]
     pub fn flyToBoundsWithOptions(this: &Map, bounds: &LatLngBounds, options: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn setMaxBounds(this: &Map, bounds: &LatLngBounds);
+
+    #[wasm_bindgen(method)]
+    pub fn setMinZoom(this: &Map, zoom: f64);
+
+    #[wasm_bindgen(method)]
+    pub fn setMaxZoom(this: &Map, zoom: f64);
+
+    #[wasm_bindgen(method)]
+    pub fn panInsideBounds(this: &Map, bounds: &LatLngBounds);
+
+    #[wasm_bindgen(method, js_name = panInsideBounds)]
+    pub fn panInsideBoundsWithOptions(this: &Map, bounds: &LatLngBounds, options: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn panInside(this: &Map, latlng: &LatLng);
+
+    #[wasm_bindgen(method, js_name = panInside)]
+    pub fn panInsideWithOptions(this: &Map, latlng: &LatLng, options: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn invalidateSize(this: &Map, animate: bool);
+
+    #[wasm_bindgen(method, js_name = invalidateSize)]
+    pub fn invalidateSizeWithOptions(this: &Map, options: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn stop(this: &Map);
 
     // Marker
 
