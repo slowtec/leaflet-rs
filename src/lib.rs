@@ -336,4 +336,15 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn addTo(this: &TileLayer, map: &Map);
 
+    // Control
+
+    #[derive(Debug)]
+    pub type Control;
+
+    #[wasm_bindgen(js_namespace = L, static_method_of = Control)]
+    pub fn extend(props: &JsValue) -> JsValue;
+
+    #[wasm_bindgen(method)]
+    pub fn addTo(this: &Control, map: &Map);
+
 }

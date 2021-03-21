@@ -1,0 +1,23 @@
+[package]
+name = "leaflet-rs-example"
+version = "0.1.0"
+authors = ["The leaflet-rs Developers"]
+license = "MIT/Apache-2.0"
+description = "An example using leaflet-rs"
+homepage = "https://github.com/kartevonmorgen/leaflet-rs"
+repository = "https://github.com/kartevonmorgen/leaflet-rs"
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+leaflet = { path = "../.." }
+# Your project would instead do:
+# leaflet = "0.1.2"
+
+gloo-events = "0.1.1"
+js-sys = "0.3"
+serde = { version = "1.0.124", features = ["derive"] }
+wasm-bindgen = { version = "0.2.72", features = ["serde-serialize"] }
+web-sys = { version = "0.3.49", features = ["console", "Document", "Element", "HtmlAnchorElement", "Window"] }
