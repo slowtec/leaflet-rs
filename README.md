@@ -13,7 +13,7 @@ leaflet = "0.1"
 
 ## Example
 
-See https://github.com/kartevonmorgen/leaflet-rs/tree/master/src/example
+See https://github.com/kartevonmorgen/leaflet-rs/tree/master/examples/basic
 
 ## License
 
