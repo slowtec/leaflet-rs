@@ -159,7 +159,12 @@ extern "C" {
     pub fn setZoomAroundLatLng(this: &Map, latlng: &LatLng, zoom: f64);
 
     #[wasm_bindgen(method, js_name = setZoomAround)]
-    pub fn setZoomAroundLatLngWithOptions(this: &Map, latlng: &LatLng, zoom: f64, options: &JsValue);
+    pub fn setZoomAroundLatLngWithOptions(
+        this: &Map,
+        latlng: &LatLng,
+        zoom: f64,
+        options: &JsValue,
+    );
 
     #[wasm_bindgen(method, js_name = setZoomAround)]
     pub fn setZoomAroundPoint(this: &Map, offset: &Point, zoom: f64);
