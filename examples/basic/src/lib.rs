@@ -1,7 +1,7 @@
 use gloo_events::EventListener;
 use js_sys::{Array, Function};
 use leaflet::{
-    rectangle, Circle, Control, LatLng, LatLngBounds, Map, Polygon, Polyline, TileLayer,
+    Circle, Control, LatLng, LatLngBounds, Map, Polygon, Polyline, Rectangle, TileLayer,
 };
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
@@ -88,7 +88,7 @@ fn add_polygon(map: &Map) {
 }
 
 fn add_rectangle(map: &Map) {
-    rectangle::new(&LatLngBounds::new(
+    Rectangle::new(&LatLngBounds::new(
         &LatLng::new(63.25, 10.25),
         &LatLng::new(63.75, 10.75),
     ))

@@ -7,6 +7,7 @@ description = "An example using leaflet-rs"
 homepage = "https://github.com/kartevonmorgen/leaflet-rs"
 repository = "https://github.com/kartevonmorgen/leaflet-rs"
 edition = "2018"
+publish = false
 
 [lib]
 crate-type = ["cdylib"]
@@ -16,8 +17,8 @@ leaflet = { path = "../.." }
 # Your project would instead do:
 # leaflet = "0.1.2"
 
-gloo-events = "0.1.1"
+gloo-events = "0.1"
 js-sys = "0.3"
-serde = { version = "1.0.124", features = ["derive"] }
-wasm-bindgen = { version = "0.2.72", features = ["serde-serialize"] }
-web-sys = { version = "0.3.49", features = ["console", "Document", "Element", "HtmlAnchorElement", "Window"] }
+serde = { version = "1.0", features = ["derive"] }
+wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
+web-sys = { version = "0.3", features = ["console", "Document", "Element", "HtmlAnchorElement", "Window"] }
