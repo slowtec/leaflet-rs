@@ -91,6 +91,40 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn remove(this: &Layer);
 
+    // Layer Popup Methods
+
+    /// [`bindPopup`](https://leafletjs.com/reference-1.7.1.html#layer-bindpopup)
+    #[wasm_bindgen(method)]
+    pub fn bindPopup(this: &Layer, content: &JsValue, options: &JsValue);
+
+    /// [`unbindPopup`](https://leafletjs.com/reference-1.7.1.html#layer-unbindpopup)
+    #[wasm_bindgen(method)]
+    pub fn unbindPopup(this: &Layer);
+
+    /// [`openPopup`](https://leafletjs.com/reference-1.7.1.html#layer-openpopup)
+    #[wasm_bindgen(method)]
+    pub fn openPopup(this: &Layer, latlng: &LatLng);
+
+    /// [`closePopup`](https://leafletjs.com/reference-1.7.1.html#layer-closepopup)
+    #[wasm_bindgen(method)]
+    pub fn closePopup(this: &Layer);
+
+    /// [`togglePopup`](https://leafletjs.com/reference-1.7.1.html#layer-togglepopup)
+    #[wasm_bindgen(method)]
+    pub fn togglePopup(this: &Layer);
+
+    /// [`isPopupOpen`](https://leafletjs.com/reference-1.7.1.html#layer-ispopupopen)
+    #[wasm_bindgen(method)]
+    pub fn isPopupOpen(this: &Layer) -> bool;
+
+    /// [`setPopupContent`](https://leafletjs.com/reference-1.7.1.html#layer-setpopupcontent)
+    #[wasm_bindgen(method)]
+    pub fn setPopupContent(this: &Layer, content: &JsValue);
+
+    /// [`getPopup`](https://leafletjs.com/reference-1.7.1.html#layer-getpopup)
+    #[wasm_bindgen(method)]
+    pub fn getPopup(this: &Layer) -> Popup;
+
     // LayerGroup
 
     #[derive(Debug)]
@@ -258,6 +292,53 @@ extern "C" {
 
     #[wasm_bindgen(method)]
     pub fn on(this: &Marker, event_name: &str, handler: &JsValue);
+
+    // Popup
+
+    /// [`Popup`](https://leafletjs.com/reference-1.7.1.html#popup)
+    #[derive(Debug, Clone)]
+    #[wasm_bindgen(extends = Layer)]
+    pub type Popup;
+
+    /// [`L.popup`](https://leafletjs.com/reference-1.7.1.html#popup-l-popup)
+    #[wasm_bindgen(js_namespace = L)]
+    pub fn popup(options: &JsValue, layer: Option<&Layer>) -> Popup;
+
+    /// [`getLatLng`](https://leafletjs.com/reference-1.7.1.html#popup-getlatlng)
+    #[wasm_bindgen(method)]
+    pub fn getLatLng(this: &Popup) -> LatLng;
+
+    /// [`setLatLng`](https://leafletjs.com/reference-1.7.1.html#popup-setlatlng)
+    #[wasm_bindgen(method)]
+    pub fn setLatLng(this: &Popup, latlng: &LatLng);
+
+    /// [`getContent`](https://leafletjs.com/reference-1.7.1.html#popup-getcontent)
+    #[wasm_bindgen(method)]
+    pub fn getContent(this: &Popup) -> JsValue;
+
+    /// [`setContent`](https://leafletjs.com/reference-1.7.1.html#popup-setcontent)
+    #[wasm_bindgen(method)]
+    pub fn setContent(this: &Popup, content: &JsValue);
+
+    /// [`update`](https://leafletjs.com/reference-1.7.1.html#popup-update)
+    #[wasm_bindgen(method)]
+    pub fn update(this: &Popup);
+
+    /// [`isOpen`](https://leafletjs.com/reference-1.7.1.html#popup-isopen)
+    #[wasm_bindgen(method)]
+    pub fn isOpen(this: &Popup) -> bool;
+
+    /// [`bringToFront`](https://leafletjs.com/reference-1.7.1.html#popup-bringtofront)
+    #[wasm_bindgen(method)]
+    pub fn bringToFront(this: &Popup);
+
+    /// [`bringToBack`](https://leafletjs.com/reference-1.7.1.html#popup-bringtoback)
+    #[wasm_bindgen(method)]
+    pub fn bringToBack(this: &Popup);
+
+    /// [`openOn`](https://leafletjs.com/reference-1.7.1.html#popup-openon)
+    #[wasm_bindgen(method)]
+    pub fn openOn(this: &Popup, map: &Map);
 
     // MouseEvent
 
