@@ -125,6 +125,40 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn getPopup(this: &Layer) -> Popup;
 
+    // Layer Tooltil Methods
+
+    /// [`bindTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-bindtooltip)
+    #[wasm_bindgen(method)]
+    pub fn bindTooltip(this: &Layer, content: &JsValue, options: &JsValue);
+
+    /// [`unbindTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-unbindtooltip)
+    #[wasm_bindgen(method)]
+    pub fn unbindTooltip(this: &Layer);
+
+    /// [`openTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-opentooltip)
+    #[wasm_bindgen(method)]
+    pub fn openTooltip(this: &Layer, latlng: &LatLng);
+
+    /// [`closeTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-closetooltip)
+    #[wasm_bindgen(method)]
+    pub fn closeTooltip(this: &Layer);
+
+    /// [`toggleTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-toggletooltip)
+    #[wasm_bindgen(method)]
+    pub fn toggleTooltip(this: &Layer);
+
+    /// [`isTooltipOpen`](https://leafletjs.com/reference-1.7.1.html#layer-istooltipopen)
+    #[wasm_bindgen(method)]
+    pub fn isTooltipOpen(this: &Layer) -> bool;
+
+    /// [`setTooltipContent`](https://leafletjs.com/reference-1.7.1.html#layer-settooltipcontent)
+    #[wasm_bindgen(method)]
+    pub fn setTooltipContent(this: &Layer, content: &JsValue);
+
+    /// [`getTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-gettooltip)
+    #[wasm_bindgen(method)]
+    pub fn getTooltip(this: &Layer) -> Tooltip;
+
     // LayerGroup
 
     #[derive(Debug)]
@@ -339,6 +373,17 @@ extern "C" {
     /// [`openOn`](https://leafletjs.com/reference-1.7.1.html#popup-openon)
     #[wasm_bindgen(method)]
     pub fn openOn(this: &Popup, map: &Map);
+
+    // Tooltip
+
+    /// [`Tooltip`](https://leafletjs.com/reference-1.7.1.html#tooltip)
+    #[derive(Debug, Clone)]
+    #[wasm_bindgen(extends = Layer)]
+    pub type Tooltip;
+
+    /// [`L.tooltip`](https://leafletjs.com/reference-1.7.1.html#tooltip-l-tooltip)
+    #[wasm_bindgen(js_namespace = L)]
+    pub fn tooltip(options: &JsValue, layer: Option<&Layer>) -> Popup;
 
     // MouseEvent
 
