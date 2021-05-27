@@ -93,18 +93,31 @@ extern "C" {
 
     // LayerGroup
 
-    #[derive(Debug)]
+    /// [`LayerGroup`](https://leafletjs.com/reference-1.7.1.html#layergroup)
+    #[derive(Clone, Debug)]
+    #[wasm_bindgen(extends = Layer)]
     pub type LayerGroup;
 
     #[wasm_bindgen(constructor, js_namespace = L)]
     pub fn new() -> LayerGroup;
 
+    /// [`toGeoJSON`](https://leafletjs.com/reference-1.7.1.html#layergroup-togeojson)
+    #[wasm_bindgen(method)]
+    pub fn toGeoJSON(this: &LayerGroup) -> JsValue;
+
+    /// [`addLayer`](https://leafletjs.com/reference-1.7.1.html#layergroup-addlayer)
     #[wasm_bindgen(method)]
     pub fn addLayer(this: &LayerGroup, layer: &Layer);
 
+    /// [`removeLayer`](https://leafletjs.com/reference-1.7.1.html#layergroup-removelayer)
     #[wasm_bindgen(method)]
-    pub fn addTo(this: &LayerGroup, map: &Map);
+    pub fn removeLayer(this: &LayerGroup, layer: &Layer);
 
+    /// [`hasLayer`](https://leafletjs.com/reference-1.7.1.html#layergroup-haslayer)
+    #[wasm_bindgen(method)]
+    pub fn hasLayer(this: &LayerGroup, layer: &Layer) -> bool;
+
+    /// [`clearLayers`](https://leafletjs.com/reference-1.7.1.html#layergroup-clearlayers)
     #[wasm_bindgen(method)]
     pub fn clearLayers(this: &LayerGroup);
 
