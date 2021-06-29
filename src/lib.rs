@@ -85,8 +85,14 @@ extern "C" {
     #[wasm_bindgen(extends = Evented)]
     pub type Layer;
 
+    /// [`addTo`](https://leafletjs.com/reference-1.7.1.html#layer-addto)
     #[wasm_bindgen(method)]
     pub fn addTo(this: &Layer, map: &Map);
+
+    /// [`addTo`](https://leafletjs.com/reference-1.7.1.html#layer-addto)
+    #[wasm_bindgen(method)]
+    #[wasm_bindgen(js_name = addTo)]
+    pub fn addTo_LayerGroup(this: &Layer, layerGroup: &LayerGroup);
 
     #[wasm_bindgen(method)]
     pub fn remove(this: &Layer);
