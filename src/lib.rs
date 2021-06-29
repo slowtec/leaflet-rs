@@ -125,7 +125,7 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn getPopup(this: &Layer) -> Popup;
 
-    // Layer Tooltil Methods
+    // Layer Tooltip Methods
 
     /// [`bindTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-bindtooltip)
     #[wasm_bindgen(method)]
@@ -457,6 +457,41 @@ extern "C" {
     #[wasm_bindgen(constructor, js_namespace = L)]
     pub fn new_with_options(bounds: &LatLngBounds, options: &JsValue) -> Rectangle;
 
+    // CircleMarker
+
+    /// [`CirleMarker`](https://leafletjs.com/reference-1.7.1.html#circlemarker)
+    #[derive(Debug)]
+    #[wasm_bindgen(extends = Path)]
+    pub type CircleMarker;
+
+    /// [`Constructor`](https://leafletjs.com/reference-1.7.1.html#circlemarker-l-circlemarker)
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new(latlng: &LatLng) -> CircleMarker;
+
+    /// [`Constructor`](https://leafletjs.com/reference-1.7.1.html#circlemarker-l-circlemarker)
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new_with_options(latlng: &LatLng, options: &JsValue) -> CircleMarker;
+
+    /// [`toGeoJSON`](https://leafletjs.com/reference-1.7.1.html#circlemarker-togeojson)
+    #[wasm_bindgen(method)]
+    pub fn toGeoJSON(this: &CircleMarker) -> JsValue;
+
+    /// [`setLatLng`](https://leafletjs.com/reference-1.7.1.html#circlemarker-setlanglng)
+    #[wasm_bindgen(method)]
+    pub fn setLatLng(this: &CircleMarker, latlng: &LatLng);
+
+    /// [`getLatLng`](https://leafletjs.com/reference-1.7.1.html#circlemarker-getlatlng)
+    #[wasm_bindgen(method)]
+    pub fn getLatLng(this: &CircleMarker) -> LatLng;
+
+    /// [`setRadius`](https://leafletjs.com/reference-1.7.1.html#circlemarker-setradius)
+    #[wasm_bindgen(method)]
+    pub fn setRadius(this: &CircleMarker, radius: f64);
+
+    /// [`getRadius`](https://leafletjs.com/reference-1.7.1.html#circlemarker-getradius)
+    #[wasm_bindgen(method)]
+    pub fn getRadius(this: &CircleMarker) -> f64;
+
     // Circle
 
     #[derive(Debug)]
@@ -537,4 +572,27 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn addTo(this: &Control, map: &Map);
 
+
+    // Path
+
+    /// [`Path`](https://leafletjs.com/reference-1.7.1.html#path)
+    #[derive(Debug)]
+    #[wasm_bindgen(extends = Layer)]
+    pub type Path;
+
+    /// [`redraw`](https://leafletjs.com/reference-1.7.1.html#path-redraw)
+    #[wasm_bindgen(method)]
+    pub fn redraw(this: &Path);
+
+    /// [`setStyle`](https://leafletjs.com/reference-1.7.1.html#path-setstyle)
+    #[wasm_bindgen(method)]
+    pub fn setStyle(this: &Path, path_options: &JsValue);
+
+    /// [`bringToFront`](https://leafletjs.com/reference-1.7.1.html#path-bringtofront)
+    #[wasm_bindgen(method)]
+    pub fn bringToFront(this: &Path);
+
+    /// [`bringToBack`](https://leafletjs.com/reference-1.7.1.html#path-bringtoback)
+    #[wasm_bindgen(method)]
+    pub fn bringToBack(this: &Path);
 }
