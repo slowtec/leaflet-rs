@@ -103,7 +103,12 @@ extern "C" {
 
     /// [`openPopup`](https://leafletjs.com/reference-1.7.1.html#layer-openpopup)
     #[wasm_bindgen(method)]
-    pub fn openPopup(this: &Layer, latlng: &LatLng);
+    pub fn openPopup(this: &Layer);
+
+    /// [`openPopup`](https://leafletjs.com/reference-1.7.1.html#layer-openpopup)
+    #[wasm_bindgen(method)]
+    #[wasm_bindgen(js_name = openPopup)]
+    pub fn openPopup_with_latlng(this: &Layer, latlng: &LatLng);
 
     /// [`closePopup`](https://leafletjs.com/reference-1.7.1.html#layer-closepopup)
     #[wasm_bindgen(method)]
@@ -328,8 +333,13 @@ extern "C" {
     #[wasm_bindgen(extends = Layer)]
     pub type Marker;
 
+    // [`Marker`](https://leafletjs.com/reference-1.7.1.html#marker-l-marker)
     #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(latlng: &LatLng, options: &JsValue) -> Marker;
+    pub fn new(latlng: &LatLng) -> Marker;
+
+    // [`Marker`](https://leafletjs.com/reference-1.7.1.html#marker-l-marker)
+    #[wasm_bindgen(constructor, js_namespace = L)]
+    pub fn new_with_options(latlng: &LatLng, options: &JsValue) -> Marker;
 
     #[wasm_bindgen(method)]
     pub fn setIcon(this: &Marker, icon: &Icon);
