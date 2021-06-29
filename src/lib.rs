@@ -444,6 +444,10 @@ extern "C" {
     #[wasm_bindgen(constructor, js_namespace = L)]
     pub fn new_with_options(latlngs: Vec<JsValue>, options: &JsValue) -> Polyline;
 
+    /// [`addLatLng`](https://leafletjs.com/reference-1.7.1.html#polyline-addlatlng)
+    #[wasm_bindgen(method)]
+    pub fn addLatLng(this: &Polyline, latlng: &LatLng);
+
     // Polygon
 
     #[derive(Debug)]
