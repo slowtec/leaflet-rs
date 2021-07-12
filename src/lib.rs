@@ -312,6 +312,10 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn setMaxZoom(this: &Map, zoom: f64);
 
+    /// [`getMaxZoom`](https://leafletjs.com/reference-1.7.1.html#map-getmaxzoom)
+    #[wasm_bindgen(method)]
+    pub fn getMaxZoom(this: &Map) -> f64;
+
     #[wasm_bindgen(method)]
     pub fn panInsideBounds(this: &Map, bounds: &LatLngBounds);
 
