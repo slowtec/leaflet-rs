@@ -1,11 +1,11 @@
 [package]
 name = "leaflet"
-version = "0.1.3"
+version = "0.2.0"
 authors = ["slowtec GmbH <post@slowtec.de>"]
 license = "MIT/Apache-2.0"
 description = "A wasm-bindgen wrapper for Leaflet.js"
-homepage = "https://github.com/kartevonmorgen/leaflet-rs"
-repository = "https://github.com/kartevonmorgen/leaflet-rs"
+homepage = "https://github.com/slowtec/leaflet-rs"
+repository = "https://github.com/slowtec/leaflet-rs"
 edition = "2018"
 
 [dependencies]

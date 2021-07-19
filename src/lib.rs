@@ -605,7 +605,6 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn addTo(this: &Control, map: &Map);
 
-
     // Path
 
     /// [`Path`](https://leafletjs.com/reference-1.7.1.html#path)

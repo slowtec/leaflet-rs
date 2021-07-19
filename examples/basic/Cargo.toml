@@ -4,8 +4,8 @@ version = "0.1.0"
 authors = ["The leaflet-rs Developers"]
 license = "MIT/Apache-2.0"
 description = "An example using leaflet-rs"
-homepage = "https://github.com/kartevonmorgen/leaflet-rs"
-repository = "https://github.com/kartevonmorgen/leaflet-rs"
+homepage = "https://github.com/slowtec/leaflet-rs"
+repository = "https://github.com/slowtec/leaflet-rs"
 edition = "2018"
 publish = false
 
