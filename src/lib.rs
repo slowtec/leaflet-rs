@@ -454,6 +454,22 @@ extern "C" {
     #[wasm_bindgen(constructor, js_namespace = L)]
     pub fn new_with_options(latlngs: Vec<JsValue>, options: &JsValue) -> Polyline;
 
+    /// [`getLatLngs`](https://leafletjs.com/reference-1.7.1.html#polyline-getlatlngs)
+    #[wasm_bindgen(method)]
+    pub fn getLatLngs(this: &Polyline) -> Vec<JsValue>;
+
+    /// [`setLatLngs`](https://leafletjs.com/reference-1.7.1.html#polyline-setlatlngs)
+    #[wasm_bindgen(method)]
+    pub fn setLatLngs(this: &Polyline, latlngs: Vec<JsValue>);
+
+    /// [`isEmpty`](https://leafletjs.com/reference-1.7.1.html#polyline-isempty)
+    #[wasm_bindgen(method)]
+    pub fn isEmpty(this: &Polyline) -> bool;
+
+    /// [`getCenter`](https://leafletjs.com/reference-1.7.1.html#polyline-getcenter)
+    #[wasm_bindgen(method)]
+    pub fn getCenter(this: &Polyline) -> LatLng;
+
     /// [`addLatLng`](https://leafletjs.com/reference-1.7.1.html#polyline-addlatlng)
     #[wasm_bindgen(method)]
     pub fn addLatLng(this: &Polyline, latlng: &LatLng);
