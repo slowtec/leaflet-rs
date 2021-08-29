@@ -8,7 +8,7 @@ wrapper for
 
 ```toml
 [dependencies]
-leaflet = "0.1"
+leaflet = "0.2"
 ```
 
 ## Example
