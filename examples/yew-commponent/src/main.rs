@@ -55,10 +55,10 @@ impl Component for Model {
     fn view(&self) -> Html {
         let cb = self.link.callback(|name| Msg::SelectCity(name));
         html! {
-            <main>
+            <>
                 <MapComponent city=&self.city  />
                 <Control select_city=cb cities=&self.cities/>
-            </main>
+            </>
         }
     }
 }

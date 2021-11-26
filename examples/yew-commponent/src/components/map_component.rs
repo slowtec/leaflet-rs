@@ -33,6 +33,13 @@ pub struct Props {
     pub city: City,
 }
 
+impl MapComponent {
+    fn render_map(&self) -> Html {
+        let node: &Node = &self.container.clone().into();
+        Html::VRef(node.clone())
+    }
+}
+
 impl Component for MapComponent {
     type Message = Msg;
     type Properties = Props;
@@ -71,8 +78,11 @@ impl Component for MapComponent {
     }
 
     fn view(&self) -> Html {
-        let node: &Node = &self.container.clone().into();
-        Html::VRef(node.clone())
+        html! {
+            <div class="map-container component-container">
+                {self.render_map()}
+            </div>
+        }
     }
 }
 

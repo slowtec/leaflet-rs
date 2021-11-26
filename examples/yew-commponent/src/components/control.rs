@@ -63,7 +63,7 @@ impl Component for Control {
 
     fn view(&self) -> Html {
         html! {
-            <div>
+            <div class="control component-container">
                 <h1>{"Choose a city"}</h1>
                 <div>
                     {for self.cities.iter().map(|city| Self::button(&self, city.clone()))}
