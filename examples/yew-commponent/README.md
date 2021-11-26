@@ -1,7 +1,7 @@
 # Leaflet-rs in yew.rs example
 
 An example that shows how to use library to use Leaflet within
-a (yew.rs)[https://yew.rs] component.
+a [yew.rs](https://yew.rs) component.
 
 ## How to run the example
 
