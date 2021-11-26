@@ -1,0 +1,11 @@
+body {
+  display: flex;
+  flex-direction: column;
+
+  .map,
+  #yew {
+    height: 400px;
+    width: 800px;
+    margin: 2em auto;
+  }
+}
