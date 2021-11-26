@@ -4,7 +4,7 @@
 
 ```
 cargo install wasm-pack https
-cd src/example
+# in current directory, so: src/examples/basic
 wasm-pack build --target web
 http
 ```

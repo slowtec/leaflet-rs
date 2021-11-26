@@ -7,7 +7,7 @@ a [yew.rs](https://yew.rs) component.
 
 ```
 cargo install trunk
-cd src/example/yew-component
+# in current directory, so: src/examples/yew-component
 trunk serve
 ```
 
