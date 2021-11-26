@@ -13,7 +13,10 @@ leaflet = "0.2"
 
 ## Example
 
-See https://github.com/slowtec/leaflet-rs/tree/master/examples/basic
+See:
+
+- Basic example: https://github.com/slowtec/leaflet-rs/tree/master/examples/basic
+- Usage in yew component: https://github.com/slowtec/leaflet-rs/tree/master/examples/yew-component
 
 ## License
 
