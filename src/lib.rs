@@ -6,6 +6,7 @@ use web_sys::HtmlElement;
 extern "C" {
 
     // mapboxGl
+    #[allow(non_camel_case_types)]
     #[derive(Debug)]
     pub type mapboxGL;
 
@@ -469,6 +470,10 @@ extern "C" {
     /// [`getCenter`](https://leafletjs.com/reference-1.7.1.html#polyline-getcenter)
     #[wasm_bindgen(method)]
     pub fn getCenter(this: &Polyline) -> LatLng;
+
+    /// [`getBounds`](https://leafletjs.com/reference-1.7.1.html#polyline-getbounds)
+    #[wasm_bindgen(method)]
+    pub fn getBounds(this: &Polyline) -> LatLngBounds;
 
     /// [`addLatLng`](https://leafletjs.com/reference-1.7.1.html#polyline-addlatlng)
     #[wasm_bindgen(method)]
