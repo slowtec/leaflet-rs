@@ -20,4 +20,4 @@ See:
 
 ## License
 
-Copyright (c) 2020 - 2021 [slowtec GmbH](https://slowtec.de)
+Copyright (c) 2020 - 2022 [slowtec GmbH](https://slowtec.de)
