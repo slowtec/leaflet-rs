@@ -1,5 +1,5 @@
 use super::map_component::City;
-use yew::services::ConsoleService;
+use gloo_console::log;
 use yew::{html::ImplicitClone, prelude::*};
 
 pub enum Msg {
@@ -7,30 +7,28 @@ pub enum Msg {
 }
 
 pub struct Control {
-    link: ComponentLink<Self>,
     cities: Vec<City>,
-    props: Props,
 }
 
-#[derive(Clone)]
+#[derive(PartialEq, Clone)]
 pub struct Cities {
     pub list: Vec<City>,
 }
 
 impl ImplicitClone for Cities {}
 
-#[derive(Properties, Clone)]
+#[derive(PartialEq, Properties, Clone)]
 pub struct Props {
     pub cities: Cities,
     pub select_city: Callback<City>,
 }
 
 impl Control {
-    fn button(&self, city: City) -> Html {
+    fn button(&self, ctx: &Context<Self>, city: City) -> Html {
         let name = city.name.clone();
-        let cb = self.link.callback(move |_| Msg::CityChosen(city.clone()));
+        let cb = ctx.link().callback(move |_| Msg::CityChosen(city.clone()));
         html! {
-            <button onclick=cb>{name}</button>
+            <button onclick={cb}>{name}</button>
         }
     }
 }
@@ -39,34 +37,32 @@ impl Component for Control {
     type Message = Msg;
     type Properties = Props;
 
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
+    fn create(ctx: &Context<Self>) -> Self {
         Control {
-            link,
-            cities: props.cities.list.clone(),
-            props,
+            cities: ctx.props().cities.list.clone(),
         }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Msg::CityChosen(city) => {
-                ConsoleService::info(format!("Update: {:?}", city.name).as_ref());
-                self.props.select_city.emit(city);
+                log!(format!("Update: {:?}", city.name));
+                ctx.props().select_city.emit(city);
             }
         }
         true
     }
 
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+    fn changed(&mut self, _ctx: &Context<Self>) -> bool {
         false
     }
 
-    fn view(&self) -> Html {
+    fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
             <div class="control component-container">
                 <h1>{"Choose a city"}</h1>
                 <div>
-                    {for self.cities.iter().map(|city| Self::button(&self, city.clone()))}
+                    {for self.cities.iter().map(|city| Self::button(&self, ctx, city.clone()))}
                     </div>
 
             </div>
