@@ -9,12 +9,9 @@ body {
   // those styles are irrelevant, just here for nicer presentation
   display: flex;
   flex-direction: column;
-
-  #yew {
-    height: 400px;
-    width: 800px;
-    margin: 2em auto;
-  }
+  height: 400px;
+  width: 800px;
+  margin: 2em auto;
 
   .map {
     height: 400px;

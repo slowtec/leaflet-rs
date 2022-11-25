@@ -3,10 +3,11 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use yew::html::ImplicitClone;
 use yew::prelude::*;
-use yew::{
-    utils::document,
-    web_sys::{Element, HtmlElement, Node},
-    Html,
+use gloo_utils::document;
+use web_sys::{
+    Element,
+    HtmlElement,
+    Node,
 };
 
 pub enum Msg {}
@@ -20,7 +21,7 @@ pub struct MapComponent {
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Point(pub f64, pub f64);
 
-#[derive(Clone, Debug)]
+#[derive(PartialEq, Clone, Debug)]
 pub struct City {
     pub name: String,
     pub lat: Point,
@@ -28,7 +29,7 @@ pub struct City {
 
 impl ImplicitClone for City {}
 
-#[derive(Properties, Clone)]
+#[derive(PartialEq, Properties, Clone)]
 pub struct Props {
     pub city: City,
 }
@@ -44,7 +45,9 @@ impl Component for MapComponent {
     type Message = Msg;
     type Properties = Props;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(ctx: &Context<Self>) -> Self {
+        let props = ctx.props();
+
         let container: Element = document().create_element("div").unwrap();
         let container: HtmlElement = container.dyn_into().unwrap();
         container.set_class_name("map");
@@ -56,18 +59,20 @@ impl Component for MapComponent {
         }
     }
 
-    fn rendered(&mut self, first_render: bool) {
+    fn rendered(&mut self, _ctx: &Context<Self>, first_render: bool) {
         if first_render {
             self.map.setView(&LatLng::new(self.lat.0, self.lat.1), 11.0);
             add_tile_layer(&self.map);
         }
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, _msg: Self::Message) -> bool {
         false
     }
 
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
+    fn changed(&mut self, ctx: &Context<Self>) -> bool {
+        let props = ctx.props();
+
         if self.lat == props.city.lat {
             false
         } else {
@@ -77,7 +82,7 @@ impl Component for MapComponent {
         }
     }
 
-    fn view(&self) -> Html {
+    fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
             <div class="map-container component-container">
                 {self.render_map()}

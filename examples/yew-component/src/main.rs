@@ -10,14 +10,13 @@ enum Msg {
 struct Model {
     city: City,
     cities: Cities,
-    link: ComponentLink<Self>,
 }
 
 impl Component for Model {
     type Message = Msg;
     type Properties = ();
 
-    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
+    fn create(_ctx: &Context<Self>) -> Self {
         let aachen = City {
             name: "Aachen".to_string(),
             lat: Point(50.7597f64, 6.0967f64),
@@ -30,10 +29,10 @@ impl Component for Model {
             list: vec![aachen, stuttgart],
         };
         let city = cities.list[0].clone();
-        Self { city, cities, link }
+        Self { city, cities }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Msg::SelectCity(city) => {
                 self.city = self
@@ -48,27 +47,21 @@ impl Component for Model {
         true
     }
 
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+    fn changed(&mut self, _ctx: &Context<Self>) -> bool {
         false
     }
 
-    fn view(&self) -> Html {
-        let cb = self.link.callback(|name| Msg::SelectCity(name));
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let cb = ctx.link().callback(|name| Msg::SelectCity(name));
         html! {
             <>
-                <MapComponent city=&self.city  />
-                <Control select_city=cb cities=&self.cities/>
+                <MapComponent city={&self.city}  />
+                <Control select_city={cb} cities={&self.cities}/>
             </>
         }
     }
 }
 
 fn main() {
-    yew::initialize();
-    let document = yew::utils::document();
-    let app = document.query_selector("#yew").unwrap().unwrap();
-
-    yew::App::<Model>::new().mount(app);
-
-    yew::run_loop();
+    yew::start_app::<Model>();
 }
