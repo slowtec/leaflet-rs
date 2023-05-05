@@ -1,11 +1,11 @@
 use gloo_events::EventListener;
+use gloo_utils::format::JsValueSerdeExt;
 use js_sys::{Array, Function};
 use leaflet::{
     Circle, Control, LatLng, LatLngBounds, Map, Polygon, Polyline, Rectangle, TileLayer,
 };
 use serde::{Deserialize, Serialize};
-use wasm_bindgen::prelude::*;
-use wasm_bindgen::JsCast;
+use wasm_bindgen::{prelude::*, JsCast};
 use web_sys::{console, window, Element, HtmlAnchorElement};
 
 #[derive(Serialize, Deserialize)]
@@ -70,7 +70,7 @@ fn add_polyline(map: &Map) {
         })
         .expect("Unable to serialize polyline options"),
     )
-    .addTo(&map);
+    .addTo(map);
 }
 
 fn add_polygon(map: &Map) {
@@ -84,7 +84,7 @@ fn add_polygon(map: &Map) {
         .map(JsValue::from)
         .collect(),
     )
-    .addTo(&map);
+    .addTo(map);
 }
 
 fn add_rectangle(map: &Map) {
@@ -92,11 +92,11 @@ fn add_rectangle(map: &Map) {
         &LatLng::new(63.25, 10.25),
         &LatLng::new(63.75, 10.75),
     ))
-    .addTo(&map);
+    .addTo(map);
 }
 
 fn add_circle(map: &Map) {
-    Circle::new(&LatLng::new(63.25, 13.25)).addTo(&map);
+    Circle::new(&LatLng::new(63.25, 13.25)).addTo(map);
 }
 
 fn add_circle_with_options(map: &Map) {
@@ -105,7 +105,7 @@ fn add_circle_with_options(map: &Map) {
         &JsValue::from_serde(&CircleOptions { radius: 4000.0 })
             .expect("Unable to serialize circle options"),
     )
-    .addTo(&map);
+    .addTo(map);
 }
 
 fn add_control(map: &Map) {
@@ -168,5 +168,5 @@ fn add_control(map: &Map) {
             .expect("Unable to run constructor"),
     );
 
-    control_button.addTo(&map);
+    control_button.addTo(map);
 }

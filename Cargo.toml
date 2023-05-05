@@ -6,7 +6,8 @@ license = "MIT/Apache-2.0"
 description = "A wasm-bindgen wrapper for Leaflet.js"
 homepage = "https://github.com/slowtec/leaflet-rs"
 repository = "https://github.com/slowtec/leaflet-rs"
-edition = "2018"
+edition = "2021"
+readme = "README.md"
 
 [dependencies]
 wasm-bindgen = "0.2"
