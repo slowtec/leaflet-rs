@@ -62,7 +62,7 @@ impl Component for Control {
             <div class="control component-container">
                 <h1>{"Choose a city"}</h1>
                 <div>
-                    {for self.cities.iter().map(|city| Self::button(&self, ctx, city.clone()))}
+                    {for self.cities.iter().map(|city| Self::button(self, ctx, city.clone()))}
                     </div>
 
             </div>

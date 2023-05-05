@@ -1,5 +1,7 @@
-use crate::components::control::{Cities, Control};
-use crate::components::map_component::{City, MapComponent, Point};
+use crate::components::{
+    control::{Cities, Control},
+    map_component::{City, MapComponent, Point},
+};
 use yew::prelude::*;
 mod components;
 
@@ -52,7 +54,7 @@ impl Component for Model {
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
-        let cb = ctx.link().callback(|name| Msg::SelectCity(name));
+        let cb = ctx.link().callback(Msg::SelectCity);
         html! {
             <>
                 <MapComponent city={&self.city}  />

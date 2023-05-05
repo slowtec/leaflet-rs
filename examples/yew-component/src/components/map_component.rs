@@ -1,14 +1,8 @@
-use leaflet::{LatLng, Map, TileLayer};
-use wasm_bindgen::prelude::*;
-use wasm_bindgen::JsCast;
-use yew::html::ImplicitClone;
-use yew::prelude::*;
 use gloo_utils::document;
-use web_sys::{
-    Element,
-    HtmlElement,
-    Node,
-};
+use leaflet::{LatLng, Map, TileLayer};
+use wasm_bindgen::{prelude::*, JsCast};
+use web_sys::{Element, HtmlElement, Node};
+use yew::{html::ImplicitClone, prelude::*};
 
 pub enum Msg {}
 
