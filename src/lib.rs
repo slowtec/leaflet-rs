@@ -203,7 +203,7 @@ extern "C" {
 
     // Map
 
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     pub type Map;
 
     #[wasm_bindgen(constructor, js_namespace = L)]
