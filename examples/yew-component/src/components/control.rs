@@ -53,10 +53,6 @@ impl Component for Control {
         true
     }
 
-    fn changed(&mut self, _ctx: &Context<Self>) -> bool {
-        false
-    }
-
     fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
             <div class="control component-container">

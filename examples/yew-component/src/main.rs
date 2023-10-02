@@ -49,10 +49,6 @@ impl Component for Model {
         true
     }
 
-    fn changed(&mut self, _ctx: &Context<Self>) -> bool {
-        false
-    }
-
     fn view(&self, ctx: &Context<Self>) -> Html {
         let cb = ctx.link().callback(Msg::SelectCity);
         html! {
@@ -65,5 +61,5 @@ impl Component for Model {
 }
 
 fn main() {
-    yew::start_app::<Model>();
+    yew::Renderer::<Model>::new().render();
 }
