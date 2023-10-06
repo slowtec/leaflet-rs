@@ -24,6 +24,12 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn on(this: &Evented, kind: &str, handler: &JsValue);
 
+    #[wasm_bindgen(method)]
+    pub fn off(this: &Evented, kind: &str, handler: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn once(this: &Evented, kind: &str, handler: &JsValue);
+
     // Icon
 
     #[derive(Debug)]
@@ -279,6 +285,12 @@ extern "C" {
 
     #[wasm_bindgen(method)]
     pub fn on(this: &Map, kind: &str, handler: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn off(this: &Map, kind: &str, handler: &JsValue);
+
+    #[wasm_bindgen(method)]
+    pub fn once(this: &Map, kind: &str, handler: &JsValue);
 
     #[wasm_bindgen(method)]
     pub fn panTo(this: &Map, latlng: &LatLng);
