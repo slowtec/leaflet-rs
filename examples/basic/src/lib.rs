@@ -16,7 +16,7 @@ pub fn main() -> Result<(), JsValue> {
 
     let options = MapOptions::default();
     let map = Map::new("map", &options);
-    map.setView(&LatLng::new(63.5, 10.5), 5.0);
+    map.set_view(&LatLng::new(63.5, 10.5), 5.0);
 
     add_tile_layer(&map);
     add_polyline(&map);
@@ -30,7 +30,7 @@ pub fn main() -> Result<(), JsValue> {
 }
 
 fn add_tile_layer(map: &Map) {
-    TileLayer::new("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+    TileLayer::new("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").add_to(map);
 }
 
 fn add_polyline(map: &Map) {
@@ -46,7 +46,7 @@ fn add_polyline(map: &Map) {
         .collect::<Array>(),
         &options,
     )
-    .addTo(map);
+    .add_to(map);
 }
 
 fn add_polygon(map: &Map) {
@@ -60,7 +60,7 @@ fn add_polygon(map: &Map) {
         .map(JsValue::from)
         .collect::<Array>(),
     )
-    .addTo(map);
+    .add_to(map);
 }
 
 fn add_rectangle(map: &Map) {
@@ -68,22 +68,22 @@ fn add_rectangle(map: &Map) {
         &LatLng::new(63.25, 10.25),
         &LatLng::new(63.75, 10.75),
     ))
-    .addTo(map);
+    .add_to(map);
 }
 
 fn add_circle(map: &Map) {
-    Circle::new(&LatLng::new(63.25, 13.25)).addTo(map);
+    Circle::new(&LatLng::new(63.25, 13.25)).add_to(map);
 }
 
 fn add_circle_with_options(map: &Map) {
     let mut options = CircleOptions::default();
-    options.radius(4000.0);
-    Circle::new_with_options(&LatLng::new(63.25, 13.35), &options).addTo(map);
+    options.set_radius(4000.0);
+    Circle::new_with_options(&LatLng::new(63.25, 13.35), &options).add_to(map);
 }
 
 fn add_control(map: &Map) {
     let mut options = ControlOptions::default();
-    options.position("topleft");
+    options.set_position("topleft");
     let control_button = Control::new(&options);
 
     // This callback must return a HTML div representing the control button.
@@ -123,5 +123,5 @@ fn add_control(map: &Map) {
     };
 
     control_button.on_add(on_add);
-    control_button.addTo(map);
+    control_button.add_to(map);
 }
