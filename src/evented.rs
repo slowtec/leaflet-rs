@@ -27,13 +27,13 @@ extern "C" {
     pub fn off(this: &Evented, kind: &str, handler: &JsValue) -> Evented;
 
     #[wasm_bindgen(method, js_name = off)]
-    pub fn offByName(this: &Evented, kind: &str) -> Evented;
+    pub fn off_by_name(this: &Evented, kind: &str) -> Evented;
 
     /// Removes all event listeners.
     ///
     /// [`off`](https://leafletjs.com/reference.html#evented-off)
     #[wasm_bindgen(method, js_name = off)]
-    pub fn offAll(this: &Evented) -> Evented;
+    pub fn off_all(this: &Evented) -> Evented;
 
     /// Emits an event.
     ///
@@ -56,20 +56,20 @@ extern "C" {
     /// Returns true if the event has listeners.
     ///
     /// [`addEventParent`](https://leafletjs.com/reference.html#evented-addeventparent)
-    #[wasm_bindgen(method)]
-    pub fn addEventParent(this: &Evented, other: &Evented) -> Evented;
+    #[wasm_bindgen(method, js_name = "addEventParent")]
+    pub fn add_event_parent(this: &Evented, other: &Evented) -> Evented;
 
     /// Returns true if the event has listeners.
     ///
     /// ['removeEventParent'](https://leafletjs.com/reference.html#evented-removeeventparent)
-    #[wasm_bindgen(method)]
-    pub fn removeEventParent(this: &Evented, other: &Evented) -> Evented;
+    #[wasm_bindgen(method, js_name = "removeEventParent")]
+    pub fn remove_event_parent(this: &Evented, other: &Evented) -> Evented;
 
     /// Returns true if the event has listeners.
     ///
     /// [`addEventListener`](https://leafletjs.com/reference.html#evented-addeventlistener)
-    #[wasm_bindgen(method)]
-    pub fn addEventListener(
+    #[wasm_bindgen(method, js_name = "addEventListener")]
+    pub fn add_event_listener(
         this: &Evented,
         kind: &str,
         handler: &Closure<dyn Fn(JsValue)>,
@@ -78,8 +78,8 @@ extern "C" {
     /// Returns true if the event has listeners.
     ///
     /// [`removeEventListener`](https://leafletjs.com/reference.html#evented-removeeventlistener)
-    #[wasm_bindgen(method)]
-    pub fn removeEventListener(
+    #[wasm_bindgen(method, js_name = "removeEventListener")]
+    pub fn remove_event_listener(
         this: &Evented,
         kind: &str,
         handler: &Closure<dyn Fn(JsValue)>,
@@ -88,14 +88,14 @@ extern "C" {
     /// Clears all event listeners.
     ///
     /// [`clearAllEventListeners`](https://leafletjs.com/reference.html#evented-cleareventlisteners)
-    #[wasm_bindgen(method)]
-    pub fn clearAllEventListeners(this: &Evented) -> Evented;
+    #[wasm_bindgen(method, js_name = "clearAllEventListeners")]
+    pub fn clear_all_event_listeners(this: &Evented) -> Evented;
 
     /// Adds a one time event listener.
     ///
     /// [`addOneTimeEventListener`](https://leafletjs.com/reference.html#evented-addonetimeeventlistener)
-    #[wasm_bindgen(method)]
-    pub fn addOneTimeEventListener(
+    #[wasm_bindgen(method, js_name = "addOneTimeEventListener")]
+    pub fn add_one_time_event_listener(
         this: &Evented,
         kind: &str,
         handler: &Closure<dyn Fn(JsValue)>,
@@ -104,15 +104,19 @@ extern "C" {
     /// Fires an event.
     ///
     /// [`fireEvent`](https://leafletjs.com/reference.html#evented-fireevent)
-    #[wasm_bindgen(method)]
-    pub fn fireEvent(this: &Evented, kind: &str, data: &Object, propagate: Option<bool>)
-        -> Evented;
+    #[wasm_bindgen(method, js_name = "fireEvent")]
+    pub fn fire_event(
+        this: &Evented,
+        kind: &str,
+        data: &Object,
+        propagate: Option<bool>,
+    ) -> Evented;
 
     /// Returns true if the event has listeners.
     ///
     /// [`hasEventListeners`](https://leafletjs.com/reference.html#evented-haseventlisteners)
-    #[wasm_bindgen(method)]
-    pub fn hasEventListeners(this: &Evented, kind: &str, propagate: Option<bool>) -> bool;
+    #[wasm_bindgen(method, js_name = "hasEventListeners")]
+    pub fn has_event_listeners(this: &Evented, kind: &str, propagate: Option<bool>) -> bool;
 }
 
 pub trait FromLeafletEvent: FromWasmAbi {

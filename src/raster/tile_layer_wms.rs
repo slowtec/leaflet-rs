@@ -22,7 +22,7 @@ extern "C" {
     fn new_wms_options(url_template: &str, options: &TileLayerWmsOptions) -> TileLayerWms;
 
     #[wasm_bindgen(method, js_name = setParams)]
-    pub fn setParams(
+    pub fn set_params(
         this: &TileLayer,
         params: &TileLayerWmsOptions,
         no_redraw: Option<bool>,

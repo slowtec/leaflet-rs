@@ -25,8 +25,8 @@ extern "C" {
     #[wasm_bindgen(method, setter)]
     pub fn set_lng(this: &LatLng, value: f64) -> f64;
 
-    #[wasm_bindgen(method)]
-    pub fn distanceTo(this: &LatLng, otherLatLng: &LatLng) -> f64;
+    #[wasm_bindgen(method, js_name = distanceTo)]
+    pub fn distance_to(this: &LatLng, otherLatLng: &LatLng) -> f64;
 
 }
 

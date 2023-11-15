@@ -21,24 +21,24 @@ extern "C" {
     pub fn new_with_options(latlng: &LatLng, options: &JsValue) -> CircleMarker;
 
     /// [`toGeoJSON`](https://leafletjs.com/reference-1.7.1.html#circlemarker-togeojson)
-    #[wasm_bindgen(method)]
-    pub fn toGeoJSON(this: &CircleMarker) -> JsValue;
+    #[wasm_bindgen(method, js_name = toGeoJSON)]
+    pub fn to_geo_json(this: &CircleMarker) -> JsValue;
 
     /// [`setLatLng`](https://leafletjs.com/reference-1.7.1.html#circlemarker-setlanglng)
-    #[wasm_bindgen(method)]
-    pub fn setLatLng(this: &CircleMarker, latlng: &LatLng);
+    #[wasm_bindgen(method, js_name = setLatLng)]
+    pub fn set_lat_lng(this: &CircleMarker, latlng: &LatLng);
 
     /// [`getLatLng`](https://leafletjs.com/reference-1.7.1.html#circlemarker-getlatlng)
-    #[wasm_bindgen(method)]
-    pub fn getLatLng(this: &CircleMarker) -> LatLng;
+    #[wasm_bindgen(method, js_name = getLatLng)]
+    pub fn get_lat_lng(this: &CircleMarker) -> LatLng;
 
     /// [`setRadius`](https://leafletjs.com/reference-1.7.1.html#circlemarker-setradius)
-    #[wasm_bindgen(method)]
-    pub fn setRadius(this: &CircleMarker, radius: f64);
+    #[wasm_bindgen(method, js_name = setRadius)]
+    pub fn set_radius(this: &CircleMarker, radius: f64);
 
     /// [`getRadius`](https://leafletjs.com/reference-1.7.1.html#circlemarker-getradius)
-    #[wasm_bindgen(method)]
-    pub fn getRadius(this: &CircleMarker) -> f64;
+    #[wasm_bindgen(method, js_name = getRadius)]
+    pub fn get_radius(this: &CircleMarker) -> f64;
 
 }
 

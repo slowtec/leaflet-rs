@@ -14,7 +14,6 @@ use crate::{
 pub use events::*;
 pub use geolocation::*;
 pub use location_event::*;
-pub use other::*;
 
 #[wasm_bindgen]
 extern "C" {
@@ -30,38 +29,38 @@ extern "C" {
     pub fn new(id: &str, options: &MapOptions) -> Map;
 
     #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn newWithElement(el: &HtmlElement, options: &MapOptions) -> Map;
+    pub fn new_with_element(el: &HtmlElement, options: &MapOptions) -> Map;
 
     // Methods for Layers and Controls
     #[wasm_bindgen(method, js_name = addControl)]
-    pub fn addControl(this: &Map, control: &Control) -> Map;
+    pub fn add_control(this: &Map, control: &Control) -> Map;
 
     #[wasm_bindgen(method, js_name = removeControl)]
-    pub fn removeControl(this: &Map, control: &Control) -> Map;
+    pub fn remove_control(this: &Map, control: &Control) -> Map;
 
     #[wasm_bindgen(method, js_name = addLayer)]
-    pub fn addLayer(this: &Map, layer: &Layer) -> Map;
+    pub fn add_layer(this: &Map, layer: &Layer) -> Map;
 
     #[wasm_bindgen(method, js_name = removeLayer)]
-    pub fn removeLayer(this: &Map, layer: &Layer) -> Map;
+    pub fn remove_layer(this: &Map, layer: &Layer) -> Map;
 
     #[wasm_bindgen(method, js_name = hasLayer)]
-    pub fn hasLayer(this: &Map, layer: &Layer) -> bool;
+    pub fn has_layer(this: &Map, layer: &Layer) -> bool;
 
     #[wasm_bindgen(method, js_name = eachLayer)]
-    pub fn eachLayer(this: &Map, for_each: &dyn Fn(Layer)) -> Map;
+    pub fn each_layer(this: &Map, for_each: &dyn Fn(Layer)) -> Map;
 
     #[wasm_bindgen(method, js_name = eachLayer)]
-    pub fn eachLayerWithContext(this: &Map, for_each: &dyn Fn(Layer), context: &JsValue) -> Map;
+    pub fn each_layer_with_context(this: &Map, for_each: &dyn Fn(Layer), context: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = openPopup)]
-    pub fn openPopup(this: &Map, popup: &Popup) -> Map;
+    pub fn open_popup(this: &Map, popup: &Popup) -> Map;
 
     #[wasm_bindgen(method, js_name = openPopup)]
-    pub fn openPopupWithContent(this: &Map, content: &JsValue, lat_lng: &LatLng) -> Map;
+    pub fn open_popup_with_content(this: &Map, content: &JsValue, lat_lng: &LatLng) -> Map;
 
     #[wasm_bindgen(method, js_name = openPopup)]
-    pub fn openPopupWithContentAndOptions(
+    pub fn open_popup_with_content_and_options(
         this: &Map,
         content: &JsValue,
         lat_lng: &LatLng,
@@ -69,16 +68,16 @@ extern "C" {
     ) -> Map;
 
     #[wasm_bindgen(method, js_name = closePopup)]
-    pub fn closePopup(this: &Map, popup: &Popup) -> Map;
+    pub fn close_popup(this: &Map, popup: &Popup) -> Map;
 
     #[wasm_bindgen(method, js_name = openTooltip)]
-    pub fn openTooltip(this: &Map, tooltip: &Tooltip) -> Map;
+    pub fn open_tooltip(this: &Map, tooltip: &Tooltip) -> Map;
 
     #[wasm_bindgen(method, js_name = openTooltip)]
-    pub fn openTooltipWithContent(this: &Map, content: &JsValue, lat_lng: &LatLng) -> Map;
+    pub fn open_tooltip_with_content(this: &Map, content: &JsValue, lat_lng: &LatLng) -> Map;
 
     #[wasm_bindgen(method, js_name = openTooltip)]
-    pub fn openTooltipWithContentAndOptions(
+    pub fn open_tooltip_with_content_and_options(
         this: &Map,
         content: &JsValue,
         lat_lng: &LatLng,
@@ -86,51 +85,51 @@ extern "C" {
     ) -> Map;
 
     #[wasm_bindgen(method, js_name = closeTooltip)]
-    pub fn closeTooltip(this: &Map, tooltip: &Tooltip) -> Map;
+    pub fn close_tooltip(this: &Map, tooltip: &Tooltip) -> Map;
 
     // Methods for modifying map state
 
-    #[wasm_bindgen(method)]
-    pub fn setView(this: &Map, center: &LatLng, zoom: f64) -> Map;
+    #[wasm_bindgen(method, js_name = setView)]
+    pub fn set_view(this: &Map, center: &LatLng, zoom: f64) -> Map;
 
     #[wasm_bindgen(method, js_name = setView)]
-    pub fn setViewWithOptions(this: &Map, center: &LatLng, zoom: f64, options: &JsValue) -> Map;
+    pub fn set_view_with_options(this: &Map, center: &LatLng, zoom: f64, options: &JsValue) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn getBounds(this: &Map) -> LatLngBounds;
+    #[wasm_bindgen(method, js_name = getBounds)]
+    pub fn get_bounds(this: &Map) -> LatLngBounds;
 
-    #[wasm_bindgen(method)]
-    pub fn getCenter(this: &Map) -> LatLng;
+    #[wasm_bindgen(method, js_name = getCenter)]
+    pub fn get_center(this: &Map) -> LatLng;
 
-    #[wasm_bindgen(method)]
-    pub fn getZoom(this: &Map) -> f64;
+    #[wasm_bindgen(method, js_name = getZoom)]
+    pub fn get_zoom(this: &Map) -> f64;
 
-    #[wasm_bindgen(method)]
-    pub fn getZoomScale(this: &Map, toZoom: f64, fromZoom: f64) -> f64;
-
-    #[wasm_bindgen(method)]
-    pub fn setZoom(this: &Map, zoom: f64) -> Map;
+    #[wasm_bindgen(method, js_name = getZoomScale)]
+    pub fn get_zoom_scale(this: &Map, toZoom: f64, fromZoom: f64) -> f64;
 
     #[wasm_bindgen(method, js_name = setZoom)]
-    pub fn setZoomWithOptions(this: &Map, zoom: f64, options: &JsValue) -> Map;
+    pub fn set_zoom(this: &Map, zoom: f64) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn zoomIn(this: &Map, delta: f64) -> Map;
+    #[wasm_bindgen(method, js_name = setZoom)]
+    pub fn set_zoom_with_options(this: &Map, zoom: f64, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = zoomIn)]
-    pub fn zoomInWithOptions(this: &Map, delta: f64, options: &JsValue) -> Map;
+    pub fn zoom_in(this: &Map, delta: f64) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn zoomOut(this: &Map, delta: f64);
+    #[wasm_bindgen(method, js_name = zoomIn)]
+    pub fn zoom_in_with_options(this: &Map, delta: f64, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = zoomOut)]
-    pub fn zoomOutWithOptions(this: &Map, delta: f64, options: &JsValue) -> Map;
+    pub fn zoom_out(this: &Map, delta: f64);
+
+    #[wasm_bindgen(method, js_name = zoomOut)]
+    pub fn zoom_out_with_options(this: &Map, delta: f64, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = setZoomAround)]
-    pub fn setZoomAroundLatLng(this: &Map, latlng: &LatLng, zoom: f64) -> Map;
+    pub fn set_zoom_around_lat_lng(this: &Map, latlng: &LatLng, zoom: f64) -> Map;
 
     #[wasm_bindgen(method, js_name = setZoomAround)]
-    pub fn setZoomAroundLatLngWithOptions(
+    pub fn set_zoom_around_lat_lng_with_options(
         this: &Map,
         latlng: &LatLng,
         zoom: f64,
@@ -138,82 +137,86 @@ extern "C" {
     ) -> Map;
 
     #[wasm_bindgen(method, js_name = setZoomAround)]
-    pub fn setZoomAroundPoint(this: &Map, offset: &Point, zoom: f64) -> Map;
+    pub fn set_zoom_around_point(this: &Map, offset: &Point, zoom: f64) -> Map;
 
     #[wasm_bindgen(method, js_name = setZoomAround)]
-    pub fn setZoomAroundPointWithOptions(
+    pub fn set_zoom_around_point_with_options(
         this: &Map,
         offset: &Point,
         zoom: f64,
         options: &JsValue,
     ) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn fitBounds(this: &Map, bounds: &LatLngBounds) -> Map;
+    #[wasm_bindgen(method, js_name = "fitBounds")]
+    pub fn fit_bounds(this: &Map, bounds: &LatLngBounds) -> Map;
 
     #[wasm_bindgen(method, js_name = fitBounds)]
-    pub fn fitBoundsWithOptions(this: &Map, bounds: &LatLngBounds, options: &JsValue) -> Map;
-
-    #[wasm_bindgen(method)]
-    pub fn fitWorld(this: &Map) -> Map;
+    pub fn fit_bounds_with_options(this: &Map, bounds: &LatLngBounds, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = fitWorld)]
-    pub fn fitWorldWithOptions(this: &Map, options: &JsValue) -> Map;
+    pub fn fit_world(this: &Map) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn panTo(this: &Map, lat_lng: &LatLng) -> Map;
+    #[wasm_bindgen(method, js_name = fitWorld)]
+    pub fn fit_world_with_options(this: &Map, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = panTo)]
-    pub fn panToWithOptions(this: &Map, lat_lng: &LatLng, options: &JsValue) -> Map;
+    pub fn pan_to(this: &Map, lat_lng: &LatLng) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn panBy(this: &Map, point: &Point) -> Map;
+    #[wasm_bindgen(method, js_name = panTo)]
+    pub fn pan_to_with_options(this: &Map, lat_lng: &LatLng, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = panBy)]
-    pub fn panByWithOptions(this: &Map, point: &Point, options: &JsValue) -> Map;
+    pub fn pan_by(this: &Map, point: &Point) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn flyTo(this: &Map, lat_lng: &LatLng, zoom: f64) -> Map;
+    #[wasm_bindgen(method, js_name = panBy)]
+    pub fn pan_by_with_options(this: &Map, point: &Point, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = flyTo)]
-    pub fn flyToWithOptions(this: &Map, latlng: &LatLng, zoom: f64, options: &JsValue) -> Map;
+    pub fn fly_to(this: &Map, lat_lng: &LatLng, zoom: f64) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn flyToBounds(this: &Map, bounds: &LatLngBounds) -> Map;
+    #[wasm_bindgen(method, js_name = flyTo)]
+    pub fn fly_to_with_options(this: &Map, latlng: &LatLng, zoom: f64, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = flyToBounds)]
-    pub fn flyToBoundsWithOptions(this: &Map, bounds: &LatLngBounds, options: &JsValue) -> Map;
+    pub fn fly_to_bounds(this: &Map, bounds: &LatLngBounds) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn setMaxBounds(this: &Map, bounds: &LatLngBounds) -> Map;
+    #[wasm_bindgen(method, js_name = flyToBounds)]
+    pub fn fly_to_bounds_with_options(this: &Map, bounds: &LatLngBounds, options: &JsValue) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn setMinZoom(this: &Map, zoom: f64) -> Map;
+    #[wasm_bindgen(method, js_name = setMaxBounds)]
+    pub fn set_max_bounds(this: &Map, bounds: &LatLngBounds) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn setMaxZoom(this: &Map, zoom: f64) -> Map;
+    #[wasm_bindgen(method, js_name = setMinZoom)]
+    pub fn set_min_zoom(this: &Map, zoom: f64) -> Map;
+
+    #[wasm_bindgen(method, js_name = setMaxZoom)]
+    pub fn set_max_zoom(this: &Map, zoom: f64) -> Map;
 
     /// [`getMaxZoom`](https://leafletjs.com/reference-1.7.1.html#map-getmaxzoom)
-    #[wasm_bindgen(method)]
-    pub fn getMaxZoom(this: &Map) -> f64;
-
-    #[wasm_bindgen(method)]
-    pub fn panInsideBounds(this: &Map, bounds: &LatLngBounds) -> Map;
+    #[wasm_bindgen(method, js_name = getMaxZoom)]
+    pub fn get_max_zoom(this: &Map) -> f64;
 
     #[wasm_bindgen(method, js_name = panInsideBounds)]
-    pub fn panInsideBoundsWithOptions(this: &Map, bounds: &LatLngBounds, options: &JsValue) -> Map;
+    pub fn pan_inside_bounds(this: &Map, bounds: &LatLngBounds) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn panInside(this: &Map, latlng: &LatLng) -> Map;
+    #[wasm_bindgen(method, js_name = panInsideBounds)]
+    pub fn pan_inside_bounds_with_options(
+        this: &Map,
+        bounds: &LatLngBounds,
+        options: &JsValue,
+    ) -> Map;
 
     #[wasm_bindgen(method, js_name = panInside)]
-    pub fn panInsideWithOptions(this: &Map, latlng: &LatLng, options: &JsValue) -> Map;
+    pub fn pan_inside(this: &Map, latlng: &LatLng) -> Map;
 
-    #[wasm_bindgen(method)]
-    pub fn invalidateSize(this: &Map, animate: bool) -> Map;
+    #[wasm_bindgen(method, js_name = panInside)]
+    pub fn pan_inside_with_options(this: &Map, latlng: &LatLng, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = invalidateSize)]
-    pub fn invalidateSizeWithOptions(this: &Map, options: &JsValue) -> Map;
+    pub fn invalidate_size(this: &Map, animate: bool) -> Map;
+
+    #[wasm_bindgen(method, js_name = invalidateSize)]
+    pub fn invalidate_size_with_options(this: &Map, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method)]
     pub fn stop(this: &Map) -> Map;
@@ -233,17 +236,17 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn distance(this: &Map, latlng1: &LatLng, latlng2: &LatLng) -> f64;
 
-    #[wasm_bindgen(method)]
-    pub fn latLngToContainerPoint(this: &Map, latlng: &LatLng) -> Point;
+    #[wasm_bindgen(method, js_name = latLngToContainerPoint)]
+    pub fn lat_lng_to_container_point(this: &Map, latlng: &LatLng) -> Point;
 
-    #[wasm_bindgen(method)]
-    pub fn containerPointToLatLng(this: &Map, point: &Point) -> LatLng;
+    #[wasm_bindgen(method, js_name = containerPointToLatLng)]
+    pub fn container_point_to_lat_lng(this: &Map, point: &Point) -> LatLng;
 
-    #[wasm_bindgen(method)]
-    pub fn layerPointToLatLng(this: &Map, point: &Point) -> LatLng;
+    #[wasm_bindgen(method, js_name = layerPointToLatLng)]
+    pub fn layer_point_to_lat_lng(this: &Map, point: &Point) -> LatLng;
 
-    #[wasm_bindgen(method)]
-    pub fn latLngToLayerPoint(this: &Map, latlng: &LatLng) -> Point;
+    #[wasm_bindgen(method, js_name = latLngToLayerPoint)]
+    pub fn lat_lng_to_layer_point(this: &Map, latlng: &LatLng) -> Point;
 }
 
 impl MapOptions {

@@ -25,23 +25,23 @@ extern "C" {
 
     // [`Marker`](https://leafletjs.com/reference.html#marker-l-marker)
     #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn newWithOptions(lat_lng: &LatLng, options: &MarkerOptions) -> Marker;
+    pub fn new_with_options(lat_lng: &LatLng, options: &MarkerOptions) -> Marker;
 
     /// ['setIcon'](https://leafletjs.com/reference.html#marker-seticon)
-    #[wasm_bindgen(method)]
-    pub fn setIcon(this: &Marker, icon: &Icon);
+    #[wasm_bindgen(method, js_name = setIcon)]
+    pub fn set_icon(this: &Marker, icon: &Icon);
 
     /// ['setIcon'](https://leafletjs.com/reference.html#marker-setopacity)
-    #[wasm_bindgen(method)]
-    pub fn setOpacity(this: &Marker, value: f64);
+    #[wasm_bindgen(method, js_name = setOpacity)]
+    pub fn set_opacity(this: &Marker, value: f64);
 
     /// ['getLatLng'](https://leafletjs.com/reference.html#marker-getlatlng)
-    #[wasm_bindgen(method)]
-    pub fn getLatLng(this: &Marker) -> LatLng;
+    #[wasm_bindgen(method, js_name = getLatLng)]
+    pub fn get_lat_lng(this: &Marker) -> LatLng;
 
     /// ['setLatLng'](https://leafletjs.com/reference.html#marker-setlatlng)
-    #[wasm_bindgen(method)]
-    pub fn setLatLng(this: &Marker, latlng: &LatLng);
+    #[wasm_bindgen(method, js_name = setLatLng)]
+    pub fn set_lat_lng(this: &Marker, latlng: &LatLng);
 
     /// ['dragging'](https://leafletjs.com/reference.html#marker-dragging)
     #[wasm_bindgen(method, getter)]
@@ -50,8 +50,8 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn update(this: &Marker) -> Marker;
 
-    #[wasm_bindgen(method)]
-    pub fn setZIndexOffset(this: &Marker, offset: f64) -> Marker;
+    #[wasm_bindgen(method, js_name = setZIndexOffset)]
+    pub fn set_z_index_offset(this: &Marker, offset: f64) -> Marker;
 }
 
 impl MarkerOptions {

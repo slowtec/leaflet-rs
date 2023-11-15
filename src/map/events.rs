@@ -15,34 +15,34 @@ extern "C" {
     pub fn new() -> MouseEvent;
 
     #[wasm_bindgen(method, getter, js_name = latlng)]
-    pub fn latlng(this: &MouseEvent) -> LatLng;
+    pub fn lat_lng(this: &MouseEvent) -> LatLng;
 
     #[wasm_bindgen(method, setter, js_name = latlng)]
-    pub fn setLatlng(this: &MouseEvent, value: &LatLng) -> MouseEvent;
+    pub fn set_lat_lng(this: &MouseEvent, value: &LatLng) -> MouseEvent;
 
     #[wasm_bindgen(method, getter, js_name = layerPoint)]
-    pub fn layerPoint(this: &MouseEvent) -> Point;
+    pub fn layer_point(this: &MouseEvent) -> Point;
 
     #[wasm_bindgen(method, setter, js_name = layerPoint)]
-    pub fn setLayerPoint(this: &MouseEvent, value: &Point) -> MouseEvent;
+    pub fn set_layer_point(this: &MouseEvent, value: &Point) -> MouseEvent;
 
     #[wasm_bindgen(method, getter, js_name = containerPoint)]
-    pub fn containerPoint(this: &crate::map::events::MouseEvent) -> Point;
+    pub fn container_point(this: &crate::map::events::MouseEvent) -> Point;
 
     #[wasm_bindgen(method, setter, js_name = containerPoint)]
-    pub fn setContainerPoint(this: &MouseEvent, value: &Point) -> MouseEvent;
+    pub fn set_container_point(this: &MouseEvent, value: &Point) -> MouseEvent;
 
     #[wasm_bindgen(method, getter, js_name = originalEvent)]
-    pub fn originalEvent(this: &MouseEvent) -> web_sys::MouseEvent;
+    pub fn original_event(this: &MouseEvent) -> web_sys::MouseEvent;
 
     #[wasm_bindgen(method, setter, js_name = originalEvent)]
-    pub fn setOriginalEvent(
+    pub fn set_original_event(
         this: &MouseEvent,
         value: &web_sys::MouseEvent,
     ) -> crate::map::events::MouseEvent;
 
     /// Error Event
-    #[wasm_bindgen (extends = Event, js_name = ErrorEvent)]
+    #[wasm_bindgen(extends = Event, js_name = ErrorEvent)]
     #[derive(Debug, Clone, Eq, PartialEq)]
     pub type ErrorEvent;
 
@@ -53,13 +53,13 @@ extern "C" {
     pub fn message(this: &ErrorEvent) -> String;
 
     #[wasm_bindgen(method, setter, js_name = message)]
-    pub fn setMessage(this: &ErrorEvent, value: &str);
+    pub fn set_message(this: &ErrorEvent, value: &str);
 
     #[wasm_bindgen(method, getter, js_name = code)]
     pub fn code(this: &ErrorEvent) -> i32;
 
     #[wasm_bindgen(method, setter, js_name = code)]
-    pub fn setCode(this: &ErrorEvent, value: i32);
+    pub fn set_code(this: &ErrorEvent, value: i32);
 
     /// Drag End Event
     #[wasm_bindgen (extends = Event, js_name = DragEndEvent)]
@@ -74,7 +74,7 @@ extern "C" {
     pub fn distance(this: &DragEndEvent) -> f64;
 
     #[wasm_bindgen(method, setter, js_name = distance)]
-    pub fn setDistance(this: &DragEndEvent, value: f64);
+    pub fn set_distance(this: &DragEndEvent, value: f64);
 
     /// Reset Event
     #[wasm_bindgen (extends = Event, js_name = ResetEvent)]
@@ -85,16 +85,16 @@ extern "C" {
     pub fn new() -> ResetEvent;
 
     #[wasm_bindgen(method, getter, js_name = oldSize)]
-    pub fn oldSize(this: &ResetEvent) -> Point;
+    pub fn old_size(this: &ResetEvent) -> Point;
 
     #[wasm_bindgen(method, setter, js_name = oldSize)]
-    pub fn setOldSize(this: &ResetEvent, value: &Point);
+    pub fn set_old_size(this: &ResetEvent, value: &Point);
 
     #[wasm_bindgen(method, getter, js_name = newSize)]
-    pub fn newSize(this: &ResetEvent) -> Point;
+    pub fn new_size(this: &ResetEvent) -> Point;
 
     #[wasm_bindgen(method, setter, js_name = newSize)]
-    pub fn setNewSize(this: &ResetEvent, value: &Point);
+    pub fn set_new_size(this: &ResetEvent, value: &Point);
 
     /// Popup Event
     #[wasm_bindgen(extends = Event, js_name = PopupEvent)]
@@ -108,7 +108,7 @@ extern "C" {
     pub fn popup(this: &PopupEvent) -> Popup;
 
     #[wasm_bindgen(method, setter, js_name = popup)]
-    pub fn setPopup(this: &PopupEvent, value: &Popup);
+    pub fn set_popup(this: &PopupEvent, value: &Popup);
 
     /// Tooltip Event
     #[wasm_bindgen(extends = Event, js_name = TooltipEvent)]
@@ -122,7 +122,7 @@ extern "C" {
     pub fn tooltip(this: &TooltipEvent) -> Popup;
 
     #[wasm_bindgen(method, setter, js_name = tooltip)]
-    pub fn setTooltip(this: &TooltipEvent, value: &Tooltip);
+    pub fn set_tooltip(this: &TooltipEvent, value: &Tooltip);
 }
 
 impl Map {

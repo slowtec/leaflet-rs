@@ -20,17 +20,17 @@ extern "C" {
     #[wasm_bindgen(js_namespace = ["L"], js_name = "control")]
     fn constructor_control(options: &ControlOptions) -> Control;
 
-    #[wasm_bindgen(method)]
-    pub fn getPosition(this: &Control) -> String;
+    #[wasm_bindgen(method, js_name = "getPosition")]
+    pub fn get_position(this: &Control) -> String;
 
-    #[wasm_bindgen(method)]
-    pub fn setPosition(this: &Control, position: &str) -> Control;
+    #[wasm_bindgen(method, js_name = "setPosition")]
+    pub fn set_position(this: &Control, position: &str) -> Control;
 
-    #[wasm_bindgen(method)]
-    pub fn getContainer(this: &Control) -> HtmlElement;
+    #[wasm_bindgen(method, js_name = "getContainer")]
+    pub fn get_container(this: &Control) -> HtmlElement;
 
-    #[wasm_bindgen(method)]
-    pub fn addTo(this: &Control, map: &Map) -> Control;
+    #[wasm_bindgen(method, js_name = "addTo")]
+    pub fn add_to(this: &Control, map: &Map) -> Control;
 
     #[wasm_bindgen(method)]
     pub fn remove(this: &Control) -> Control;

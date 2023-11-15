@@ -14,47 +14,47 @@ extern "C" {
     pub fn new() -> LayerGroup;
 
     /// [`toGeoJSON`](https://leafletjs.com/reference.html#layergroup-togeojson)
-    #[wasm_bindgen(method)]
-    pub fn toGeoJSON(this: &LayerGroup) -> JsValue;
+    #[wasm_bindgen(method, js_name = toGeoJSON)]
+    pub fn to_geo_json(this: &LayerGroup) -> JsValue;
 
     /// [`addLayer`](https://leafletjs.com/reference.html#layergroup-addlayer)
-    #[wasm_bindgen(method)]
-    pub fn addLayer(this: &LayerGroup, layer: &Layer) -> LayerGroup;
+    #[wasm_bindgen(method, js_name = addLayer)]
+    pub fn add_layer(this: &LayerGroup, layer: &Layer) -> LayerGroup;
 
     /// [`removeLayer`](https://leafletjs.com/reference.html#layergroup-removelayer)
-    #[wasm_bindgen(method)]
-    pub fn removeLayer(this: &LayerGroup, layer: &Layer) -> LayerGroup;
+    #[wasm_bindgen(method, js_name = removeLayer)]
+    pub fn remove_layer(this: &LayerGroup, layer: &Layer) -> LayerGroup;
 
     /// [`hasLayer`](https://leafletjs.com/reference.html#layergroup-haslayer)
-    #[wasm_bindgen(method)]
-    pub fn hasLayer(this: &LayerGroup, layer: &Layer) -> bool;
+    #[wasm_bindgen(method, js_name = hasLayer)]
+    pub fn has_layer(this: &LayerGroup, layer: &Layer) -> bool;
 
     /// [`clearLayers`](https://leafletjs.com/reference.html#layergroup-clearlayers)
-    #[wasm_bindgen(method)]
-    pub fn clearLayers(this: &LayerGroup) -> LayerGroup;
+    #[wasm_bindgen(method, js_name = clearLayers)]
+    pub fn clear_layers(this: &LayerGroup) -> LayerGroup;
 
     #[wasm_bindgen(method)]
     pub fn invoke(this: &LayerGroup, method_name: &str) -> LayerGroup;
 
-    #[wasm_bindgen(method)]
-    pub fn eachLayer(this: &LayerGroup, callback: &Closure<dyn Fn(Layer)>) -> LayerGroup;
+    #[wasm_bindgen(method, js_name = eachLayer)]
+    pub fn each_layer(this: &LayerGroup, callback: &Closure<dyn Fn(Layer)>) -> LayerGroup;
 
     #[wasm_bindgen(method, js_name = eachLayer)]
-    pub fn eachLayerWithContext(
+    pub fn each_layer_with_context(
         this: &LayerGroup,
         callback: &Closure<dyn Fn(Object, Layer)>,
         context: &Object,
     ) -> LayerGroup;
 
-    #[wasm_bindgen(method)]
-    pub fn getLayer(this: &LayerGroup, id: i32) -> Layer;
+    #[wasm_bindgen(method, js_name = getLayer)]
+    pub fn get_layer(this: &LayerGroup, id: i32) -> Layer;
 
-    #[wasm_bindgen(method)]
-    pub fn getLayers(this: &LayerGroup) -> Array;
+    #[wasm_bindgen(method, js_name = getLayers)]
+    pub fn get_layers(this: &LayerGroup) -> Array;
 
-    #[wasm_bindgen(method)]
-    pub fn setZIndex(this: &LayerGroup, index: f64) -> LayerGroup;
+    #[wasm_bindgen(method, js_name = setZIndex)]
+    pub fn set_z_index(this: &LayerGroup, index: f64) -> LayerGroup;
 
-    #[wasm_bindgen(method)]
-    pub fn getLayerId(this: &LayerGroup, layer: &Layer) -> i32;
+    #[wasm_bindgen(method, js_name = getLayerId)]
+    pub fn get_layer_id(this: &LayerGroup, layer: &Layer) -> i32;
 }

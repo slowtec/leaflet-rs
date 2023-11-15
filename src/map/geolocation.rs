@@ -21,12 +21,12 @@ extern "C" {
     /// method will fail in modern browsers (Chrome 50 and newer)
     /// See `LocateOptions` for more details.
     #[wasm_bindgen(method, js_name = locate)]
-    pub fn locateWithOptions(this: &Map, options: &LocateOptions) -> Map;
+    pub fn locate_with_options(this: &Map, options: &LocateOptions) -> Map;
 
     /// Stops watching location previously initiated by map.locate({watch: true})
     /// and aborts resetting the map view if map.locate was called with {setView: true}.
     #[wasm_bindgen(method, js_name = stopLocate)]
-    pub fn stopLocate(this: &Map) -> Map;
+    pub fn stop_locate(this: &Map) -> Map;
 }
 
 impl LocateOptions {
