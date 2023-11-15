@@ -1,67 +1,180 @@
-use js_sys::Object;
+mod control;
+mod div_icon;
+mod div_overlay;
+mod event;
+mod evented;
+mod grid_layer;
+mod handler;
+mod icon;
+mod lat_lng;
+mod layer;
+mod layer_control;
+mod layer_group;
+mod map;
+mod marker;
+mod popup;
+mod raster;
+mod shapes;
+mod tooltip;
+
+use js_sys::Array;
 use wasm_bindgen::prelude::*;
-use web_sys::HtmlElement;
+
+pub use control::{Control, ControlOptions, Zoom, ZoomOptions};
+pub use div_icon::{DivIcon, DivIconOptions};
+pub use div_overlay::DivOverlay;
+pub use event::Event;
+pub use evented::{
+    DragEvents, Evented, EventedHandle, LayerEvents, MouseEvents, MoveEvents, PopupEvents,
+    TooltipEvents,
+};
+pub use grid_layer::{GridLayer, GridLayerOptions};
+pub use handler::Handler;
+pub use icon::{Icon, IconOptions};
+pub use lat_lng::LatLng;
+pub use layer::Layer;
+pub use layer_group::LayerGroup;
+pub use map::{
+    DragEndEvent, ErrorEvent, LocateOptions, LocationEvent, Map, MapOptions, MouseEvent,
+    PopupEvent, TooltipEvent,
+};
+pub use marker::{Marker, MarkerOptions};
+pub use popup::{Popup, PopupOptions};
+pub use raster::{
+    ImageOverlay, ImageOverlayOptions, TileLayer, TileLayerOptions, TileLayerWms,
+    TileLayerWmsOptions, VideoOverlay, VideoOverlayOptions,
+};
+pub use shapes::{
+    Circle, CircleMarker, CircleOptions, Path, PathOptions, Polygon, Polyline, PolylineOptions,
+    Rectangle,
+};
+pub use tooltip::{Tooltip, TooltipOptions};
+
+#[macro_export]
+macro_rules! object_property_set {
+    ($a:ident, $b:ty) => {
+        pub fn $a(&mut self, val: $b) {
+            let _ = js_sys::Reflect::set(
+                self.as_ref(),
+                &wasm_bindgen::JsValue::from(stringify!($a)),
+                &wasm_bindgen::JsValue::from(val),
+            );
+        }
+    };
+    ($a:ident, $b:ident, $c:ty) => {
+        pub fn $a(&mut self, val: $c) {
+            let _ = js_sys::Reflect::set(
+                self.as_ref(),
+                &wasm_bindgen::JsValue::from(stringify!($b)),
+                &wasm_bindgen::JsValue::from(val),
+            );
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! object_property_set_with {
+    ($a:ident, $b:ident, $c:expr) => {
+        pub fn $a(&mut self) {
+            let _ = js_sys::Reflect::set(
+                self.as_ref(),
+                &wasm_bindgen::JsValue::from(stringify!($b)),
+                &wasm_bindgen::JsValue::from($c),
+            );
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! object_constructor {
+    () => {
+        #[allow(clippy::new_without_default)]
+        pub fn new() -> Self {
+            #[allow(unused_mut)]
+            let mut r = JsCast::unchecked_into(Object::new());
+            r
+        }
+    };
+}
 
 #[wasm_bindgen]
 extern "C" {
-
-    // mapboxGl
-    #[allow(non_camel_case_types)]
+    // CRS
     #[derive(Debug)]
-    pub type mapboxGL;
+    pub type Crs;
 
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(options: &JsValue) -> mapboxGL;
+    #[wasm_bindgen(constructor, js_namespace = ["L", "CRS"], js_name = "Simple")]
+    pub fn new_simple() -> Crs;
 
-    #[wasm_bindgen(method)]
-    pub fn addTo(this: &mapboxGL, map: &Map);
+    #[wasm_bindgen(constructor, js_namespace = ["L", "CRS"], js_name = "Earth")]
+    pub fn new_earth() -> Crs;
 
-    // Evented
+    #[wasm_bindgen(constructor, js_namespace = ["L", "CRS"], js_name = "EPSG3395")]
+    pub fn new_epsg_3395() -> Crs;
 
-    #[derive(Debug, Clone)]
-    pub type Evented;
+    #[wasm_bindgen(constructor, js_namespace = ["L", "CRS"], js_name = "EPSG3857")]
+    pub fn new_epsg_3857() -> Crs;
 
-    #[wasm_bindgen(method)]
-    pub fn on(this: &Evented, kind: &str, handler: &JsValue);
+    #[wasm_bindgen(constructor, js_namespace = ["L", "CRS"], js_name = "EPSG4326")]
+    pub fn new_epsg_4326() -> Crs;
 
-    // Icon
+    #[wasm_bindgen(constructor, js_namespace = ["L", "CRS"], js_name = "Base")]
+    pub fn new_base() -> Crs;
 
-    #[derive(Debug)]
-    pub type Icon;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(options: &JsValue) -> Icon;
+    #[wasm_bindgen(method, js_name = "latLngToPoint")]
+    pub fn latLngToPoint(this: &Crs, latlng: LatLng, zoom: f32) -> Point;
 
     // Point
-
     #[derive(Debug)]
     pub type Point;
 
     #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(x: u32, y: u32) -> Point;
+    pub fn new(x: f64, y: f64) -> Point;
 
     #[wasm_bindgen(method, getter)]
-    pub fn x(this: &Point) -> u32;
+    pub fn x(this: &Point) -> f64;
 
     #[wasm_bindgen(method, getter)]
-    pub fn y(this: &Point) -> u32;
-
-    // LatLng
-
-    #[derive(Debug)]
-    pub type LatLng;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(lat: f64, lng: f64) -> LatLng;
-
-    #[wasm_bindgen(method, getter)]
-    pub fn lat(this: &LatLng) -> f64;
-
-    #[wasm_bindgen(method, getter)]
-    pub fn lng(this: &LatLng) -> f64;
+    pub fn y(this: &Point) -> f64;
 
     #[wasm_bindgen(method)]
-    pub fn distanceTo(this: &LatLng, otherLatLng: &LatLng) -> f64;
+    pub fn add(this: &Point, other: &Point) -> Point;
+
+    #[wasm_bindgen(method)]
+    pub fn subtract(this: &Point, other: &Point) -> Point;
+
+    #[wasm_bindgen(method)]
+    pub fn multiplyBy(this: &Point, scalar: f64) -> Point;
+
+    #[wasm_bindgen(method)]
+    pub fn divideBy(this: &Point, scalar: f64) -> Point;
+
+    #[wasm_bindgen(method)]
+    pub fn scaleBy(this: &Point, other: &Point) -> Point;
+
+    #[wasm_bindgen(method)]
+    pub fn unscaleByTo(this: &Point, other: &Point) -> Point;
+
+    #[wasm_bindgen(method)]
+    pub fn round(this: &Point) -> Point;
+
+    #[wasm_bindgen(method)]
+    pub fn floor(this: &Point) -> Point;
+
+    #[wasm_bindgen(method)]
+    pub fn ceil(this: &Point) -> Point;
+
+    #[wasm_bindgen(method)]
+    pub fn trunc(this: &Point) -> bool;
+
+    #[wasm_bindgen(method)]
+    pub fn equals(this: &Point, other: &Point) -> bool;
+
+    #[wasm_bindgen(method)]
+    pub fn contains(this: &Point, other: &Point) -> f64;
+
+    #[wasm_bindgen(method)]
+    pub fn distanceTo(this: &Point, other: &Point) -> f64;
 
     // LatLngBounds
 
@@ -79,484 +192,6 @@ extern "C" {
 
     #[wasm_bindgen(method)]
     pub fn contains(this: &LatLngBounds, latlng: &LatLng) -> bool;
-
-    // Layer
-
-    #[derive(Debug, Clone)]
-    #[wasm_bindgen(extends = Evented)]
-    pub type Layer;
-
-    /// [`addTo`](https://leafletjs.com/reference-1.7.1.html#layer-addto)
-    #[wasm_bindgen(method)]
-    pub fn addTo(this: &Layer, map: &Map);
-
-    /// [`addTo`](https://leafletjs.com/reference-1.7.1.html#layer-addto)
-    #[wasm_bindgen(method)]
-    #[wasm_bindgen(js_name = addTo)]
-    pub fn addTo_LayerGroup(this: &Layer, layerGroup: &LayerGroup);
-
-    #[wasm_bindgen(method)]
-    pub fn remove(this: &Layer);
-
-    // Layer Popup Methods
-
-    /// [`bindPopup`](https://leafletjs.com/reference-1.7.1.html#layer-bindpopup)
-    #[wasm_bindgen(method)]
-    pub fn bindPopup(this: &Layer, content: &JsValue, options: &JsValue);
-
-    /// [`unbindPopup`](https://leafletjs.com/reference-1.7.1.html#layer-unbindpopup)
-    #[wasm_bindgen(method)]
-    pub fn unbindPopup(this: &Layer);
-
-    /// [`openPopup`](https://leafletjs.com/reference-1.7.1.html#layer-openpopup)
-    #[wasm_bindgen(method)]
-    pub fn openPopup(this: &Layer);
-
-    /// [`openPopup`](https://leafletjs.com/reference-1.7.1.html#layer-openpopup)
-    #[wasm_bindgen(method)]
-    #[wasm_bindgen(js_name = openPopup)]
-    pub fn openPopup_with_latlng(this: &Layer, latlng: &LatLng);
-
-    /// [`closePopup`](https://leafletjs.com/reference-1.7.1.html#layer-closepopup)
-    #[wasm_bindgen(method)]
-    pub fn closePopup(this: &Layer);
-
-    /// [`togglePopup`](https://leafletjs.com/reference-1.7.1.html#layer-togglepopup)
-    #[wasm_bindgen(method)]
-    pub fn togglePopup(this: &Layer);
-
-    /// [`isPopupOpen`](https://leafletjs.com/reference-1.7.1.html#layer-ispopupopen)
-    #[wasm_bindgen(method)]
-    pub fn isPopupOpen(this: &Layer) -> bool;
-
-    /// [`setPopupContent`](https://leafletjs.com/reference-1.7.1.html#layer-setpopupcontent)
-    #[wasm_bindgen(method)]
-    pub fn setPopupContent(this: &Layer, content: &JsValue);
-
-    /// [`getPopup`](https://leafletjs.com/reference-1.7.1.html#layer-getpopup)
-    #[wasm_bindgen(method)]
-    pub fn getPopup(this: &Layer) -> Popup;
-
-    // Layer Tooltip Methods
-
-    /// [`bindTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-bindtooltip)
-    #[wasm_bindgen(method)]
-    pub fn bindTooltip(this: &Layer, content: &JsValue, options: &JsValue);
-
-    /// [`unbindTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-unbindtooltip)
-    #[wasm_bindgen(method)]
-    pub fn unbindTooltip(this: &Layer);
-
-    /// [`openTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-opentooltip)
-    #[wasm_bindgen(method)]
-    pub fn openTooltip(this: &Layer, latlng: &LatLng);
-
-    /// [`closeTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-closetooltip)
-    #[wasm_bindgen(method)]
-    pub fn closeTooltip(this: &Layer);
-
-    /// [`toggleTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-toggletooltip)
-    #[wasm_bindgen(method)]
-    pub fn toggleTooltip(this: &Layer);
-
-    /// [`isTooltipOpen`](https://leafletjs.com/reference-1.7.1.html#layer-istooltipopen)
-    #[wasm_bindgen(method)]
-    pub fn isTooltipOpen(this: &Layer) -> bool;
-
-    /// [`setTooltipContent`](https://leafletjs.com/reference-1.7.1.html#layer-settooltipcontent)
-    #[wasm_bindgen(method)]
-    pub fn setTooltipContent(this: &Layer, content: &JsValue);
-
-    /// [`getTooltip`](https://leafletjs.com/reference-1.7.1.html#layer-gettooltip)
-    #[wasm_bindgen(method)]
-    pub fn getTooltip(this: &Layer) -> Tooltip;
-
-    // LayerGroup
-
-    /// [`LayerGroup`](https://leafletjs.com/reference-1.7.1.html#layergroup)
-    #[derive(Clone, Debug)]
-    #[wasm_bindgen(extends = Layer)]
-    pub type LayerGroup;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new() -> LayerGroup;
-
-    /// [`toGeoJSON`](https://leafletjs.com/reference-1.7.1.html#layergroup-togeojson)
-    #[wasm_bindgen(method)]
-    pub fn toGeoJSON(this: &LayerGroup) -> JsValue;
-
-    /// [`addLayer`](https://leafletjs.com/reference-1.7.1.html#layergroup-addlayer)
-    #[wasm_bindgen(method)]
-    pub fn addLayer(this: &LayerGroup, layer: &Layer);
-
-    /// [`removeLayer`](https://leafletjs.com/reference-1.7.1.html#layergroup-removelayer)
-    #[wasm_bindgen(method)]
-    pub fn removeLayer(this: &LayerGroup, layer: &Layer);
-
-    /// [`hasLayer`](https://leafletjs.com/reference-1.7.1.html#layergroup-haslayer)
-    #[wasm_bindgen(method)]
-    pub fn hasLayer(this: &LayerGroup, layer: &Layer) -> bool;
-
-    /// [`clearLayers`](https://leafletjs.com/reference-1.7.1.html#layergroup-clearlayers)
-    #[wasm_bindgen(method)]
-    pub fn clearLayers(this: &LayerGroup);
-
-    // Map
-
-    #[derive(Debug, Clone)]
-    pub type Map;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(id: &str, options: &JsValue) -> Map;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new_with_element(el: &HtmlElement, options: &JsValue) -> Map;
-
-    #[wasm_bindgen(method)]
-    pub fn setView(this: &Map, center: &LatLng, zoom: f64);
-
-    #[wasm_bindgen(method, js_name = setView)]
-    pub fn setViewWithOptions(this: &Map, center: &LatLng, zoom: f64, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn getBounds(this: &Map) -> LatLngBounds;
-
-    #[wasm_bindgen(method)]
-    pub fn getCenter(this: &Map) -> LatLng;
-
-    #[wasm_bindgen(method)]
-    pub fn getZoom(this: &Map) -> f64;
-
-    #[wasm_bindgen(method)]
-    pub fn getZoomScale(this: &Map, toZoom: f64, fromZoom: f64) -> f64;
-
-    #[wasm_bindgen(method)]
-    pub fn setZoom(this: &Map, zoom: f64);
-
-    #[wasm_bindgen(method, js_name = setZoom)]
-    pub fn setZoomWithOptions(this: &Map, zoom: f64, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn zoomIn(this: &Map, delta: f64);
-
-    #[wasm_bindgen(method, js_name = zoomIn)]
-    pub fn zoomInWithOptions(this: &Map, delta: f64, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn zoomOut(this: &Map, delta: f64);
-
-    #[wasm_bindgen(method, js_name = zoomOut)]
-    pub fn zoomOutWithOptions(this: &Map, delta: f64, options: &JsValue);
-
-    #[wasm_bindgen(method, js_name = setZoomAround)]
-    pub fn setZoomAroundLatLng(this: &Map, latlng: &LatLng, zoom: f64);
-
-    #[wasm_bindgen(method, js_name = setZoomAround)]
-    pub fn setZoomAroundLatLngWithOptions(
-        this: &Map,
-        latlng: &LatLng,
-        zoom: f64,
-        options: &JsValue,
-    );
-
-    #[wasm_bindgen(method, js_name = setZoomAround)]
-    pub fn setZoomAroundPoint(this: &Map, offset: &Point, zoom: f64);
-
-    #[wasm_bindgen(method, js_name = setZoomAround)]
-    pub fn setZoomAroundPointWithOptions(this: &Map, offset: &Point, zoom: f64, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn fitBounds(this: &Map, bounds: &LatLngBounds);
-
-    #[wasm_bindgen(method, js_name = fitBounds)]
-    pub fn fitBoundsWithOptions(this: &Map, bounds: &LatLngBounds, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn fitWorld(this: &Map);
-
-    #[wasm_bindgen(method, js_name = fitWorld)]
-    pub fn fitWorldWithOptions(this: &Map, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn on(this: &Map, kind: &str, handler: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn panTo(this: &Map, latlng: &LatLng);
-
-    #[wasm_bindgen(method, js_name = panTo)]
-    pub fn panToWithOptions(this: &Map, latlng: &LatLng, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn panBy(this: &Map, point: &Point);
-
-    #[wasm_bindgen(method, js_name = panBy)]
-    pub fn panByWithOptions(this: &Map, point: &Point, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn flyTo(this: &Map, latlng: &LatLng, zoom: f64);
-
-    #[wasm_bindgen(method, js_name = flyTo)]
-    pub fn flyToWithOptions(this: &Map, latlng: &LatLng, zoom: f64, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn flyToBounds(this: &Map, bounds: &LatLngBounds);
-
-    #[wasm_bindgen(method, js_name = flyToBounds)]
-    pub fn flyToBoundsWithOptions(this: &Map, bounds: &LatLngBounds, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn setMaxBounds(this: &Map, bounds: &LatLngBounds);
-
-    #[wasm_bindgen(method)]
-    pub fn setMinZoom(this: &Map, zoom: f64);
-
-    #[wasm_bindgen(method)]
-    pub fn setMaxZoom(this: &Map, zoom: f64);
-
-    /// [`getMaxZoom`](https://leafletjs.com/reference-1.7.1.html#map-getmaxzoom)
-    #[wasm_bindgen(method)]
-    pub fn getMaxZoom(this: &Map) -> f64;
-
-    #[wasm_bindgen(method)]
-    pub fn panInsideBounds(this: &Map, bounds: &LatLngBounds);
-
-    #[wasm_bindgen(method, js_name = panInsideBounds)]
-    pub fn panInsideBoundsWithOptions(this: &Map, bounds: &LatLngBounds, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn panInside(this: &Map, latlng: &LatLng);
-
-    #[wasm_bindgen(method, js_name = panInside)]
-    pub fn panInsideWithOptions(this: &Map, latlng: &LatLng, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn invalidateSize(this: &Map, animate: bool);
-
-    #[wasm_bindgen(method, js_name = invalidateSize)]
-    pub fn invalidateSizeWithOptions(this: &Map, options: &JsValue);
-
-    #[wasm_bindgen(method)]
-    pub fn stop(this: &Map);
-
-    // Marker
-
-    #[derive(Debug, Clone)]
-    #[wasm_bindgen(extends = Layer)]
-    pub type Marker;
-
-    // [`Marker`](https://leafletjs.com/reference-1.7.1.html#marker-l-marker)
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(latlng: &LatLng) -> Marker;
-
-    // [`Marker`](https://leafletjs.com/reference-1.7.1.html#marker-l-marker)
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new_with_options(latlng: &LatLng, options: &JsValue) -> Marker;
-
-    #[wasm_bindgen(method)]
-    pub fn setIcon(this: &Marker, icon: &Icon);
-
-    #[wasm_bindgen(method)]
-    pub fn setLatLng(this: &Marker, latlng: &LatLng);
-
-    #[wasm_bindgen(method)]
-    pub fn on(this: &Marker, event_name: &str, handler: &JsValue);
-
-    // Popup
-
-    /// [`Popup`](https://leafletjs.com/reference-1.7.1.html#popup)
-    #[derive(Debug, Clone)]
-    #[wasm_bindgen(extends = Layer)]
-    pub type Popup;
-
-    /// [`L.popup`](https://leafletjs.com/reference-1.7.1.html#popup-l-popup)
-    #[wasm_bindgen(js_namespace = L)]
-    pub fn popup(options: &JsValue, layer: Option<&Layer>) -> Popup;
-
-    /// [`getLatLng`](https://leafletjs.com/reference-1.7.1.html#popup-getlatlng)
-    #[wasm_bindgen(method)]
-    pub fn getLatLng(this: &Popup) -> LatLng;
-
-    /// [`setLatLng`](https://leafletjs.com/reference-1.7.1.html#popup-setlatlng)
-    #[wasm_bindgen(method)]
-    pub fn setLatLng(this: &Popup, latlng: &LatLng);
-
-    /// [`getContent`](https://leafletjs.com/reference-1.7.1.html#popup-getcontent)
-    #[wasm_bindgen(method)]
-    pub fn getContent(this: &Popup) -> JsValue;
-
-    /// [`setContent`](https://leafletjs.com/reference-1.7.1.html#popup-setcontent)
-    #[wasm_bindgen(method)]
-    pub fn setContent(this: &Popup, content: &JsValue);
-
-    /// [`update`](https://leafletjs.com/reference-1.7.1.html#popup-update)
-    #[wasm_bindgen(method)]
-    pub fn update(this: &Popup);
-
-    /// [`isOpen`](https://leafletjs.com/reference-1.7.1.html#popup-isopen)
-    #[wasm_bindgen(method)]
-    pub fn isOpen(this: &Popup) -> bool;
-
-    /// [`bringToFront`](https://leafletjs.com/reference-1.7.1.html#popup-bringtofront)
-    #[wasm_bindgen(method)]
-    pub fn bringToFront(this: &Popup);
-
-    /// [`bringToBack`](https://leafletjs.com/reference-1.7.1.html#popup-bringtoback)
-    #[wasm_bindgen(method)]
-    pub fn bringToBack(this: &Popup);
-
-    /// [`openOn`](https://leafletjs.com/reference-1.7.1.html#popup-openon)
-    #[wasm_bindgen(method)]
-    pub fn openOn(this: &Popup, map: &Map);
-
-    // Tooltip
-
-    /// [`Tooltip`](https://leafletjs.com/reference-1.7.1.html#tooltip)
-    #[derive(Debug, Clone)]
-    #[wasm_bindgen(extends = Layer)]
-    pub type Tooltip;
-
-    /// [`L.tooltip`](https://leafletjs.com/reference-1.7.1.html#tooltip-l-tooltip)
-    #[wasm_bindgen(js_namespace = L)]
-    pub fn tooltip(options: &JsValue, layer: Option<&Layer>) -> Popup;
-
-    // MouseEvent
-
-    #[derive(Debug, Clone)]
-    #[wasm_bindgen(extends = Event)]
-    pub type MouseEvent;
-
-    #[wasm_bindgen(method, getter)]
-    pub fn latlng(this: &MouseEvent) -> LatLng;
-
-    #[wasm_bindgen(method, getter)]
-    pub fn originalEvent(this: &MouseEvent) -> web_sys::Event;
-
-    // Event
-
-    #[derive(Debug, Clone)]
-    pub type Event;
-
-    #[wasm_bindgen(method, getter)]
-    pub fn target(this: &Event) -> Object;
-
-    #[wasm_bindgen(method, getter)]
-    pub fn sourceTarget(this: &Event) -> Object;
-
-    // Polyline
-
-    /// [`Polyline`](https://leafletjs.com/reference-1.7.1.html#polyline)
-    #[derive(Debug)]
-    #[wasm_bindgen(extends = Path)]
-    pub type Polyline;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(latlngs: Vec<JsValue>) -> Polyline;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new_with_options(latlngs: Vec<JsValue>, options: &JsValue) -> Polyline;
-
-    /// [`getLatLngs`](https://leafletjs.com/reference-1.7.1.html#polyline-getlatlngs)
-    #[wasm_bindgen(method)]
-    pub fn getLatLngs(this: &Polyline) -> Vec<JsValue>;
-
-    /// [`setLatLngs`](https://leafletjs.com/reference-1.7.1.html#polyline-setlatlngs)
-    #[wasm_bindgen(method)]
-    pub fn setLatLngs(this: &Polyline, latlngs: Vec<JsValue>);
-
-    /// [`isEmpty`](https://leafletjs.com/reference-1.7.1.html#polyline-isempty)
-    #[wasm_bindgen(method)]
-    pub fn isEmpty(this: &Polyline) -> bool;
-
-    /// [`getCenter`](https://leafletjs.com/reference-1.7.1.html#polyline-getcenter)
-    #[wasm_bindgen(method)]
-    pub fn getCenter(this: &Polyline) -> LatLng;
-
-    /// [`getBounds`](https://leafletjs.com/reference-1.7.1.html#polyline-getbounds)
-    #[wasm_bindgen(method)]
-    pub fn getBounds(this: &Polyline) -> LatLngBounds;
-
-    /// [`addLatLng`](https://leafletjs.com/reference-1.7.1.html#polyline-addlatlng)
-    #[wasm_bindgen(method)]
-    pub fn addLatLng(this: &Polyline, latlng: &LatLng);
-
-    // Polygon
-
-    #[derive(Debug)]
-    #[wasm_bindgen(extends = Polyline)]
-    pub type Polygon;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(latlngs: Vec<JsValue>) -> Polygon;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new_with_options(latlngs: Vec<JsValue>, options: &JsValue) -> Polygon;
-
-    // Rectangle
-
-    #[derive(Debug)]
-    #[wasm_bindgen(extends = Polygon)]
-    pub type Rectangle;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(bounds: &LatLngBounds) -> Rectangle;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new_with_options(bounds: &LatLngBounds, options: &JsValue) -> Rectangle;
-
-    // CircleMarker
-
-    /// [`CirleMarker`](https://leafletjs.com/reference-1.7.1.html#circlemarker)
-    #[derive(Debug)]
-    #[wasm_bindgen(extends = Path)]
-    pub type CircleMarker;
-
-    /// [`Constructor`](https://leafletjs.com/reference-1.7.1.html#circlemarker-l-circlemarker)
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(latlng: &LatLng) -> CircleMarker;
-
-    /// [`Constructor`](https://leafletjs.com/reference-1.7.1.html#circlemarker-l-circlemarker)
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new_with_options(latlng: &LatLng, options: &JsValue) -> CircleMarker;
-
-    /// [`toGeoJSON`](https://leafletjs.com/reference-1.7.1.html#circlemarker-togeojson)
-    #[wasm_bindgen(method)]
-    pub fn toGeoJSON(this: &CircleMarker) -> JsValue;
-
-    /// [`setLatLng`](https://leafletjs.com/reference-1.7.1.html#circlemarker-setlanglng)
-    #[wasm_bindgen(method)]
-    pub fn setLatLng(this: &CircleMarker, latlng: &LatLng);
-
-    /// [`getLatLng`](https://leafletjs.com/reference-1.7.1.html#circlemarker-getlatlng)
-    #[wasm_bindgen(method)]
-    pub fn getLatLng(this: &CircleMarker) -> LatLng;
-
-    /// [`setRadius`](https://leafletjs.com/reference-1.7.1.html#circlemarker-setradius)
-    #[wasm_bindgen(method)]
-    pub fn setRadius(this: &CircleMarker, radius: f64);
-
-    /// [`getRadius`](https://leafletjs.com/reference-1.7.1.html#circlemarker-getradius)
-    #[wasm_bindgen(method)]
-    pub fn getRadius(this: &CircleMarker) -> f64;
-
-    // Circle
-
-    #[derive(Debug)]
-    #[wasm_bindgen(extends = CircleMarker)]
-    pub type Circle;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(latlng: &LatLng) -> Circle;
-
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new_with_options(latlng: &LatLng, options: &JsValue) -> Circle;
-
-    /// [`setRadius`](https://leafletjs.com/reference-1.7.1.html#circle-setradius)
-    #[wasm_bindgen(method)]
-    pub fn setRadius(this: &Circle, radius: f64);
-
-    /// [`getRadius`](https://leafletjs.com/reference-1.7.1.html#circle-getradius)
-    #[wasm_bindgen(method)]
-    pub fn getRadius(this: &Circle) -> f64;
 
     // FeatureGroup
 
@@ -603,49 +238,31 @@ extern "C" {
     /// [`setStyle`](https://leafletjs.com/reference-1.7.1.html#geojson-setstyle)
     #[wasm_bindgen(method)]
     pub fn setStyle(this: &GeoJSON, style: &JsValue);
+}
 
-    // TileLayer
+#[allow(clippy::from_over_into)]
+impl Into<LatLngBounds> for (LatLng, LatLng) {
+    fn into(self) -> LatLngBounds {
+        LatLngBounds::new(&self.0, &self.1)
+    }
+}
 
-    #[derive(Debug)]
-    pub type TileLayer;
+pub fn to_lat_lng_array<T: Into<LatLng> + Clone>(lat_lngs: &[T]) -> Array {
+    let array = Array::new();
+    for lat_lng in lat_lngs.iter().cloned() {
+        array.push(&lat_lng.into());
+    }
+    array
+}
 
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(url_template: &str, options: &JsValue) -> TileLayer;
+impl From<(u32, u32)> for Point {
+    fn from((x, y): (u32, u32)) -> Point {
+        Point::new(x as f64, y as f64)
+    }
+}
 
-    #[wasm_bindgen(method)]
-    pub fn addTo(this: &TileLayer, map: &Map);
-
-    // Control
-
-    #[derive(Debug)]
-    pub type Control;
-
-    #[wasm_bindgen(js_namespace = L, static_method_of = Control)]
-    pub fn extend(props: &JsValue) -> JsValue;
-
-    #[wasm_bindgen(method)]
-    pub fn addTo(this: &Control, map: &Map);
-
-    // Path
-
-    /// [`Path`](https://leafletjs.com/reference-1.7.1.html#path)
-    #[derive(Debug)]
-    #[wasm_bindgen(extends = Layer)]
-    pub type Path;
-
-    /// [`redraw`](https://leafletjs.com/reference-1.7.1.html#path-redraw)
-    #[wasm_bindgen(method)]
-    pub fn redraw(this: &Path);
-
-    /// [`setStyle`](https://leafletjs.com/reference-1.7.1.html#path-setstyle)
-    #[wasm_bindgen(method)]
-    pub fn setStyle(this: &Path, path_options: &JsValue);
-
-    /// [`bringToFront`](https://leafletjs.com/reference-1.7.1.html#path-bringtofront)
-    #[wasm_bindgen(method)]
-    pub fn bringToFront(this: &Path);
-
-    /// [`bringToBack`](https://leafletjs.com/reference-1.7.1.html#path-bringtoback)
-    #[wasm_bindgen(method)]
-    pub fn bringToBack(this: &Path);
+impl From<(f64, f64)> for Point {
+    fn from((x, y): (f64, f64)) -> Point {
+        Point::new(x, y)
+    }
 }
