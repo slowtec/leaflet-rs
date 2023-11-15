@@ -59,7 +59,7 @@ impl Control {
     /// is added to a map using [addTo](Control::addTo).
     pub fn on_add<C: Fn(&Map) -> HtmlElement + 'static>(&self, on_add: C) {
         let closure = Closure::wrap(Box::new(on_add) as Box<dyn Fn(&Map) -> HtmlElement>);
-        js_sys::Reflect::set(&self, &JsValue::from("onAdd"), closure.as_ref())
+        js_sys::Reflect::set(self, &JsValue::from("onAdd"), closure.as_ref())
             .expect("Unable to set Control::onAdd()");
         closure.forget();
     }
@@ -68,7 +68,7 @@ impl Control {
     /// is removed from a map using [onRemove](Control::onRemove).
     pub fn on_remove<C: Fn(&Map) + 'static>(&self, on_remove: C) {
         let closure = Closure::wrap(Box::new(on_remove) as Box<dyn Fn(&Map)>);
-        js_sys::Reflect::set(&self, &JsValue::from("onRemove"), closure.as_ref())
+        js_sys::Reflect::set(self, &JsValue::from("onRemove"), closure.as_ref())
             .expect("Unable to set Control::onRemove()");
         closure.forget();
     }
