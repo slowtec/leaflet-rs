@@ -1,6 +1,6 @@
 use gloo_utils::document;
-use leaflet::{LatLng, Map, TileLayer};
-use wasm_bindgen::{prelude::*, JsCast};
+use leaflet::{LatLng, Map, MapOptions, TileLayer};
+use wasm_bindgen::JsCast;
 use web_sys::{Element, HtmlElement, Node};
 use yew::{html::ImplicitClone, prelude::*};
 
@@ -45,7 +45,7 @@ impl Component for MapComponent {
         let container: Element = document().create_element("div").unwrap();
         let container: HtmlElement = container.dyn_into().unwrap();
         container.set_class_name("map");
-        let leaflet_map = Map::new_with_element(&container, &JsValue::NULL);
+        let leaflet_map = Map::new_with_element(&container, &MapOptions::default());
         Self {
             map: leaflet_map,
             container,
@@ -55,7 +55,8 @@ impl Component for MapComponent {
 
     fn rendered(&mut self, _ctx: &Context<Self>, first_render: bool) {
         if first_render {
-            self.map.setView(&LatLng::new(self.lat.0, self.lat.1), 11.0);
+            self.map
+                .set_view(&LatLng::new(self.lat.0, self.lat.1), 11.0);
             add_tile_layer(&self.map);
         }
     }
@@ -71,7 +72,8 @@ impl Component for MapComponent {
             false
         } else {
             self.lat = props.city.lat;
-            self.map.setView(&LatLng::new(self.lat.0, self.lat.1), 11.0);
+            self.map
+                .set_view(&LatLng::new(self.lat.0, self.lat.1), 11.0);
             true
         }
     }
@@ -86,9 +88,5 @@ impl Component for MapComponent {
 }
 
 fn add_tile_layer(map: &Map) {
-    TileLayer::new(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        &JsValue::NULL,
-    )
-    .addTo(map);
+    TileLayer::new("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").add_to(map);
 }
