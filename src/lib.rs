@@ -23,6 +23,7 @@ mod shapes;
 mod tooltip;
 
 use js_sys::Array;
+use paste::paste;
 
 pub use control::{Control, ControlOptions, Zoom, ZoomOptions};
 pub use crs::Crs;
@@ -62,21 +63,25 @@ pub use tooltip::{Tooltip, TooltipOptions};
 #[macro_export]
 macro_rules! object_property_set {
     ($a:ident, $b:ty) => {
-        pub fn set_$a(&mut self, val: $b) {
-            let _ = js_sys::Reflect::set(
-                self.as_ref(),
-                &wasm_bindgen::JsValue::from(stringify!($a)),
-                &wasm_bindgen::JsValue::from(val),
-            );
+        $crate::paste! {
+            pub fn [<set_ $a>](&mut self, val: $b) {
+                let _ = js_sys::Reflect::set(
+                    self.as_ref(),
+                    &wasm_bindgen::JsValue::from(stringify!($a)),
+                    &wasm_bindgen::JsValue::from(val),
+                );
+            }
         }
     };
     ($a:ident, $b:ident, $c:ty) => {
-        pub fn set_$a(&mut self, val: $c) {
-            let _ = js_sys::Reflect::set(
-                self.as_ref(),
-                &wasm_bindgen::JsValue::from(stringify!($b)),
-                &wasm_bindgen::JsValue::from(val),
-            );
+        $crate::paste! {
+            pub fn [<set_ $a>](&mut self, val: $c) {
+                let _ = js_sys::Reflect::set(
+                    self.as_ref(),
+                    &wasm_bindgen::JsValue::from(stringify!($b)),
+                    &wasm_bindgen::JsValue::from(val),
+                );
+            }
         }
     };
 }
@@ -84,12 +89,14 @@ macro_rules! object_property_set {
 #[macro_export]
 macro_rules! object_property_set_with {
     ($a:ident, $b:ident, $c:expr) => {
-        pub fn set_$a(&mut self) {
-            let _ = js_sys::Reflect::set(
-                self.as_ref(),
-                &wasm_bindgen::JsValue::from(stringify!($b)),
-                &wasm_bindgen::JsValue::from($c),
-            );
+        $crate::paste! {
+            pub fn [<set_ $a>](&mut self) {
+                let _ = js_sys::Reflect::set(
+                    self.as_ref(),
+                    &wasm_bindgen::JsValue::from(stringify!($b)),
+                    &wasm_bindgen::JsValue::from($c),
+                );
+            }
         }
     };
 }
