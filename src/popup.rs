@@ -22,7 +22,7 @@ extern "C" {
 
     /// [`L.popup`](/// [`L.popup`](https://leafletjs.com/reference.html#popup-l-popup))
     #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn newWithLatLng(lat_lng: &LatLng, options: &PopupOptions) -> Popup;
+    pub fn new_with_lat_lng(lat_lng: &LatLng, options: &PopupOptions) -> Popup;
 }
 
 impl PopupOptions {

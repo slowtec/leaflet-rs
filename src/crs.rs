@@ -27,5 +27,5 @@ extern "C" {
     pub fn new_base() -> Crs;
 
     #[wasm_bindgen(method, js_name = "latLngToPoint")]
-    pub fn latLngToPoint(this: &Crs, latlng: LatLng, zoom: f32) -> Point;
+    pub fn lat_lng_to_point(this: &Crs, latlng: LatLng, zoom: f32) -> Point;
 }

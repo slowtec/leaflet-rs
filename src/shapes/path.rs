@@ -20,16 +20,16 @@ extern "C" {
     pub fn redraw(this: &Path);
 
     /// [`setStyle`](https://leafletjs.com/reference.html#path-setstyle)
-    #[wasm_bindgen(method)]
-    pub fn setStyle(this: &Path, path_options: &PathOptions);
+    #[wasm_bindgen(method, js_name = setStyle)]
+    pub fn set_style(this: &Path, path_options: &PathOptions);
 
     /// [`bringToFront`](https://leafletjs.com/reference.html#path-bringtofront)
-    #[wasm_bindgen(method)]
-    pub fn bringToFront(this: &Path);
+    #[wasm_bindgen(method, js_name = bringToFront)]
+    pub fn bring_to_front(this: &Path);
 
     /// [`bringToBack`](https://leafletjs.com/reference.html#path-bringtoback)
-    #[wasm_bindgen(method)]
-    pub fn bringToBack(this: &Path);
+    #[wasm_bindgen(method, js_name = bringToBack)]
+    pub fn bring_to_back(this: &Path);
 }
 
 impl PathOptions {

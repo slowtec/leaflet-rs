@@ -19,19 +19,19 @@ extern "C" {
     pub fn new(options: &TooltipOptions, layer: Option<&Layer>) -> Tooltip;
 
     #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn newWithLatLng(lat_lng: &LatLng, options: &TooltipOptions) -> Tooltip;
+    pub fn new_with_lat_lng(lat_lng: &LatLng, options: &TooltipOptions) -> Tooltip;
 
-    #[wasm_bindgen(method)]
-    pub fn setContent(this: &Tooltip, content: &JsValue) -> Tooltip;
+    #[wasm_bindgen(method, js_name = setContent)]
+    pub fn set_content(this: &Tooltip, content: &JsValue) -> Tooltip;
 
-    #[wasm_bindgen(method)]
-    pub fn getContent(this: &Tooltip) -> JsValue;
+    #[wasm_bindgen(method, js_name = getContent)]
+    pub fn get_content(this: &Tooltip) -> JsValue;
 
-    #[wasm_bindgen(method)]
-    pub fn setLatLng(this: &Tooltip, latlng: &JsValue) -> Tooltip;
+    #[wasm_bindgen(method, js_name = setLatLng)]
+    pub fn set_lat_lng(this: &Tooltip, latlng: &JsValue) -> Tooltip;
 
-    #[wasm_bindgen(method)]
-    pub fn getLatLng(this: &Tooltip) -> LatLng;
+    #[wasm_bindgen(method, js_name = getLatLng)]
+    pub fn get_lat_lng(this: &Tooltip) -> LatLng;
 }
 
 impl TooltipOptions {

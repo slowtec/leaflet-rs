@@ -28,19 +28,20 @@ extern "C" {
     #[wasm_bindgen(constructor, js_namespace = L)]
     pub fn new_with_options(latlng: &LatLng, options: &CircleOptions) -> Circle;
 
-    #[wasm_bindgen(method)]
-    pub fn setStyle(this: &Circle, options: &CircleOptions) -> Circle;
+    #[wasm_bindgen(method, js_name = setStyle)]
+    pub fn set_style(this: &Circle, options: &CircleOptions) -> Circle;
+
     /// [`setRadius`](https://leafletjs.com/reference-1.7.1.html#circle-setradius)
-    #[wasm_bindgen(method)]
-    pub fn setRadius(this: &Circle, radius: f64);
+    #[wasm_bindgen(method, js_name = setRadius)]
+    pub fn set_radius(this: &Circle, radius: f64);
 
     /// [`getRadius`](https://leafletjs.com/reference-1.7.1.html#circle-getradius)
-    #[wasm_bindgen(method)]
-    pub fn getRadius(this: &Circle) -> f64;
+    #[wasm_bindgen(method, js_name = getRadius)]
+    pub fn get_radius(this: &Circle) -> f64;
 
     /// [`getBounds`](https://leafletjs.com/reference.html#circle-getbounds)
-    #[wasm_bindgen(method)]
-    pub fn getBounds(this: &Circle) -> LatLngBounds;
+    #[wasm_bindgen(method, js_name = getBounds)]
+    pub fn get_bounds(this: &Circle) -> LatLngBounds;
 }
 
 impl CircleOptions {

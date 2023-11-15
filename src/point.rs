@@ -20,17 +20,17 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn subtract(this: &Point, other: &Point) -> Point;
 
-    #[wasm_bindgen(method)]
-    pub fn multiplyBy(this: &Point, scalar: f64) -> Point;
+    #[wasm_bindgen(method, js_name = multiplyBy)]
+    pub fn multiply_by(this: &Point, scalar: f64) -> Point;
 
-    #[wasm_bindgen(method)]
-    pub fn divideBy(this: &Point, scalar: f64) -> Point;
+    #[wasm_bindgen(method, js_name = divideBy)]
+    pub fn divide_by(this: &Point, scalar: f64) -> Point;
 
-    #[wasm_bindgen(method)]
-    pub fn scaleBy(this: &Point, other: &Point) -> Point;
+    #[wasm_bindgen(method, js_name = scaleBy)]
+    pub fn scale_by(this: &Point, other: &Point) -> Point;
 
-    #[wasm_bindgen(method)]
-    pub fn unscaleByTo(this: &Point, other: &Point) -> Point;
+    #[wasm_bindgen(method, js_name = unscaleByTo)]
+    pub fn unscale_by_to(this: &Point, other: &Point) -> Point;
 
     #[wasm_bindgen(method)]
     pub fn round(this: &Point) -> Point;
@@ -50,8 +50,8 @@ extern "C" {
     #[wasm_bindgen(method)]
     pub fn contains(this: &Point, other: &Point) -> f64;
 
-    #[wasm_bindgen(method)]
-    pub fn distanceTo(this: &Point, other: &Point) -> f64;
+    #[wasm_bindgen(method, js_name = distanceTo)]
+    pub fn distance_to(this: &Point, other: &Point) -> f64;
 }
 
 impl From<(u32, u32)> for Point {

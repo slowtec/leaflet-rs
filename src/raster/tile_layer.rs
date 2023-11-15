@@ -23,16 +23,20 @@ extern "C" {
     pub fn new_options(url_template: &str, options: &TileLayerOptions) -> TileLayer;
 
     #[wasm_bindgen(method, js_name = setUrl)]
-    pub fn setUrl(this: &TileLayer, url: &str, no_redraw: Option<bool>) -> TileLayer;
+    pub fn set_url(this: &TileLayer, url: &str, no_redraw: Option<bool>) -> TileLayer;
 
     #[wasm_bindgen(method, js_name = getTileUrl)]
-    pub fn getTileUrl(this: &TileLayer, coords: &LatLng) -> String;
+    pub fn get_tile_url(this: &TileLayer, coords: &LatLng) -> String;
 
     #[wasm_bindgen(method, js_name = createTile)]
-    pub fn createTile(this: &TileLayer, lat_long: &LatLng) -> HtmlElement;
+    pub fn create_tile(this: &TileLayer, lat_long: &LatLng) -> HtmlElement;
 
     #[wasm_bindgen(method, js_name = createTile)]
-    pub fn createTileWithDone(this: &TileLayer, lat_long: &LatLng, done: &Function) -> HtmlElement;
+    pub fn create_tile_with_done(
+        this: &TileLayer,
+        lat_long: &LatLng,
+        done: &Function,
+    ) -> HtmlElement;
 }
 
 impl TileLayerOptions {

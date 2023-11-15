@@ -1,6 +1,6 @@
 use wasm_bindgen::prelude::*;
 
-use crate::{LayerGroup, LatLngBounds};
+use crate::{LatLngBounds, LayerGroup};
 
 #[wasm_bindgen]
 extern "C" {
@@ -10,19 +10,19 @@ extern "C" {
     pub type FeatureGroup;
 
     /// [`setStyle`](https://leafletjs.com/reference-1.7.1.html#featuregroup-setstyle)
-    #[wasm_bindgen(method)]
-    pub fn setStyle(this: &FeatureGroup, style: &JsValue);
+    #[wasm_bindgen(method, js_name = "setStyle")]
+    pub fn set_style(this: &FeatureGroup, style: &JsValue);
 
     /// [`bringToFront`](https://leafletjs.com/reference-1.7.1.html#featuregroup-bringtofront)
-    #[wasm_bindgen(method)]
-    pub fn bringToFront(this: &FeatureGroup);
+    #[wasm_bindgen(method, js_name = "bringToFront")]
+    pub fn bring_to_front(this: &FeatureGroup);
 
     /// [`bringToBack`](https://leafletjs.com/reference-1.7.1.html#featuregroup-bringtoback)
-    #[wasm_bindgen(method)]
-    pub fn bringToBack(this: &FeatureGroup);
+    #[wasm_bindgen(method, js_name = "bringToBack")]
+    pub fn bring_to_back(this: &FeatureGroup);
 
     /// [`getBounds`](https://leafletjs.com/reference-1.7.1.html#featuregroup-getbounds)
-    #[wasm_bindgen(method)]
-    pub fn getBounds(this: &FeatureGroup) -> LatLngBounds;
+    #[wasm_bindgen(method, js_name = "getBounds")]
+    pub fn get_bounds(this: &FeatureGroup) -> LatLngBounds;
 
 }

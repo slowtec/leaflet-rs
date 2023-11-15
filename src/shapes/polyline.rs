@@ -27,28 +27,28 @@ extern "C" {
     pub fn new_with_options(latlngs: &Array, options: &PolylineOptions) -> Polyline;
 
     #[wasm_bindgen(method, js_name = toGeoJSON)]
-    pub fn toGeoJSON(this: &Polyline, precision: f64) -> Object;
+    pub fn to_geo_json(this: &Polyline, precision: f64) -> Object;
 
     #[wasm_bindgen(method, js_name = getLatLngs)]
-    pub fn getLatLngs(this: &Polyline) -> Array;
+    pub fn get_lat_lngs(this: &Polyline) -> Array;
 
     #[wasm_bindgen(method, js_name = setLatLngs)]
-    pub fn setLatLngs(this: &Polyline, lat_lngs: &Array) -> Polyline;
+    pub fn set_lat_lngs(this: &Polyline, lat_lngs: &Array) -> Polyline;
 
     #[wasm_bindgen(method, js_name = isEmpty)]
-    pub fn isEmpty(this: &Polyline) -> bool;
+    pub fn is_empty(this: &Polyline) -> bool;
 
     #[wasm_bindgen(method, js_name = closestLayerPoint)]
-    pub fn closestLayerPoint(this: &Polyline, point: &Point) -> Point;
+    pub fn closest_layer_point(this: &Polyline, point: &Point) -> Point;
 
     #[wasm_bindgen(method, js_name = getCenter)]
-    pub fn getCenter(this: &Polyline) -> LatLng;
+    pub fn get_center(this: &Polyline) -> LatLng;
 
     #[wasm_bindgen(method, js_name = getBounds)]
-    pub fn getBounds(this: &Polyline) -> LatLngBounds;
+    pub fn get_bounds(this: &Polyline) -> LatLngBounds;
 
     #[wasm_bindgen(method,js_name = addLatLng)]
-    pub fn addLatLng(this: &Polyline, lat_lng: &LatLng) -> Polyline;
+    pub fn add_lat_lng(this: &Polyline, lat_lng: &LatLng) -> Polyline;
 }
 
 impl PolylineOptions {

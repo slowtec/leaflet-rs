@@ -17,8 +17,8 @@ extern "C" {
     #[wasm_bindgen(constructor, js_namespace = L)]
     pub fn new_with_options(bounds: &LatLngBounds, options: &PolylineOptions) -> Rectangle;
 
-    #[wasm_bindgen(method)]
-    pub fn setBounds(this: &Rectangle, bounds: &LatLngBounds) -> Rectangle;
+    #[wasm_bindgen(method, js_name = setBounds)]
+    pub fn set_bounds(this: &Rectangle, bounds: &LatLngBounds) -> Rectangle;
 }
 
 impl LeafletEventHandler for Rectangle {

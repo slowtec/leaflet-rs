@@ -11,32 +11,32 @@ extern "C" {
     pub fn new() -> Event;
 
     #[wasm_bindgen(method, getter, js_name = "type")]
-    pub fn eventType(this: &Event) -> String;
+    pub fn event_type(this: &Event) -> String;
 
     #[wasm_bindgen(method, setter, js_name = "type")]
-    pub fn setEventType(this: &Event, value: &str);
+    pub fn set_event_type(this: &Event, value: &str);
 
     #[wasm_bindgen(method, getter, js_name = target)]
     pub fn target(this: &Event) -> Object;
 
     #[wasm_bindgen(method, setter, js_name = target)]
-    pub fn setTarget(this: &Event, value: &Object);
+    pub fn set_target(this: &Event, value: &Object);
 
     #[wasm_bindgen(method, getter, js_name = sourceTarget)]
-    pub fn sourceTarget(this: &Event) -> Object;
+    pub fn source_target(this: &Event) -> Object;
 
     #[wasm_bindgen(method, setter, js_name = sourceTarget)]
-    pub fn setsourceTarget(this: &Event, value: &Object);
+    pub fn set_source_target(this: &Event, value: &Object);
 
     #[wasm_bindgen(method, getter, js_name = propagatedFrom)]
-    pub fn propagatedFrom(this: &Event) -> Object;
+    pub fn propagated_from(this: &Event) -> Object;
 
     #[wasm_bindgen(method, setter, js_name = propagatedFrom)]
-    pub fn setPropagatedFrom(this: &Event, value: &Object);
+    pub fn set_propagated_from(this: &Event, value: &Object);
 
     #[wasm_bindgen(method, getter, js_name = layer)]
     pub fn layer(this: &Event) -> Object;
 
     #[wasm_bindgen(method, setter, js_name = layer)]
-    pub fn setLayer(this: &Event, value: &Object);
+    pub fn set_layer(this: &Event, value: &Object);
 }

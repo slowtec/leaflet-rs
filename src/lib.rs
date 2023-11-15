@@ -35,7 +35,7 @@ pub use evented::{
     TooltipEvents,
 };
 pub use feature_group::FeatureGroup;
-pub use geo_json::GeoJSON;
+pub use geo_json::GeoJson;
 pub use grid_layer::{GridLayer, GridLayerOptions};
 pub use handler::Handler;
 pub use icon::{Icon, IconOptions};
