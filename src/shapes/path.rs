@@ -1,15 +1,10 @@
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 
-use crate::{object_constructor, object_property_set, Layer};
+use crate::{create_object_with_properties, Layer};
 
 #[wasm_bindgen]
 extern "C" {
-
-    #[wasm_bindgen(extends = Object, js_name = PathOptions)]
-    #[derive(Debug, Clone, PartialEq)]
-    pub type PathOptions;
-
     /// [`Path`](https://leafletjs.com/reference.html#path)
     #[wasm_bindgen(extends = Layer)]
     #[derive(Debug, Clone)]
@@ -32,25 +27,25 @@ extern "C" {
     pub fn bring_to_back(this: &Path);
 }
 
-impl PathOptions {
-    object_constructor!();
-    object_property_set!(stroke, bool);
-    object_property_set!(color, &str);
-    object_property_set!(weight, f64);
-    object_property_set!(interactive, bool);
-    object_property_set!(opacity, f64);
-    object_property_set!(line_cap, lineCap, &str);
-    object_property_set!(line_join, lineJoin, &str);
-    object_property_set!(dash_array, dashArray, &str);
-    object_property_set!(dash_offset, dashOffset, &str);
-    object_property_set!(fill, bool);
-    object_property_set!(fill_color, fillColor, &str);
-    object_property_set!(fill_opacity, fillOpacity, f64);
-    object_property_set!(fill_rule, fillRule, &str);
-    object_property_set!(bubbling_mouse_events, bubblingMouseEvents, bool);
-    object_property_set!(renderer, &JsValue);
-    object_property_set!(class_name, className, &str);
-}
+create_object_with_properties!(
+    (PathOptions, PathOptions),
+    (stroke, stroke, bool),
+    (color, color, String),
+    (weight, weight, f64),
+    (interactive, interactive, bool),
+    (opacity, opacity, f64),
+    (line_cap, lineCap, String),
+    (line_join, lineJoin, String),
+    (dash_array, dashArray, String),
+    (dash_offset, dashOffset, String),
+    (fill, fill, bool),
+    (fill_color, fillColor, String),
+    (fill_opacity, fillOpacity, f64),
+    (fill_rule, fillRule, String),
+    (bubbling_mouse_events, bubblingMouseEvents, bool),
+    (renderer, renderer, JsValue),
+    (class_name, className, String)
+);
 
 impl Default for PathOptions {
     fn default() -> Self {

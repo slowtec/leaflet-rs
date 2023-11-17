@@ -21,6 +21,7 @@ mod popup;
 mod raster;
 mod shapes;
 mod tooltip;
+mod util;
 
 use js_sys::Array;
 use paste::paste;
@@ -41,7 +42,7 @@ pub use handler::Handler;
 pub use icon::{Icon, IconOptions};
 pub use lat_lng::LatLng;
 pub use lat_lng_bounds::LatLngBounds;
-pub use layer::Layer;
+pub use layer::{Layer, LayerOptions};
 pub use layer_group::LayerGroup;
 pub use map::{
     DragEndEvent, ErrorEvent, LocateOptions, LocationEvent, Map, MapOptions, MouseEvent,
@@ -59,6 +60,7 @@ pub use shapes::{
     Rectangle,
 };
 pub use tooltip::{Tooltip, TooltipOptions};
+pub use util::Util;
 
 #[macro_export]
 macro_rules! object_property_set {
@@ -81,6 +83,86 @@ macro_rules! object_property_set {
                     &wasm_bindgen::JsValue::from(stringify!($b)),
                     &wasm_bindgen::JsValue::from(val),
                 );
+            }
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! create_object_with_properties {
+    (($t:ident, $t_js:ident), $(($rust:ident, $js:ident, $b:ty)),+) => {
+        $crate::paste! {
+            #[wasm_bindgen]
+            extern "C" {
+                #[wasm_bindgen (extends = Object , js_name = $t_js)]
+                #[derive(Debug, Clone, PartialEq, Eq)]
+                pub type $t;
+
+                $(
+                #[wasm_bindgen(method, getter, js_name = $js)]
+                pub fn $rust(this: &$t) -> $b;
+                )*
+
+                $(
+                #[wasm_bindgen(method, setter, js_name = $js)]
+                pub fn [<set_ $rust>](this: &$t, val: $b);
+                )*
+            }
+        }
+        impl $t {
+            #[allow(clippy::new_without_default)]
+            pub fn new() -> Self {
+                #[allow(unused_mut)]
+                let mut r = JsCast::unchecked_into(Object::new());
+                r
+            }
+        }
+    };
+    (($t:ident, $t_js:ident, $t_extends:ident), $(($rust:ident, $js:ident, $b:ty)),+) => {
+        $crate::paste! {
+            #[wasm_bindgen]
+            extern "C" {
+                #[wasm_bindgen(extends = $t_extends, js_name = $t_js)]
+                #[derive(Debug, Clone, PartialEq, Eq)]
+                pub type $t;
+
+                $(
+                #[wasm_bindgen(method, getter, js_name = $js)]
+                pub fn $rust(this: &$t) -> $b;
+                )*
+
+                $(
+                #[wasm_bindgen(method, setter, js_name = $js)]
+                pub fn [<set_ $rust>](this: &$t, val: $b);
+                )*
+            }
+        }
+        impl $t {
+            #[allow(clippy::new_without_default)]
+            pub fn new() -> Self {
+                #[allow(unused_mut)]
+                let mut r = JsCast::unchecked_into(Object::new());
+                r
+            }
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! add_object_properties {
+    ($t:ident, $(($rust:ident, $js:ident, $b:ty)),+) => {
+        $crate::paste! {
+            #[wasm_bindgen]
+            extern "C" {
+                $(
+                #[wasm_bindgen(method, getter, js_name = $js)]
+                pub fn $rust(this: &$t) -> $b;
+                )*
+
+                $(
+                #[wasm_bindgen(method, setter, js_name = $js)]
+                pub fn [<set_ $rust>](this: &$t, val: $b);
+                )*
             }
         }
     };

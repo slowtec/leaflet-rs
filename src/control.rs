@@ -1,6 +1,6 @@
 mod zoom;
 
-use crate::{object_constructor, object_property_set, Map};
+use crate::{create_object_with_properties, Map};
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
@@ -9,10 +9,6 @@ pub use zoom::{Zoom, ZoomOptions};
 
 #[wasm_bindgen]
 extern "C" {
-    #[wasm_bindgen(extends = Object , js_name = ControlOptions)]
-    #[derive(Debug, Clone, PartialEq, Eq)]
-    pub type ControlOptions;
-
     #[derive(Clone, Debug)]
     #[wasm_bindgen(js_namespace = L, js_name = Control)]
     pub type Control;
@@ -36,12 +32,10 @@ extern "C" {
     pub fn remove(this: &Control) -> Control;
 }
 
-impl ControlOptions {
-    object_constructor!();
-
-    // ControlOptions
-    object_property_set!(position, position, &str);
-}
+create_object_with_properties!(
+    (ControlOptions, ControlOptions),
+    (position, position, String)
+);
 
 impl Default for ControlOptions {
     fn default() -> Self {

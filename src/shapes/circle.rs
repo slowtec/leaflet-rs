@@ -4,16 +4,12 @@ use wasm_bindgen::prelude::*;
 
 use crate::evented::{LeafletEventHandler, MouseEvents, MoveEvents, PopupEvents, TooltipEvents};
 use crate::{
-    object_constructor, object_property_set, CircleMarker, Evented, LatLng, LatLngBounds, Layer,
-    LayerEvents, PathOptions,
+    create_object_with_properties, CircleMarker, Evented, LatLng, LatLngBounds, Layer, LayerEvents,
+    PathOptions,
 };
 
 #[wasm_bindgen]
 extern "C" {
-    #[wasm_bindgen(extends = PathOptions, js_name = CircleOptions)]
-    #[derive(Debug, Clone, PartialEq)]
-    pub type CircleOptions;
-
     /// [`Circle`](https://leafletjs.com/reference.html#circle)
     #[derive(Debug, Clone)]
     #[wasm_bindgen(extends = CircleMarker)]
@@ -44,10 +40,10 @@ extern "C" {
     pub fn get_bounds(this: &Circle) -> LatLngBounds;
 }
 
-impl CircleOptions {
-    object_constructor!();
-    object_property_set!(radius, f64);
-}
+create_object_with_properties!(
+    (CircleOptions, CircleOptions, PathOptions),
+    (radius, radius, f64)
+);
 
 impl Default for CircleOptions {
     fn default() -> Self {

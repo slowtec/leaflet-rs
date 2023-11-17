@@ -1,13 +1,9 @@
-use crate::{object_constructor, object_property_set, Point};
+use crate::{create_object_with_properties, Point};
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 extern "C" {
-    #[wasm_bindgen(extends = Object, js_name = IconOptions)]
-    #[derive(Debug, Clone)]
-    pub type IconOptions;
-
     #[derive(Debug, Clone)]
     #[wasm_bindgen(js_namespace = L, js_name = Icon)]
     pub type Icon;
@@ -16,20 +12,20 @@ extern "C" {
     pub fn new(options: &IconOptions) -> Icon;
 }
 
-impl IconOptions {
-    object_constructor!();
-    object_property_set!(icon_url, iconUrl, &str);
-    object_property_set!(icon_size, iconSize, Point);
-    object_property_set!(icon_anchor, iconAnchor, Point);
-    object_property_set!(popup_anchor, popupAnchor, Point);
-    object_property_set!(shadow_anchor, shadowAnchor, Point);
-    object_property_set!(tooltip_anchor, tooltipAnchor, Point);
-    object_property_set!(shadow_url, shadowUrl, &str);
-    object_property_set!(shadow_retina_url, shadowRetinaUrl, &str);
-    object_property_set!(shadow_size, shadowSize, Point);
-    object_property_set!(class_name, className, &str);
-    object_property_set!(cross_origin, crossOrigin, &str);
-}
+create_object_with_properties!(
+    (IconOptions, IconOptions),
+    (icon_url, iconUrl, String),
+    (icon_size, iconSize, Point),
+    (icon_anchor, iconAnchor, Point),
+    (popup_anchor, popupAnchor, Point),
+    (shadow_anchor, shadowAnchor, Point),
+    (tooltip_anchor, tooltipAnchor, Point),
+    (shadow_url, shadowUrl, String),
+    (shadow_retina_url, shadowRetinaUrl, String),
+    (shadow_size, shadowSize, Point),
+    (class_name, className, String),
+    (cross_origin, crossOrigin, String)
+);
 
 impl Default for IconOptions {
     fn default() -> Self {

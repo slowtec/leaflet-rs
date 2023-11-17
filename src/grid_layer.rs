@@ -2,14 +2,10 @@ use js_sys::Object;
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
 
-use crate::{object_constructor, object_property_set, LatLngBounds, Layer, Point};
+use crate::{create_object_with_properties, LatLngBounds, Layer, LayerOptions, Point};
 
 #[wasm_bindgen]
 extern "C" {
-
-    # [wasm_bindgen (extends = Object, js_name = GridLayerOptions)]
-    #[derive(Debug, Clone, PartialEq)]
-    pub type GridLayerOptions;
 
     #[wasm_bindgen(extends = Layer)]
     #[derive(Debug, Clone, PartialEq)]
@@ -43,25 +39,25 @@ extern "C" {
     pub fn redraw(this: &GridLayer) -> GridLayer;
 }
 
-impl GridLayerOptions {
-    object_constructor!();
-    object_property_set!(tile_size, tileSize, f64);
-    object_property_set!(tile_size_point, tileSize, &Point);
-    object_property_set!(opacity, f64);
-    object_property_set!(update_when_idle, updateWhenIdle, bool);
-    object_property_set!(update_when_zooming, updateWhenZooming, bool);
-    object_property_set!(update_interval, updateInterval, f64);
-    object_property_set!(z_index, zIndex, f64);
-    object_property_set!(bounds, &LatLngBounds);
-    object_property_set!(min_zoom, minZoom, f64);
-    object_property_set!(max_zoom, maxZoom, f64);
-    object_property_set!(min_native_zoom, minNativeZoom, f64);
-    object_property_set!(max_native_zoom, maxNativeZoom, f64);
-    object_property_set!(no_wrap, noWrap, bool);
-    object_property_set!(pane, &str);
-    object_property_set!(class_name, className, &str);
-    object_property_set!(keep_buffer, keepBuffer, f64);
-}
+create_object_with_properties!(
+    (GridLayerOptions, GridLayerOptions, LayerOptions),
+    (tile_size, tileSize, f64),
+    (tile_size_point, tileSize, Point),
+    (opacity, opacity, f64),
+    (update_when_idle, updateWhenIdle, bool),
+    (update_when_zooming, updateWhenZooming, bool),
+    (update_interval, updateInterval, f64),
+    (z_index, zIndex, f64),
+    (bounds, bounds, LatLngBounds),
+    (min_zoom, minZoom, f64),
+    (max_zoom, maxZoom, f64),
+    (min_native_zoom, minNativeZoom, f64),
+    (max_native_zoom, maxNativeZoom, f64),
+    (no_wrap, noWrap, bool),
+    (pane, pane, String),
+    (class_name, className, String),
+    (keep_buffer, keepBuffer, f64)
+);
 
 impl Default for GridLayerOptions {
     fn default() -> Self {

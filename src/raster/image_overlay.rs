@@ -1,13 +1,9 @@
-﻿use crate::{object_constructor, object_property_set, LatLngBounds, Layer};
+﻿use crate::{create_object_with_properties, LatLngBounds, Layer};
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 extern "C" {
-    #[derive(Debug, Clone)]
-    #[wasm_bindgen(extends = Object, js_name = ImageOverlayOptions)]
-    pub type ImageOverlayOptions;
-
     #[wasm_bindgen(extends = Layer, js_name = ImageOverlay, js_namespace = L)]
     #[derive(Debug, Clone)]
     pub type ImageOverlay;
@@ -23,22 +19,22 @@ extern "C" {
     ) -> ImageOverlay;
 }
 
-impl ImageOverlayOptions {
-    object_constructor!();
-    object_property_set!(opacity, f64);
-    object_property_set!(alt, &str);
-    object_property_set!(interactive, bool);
-    object_property_set!(cross_origin, crossOrigin, &str);
-    object_property_set!(cross_origin_toggle, crossOrigin, bool);
-    object_property_set!(error_overlay_url, errorOverlayUrl, &str);
-    object_property_set!(z_index, zIndex, f64);
-    object_property_set!(class_name, className, &str);
+create_object_with_properties!(
+    (ImageOverlayOptions, ImageOverlayOptions),
+    (opacity, opacity, f64),
+    (alt, alt, String),
+    (interactive, interactive, bool),
+    (cross_origin, crossOrigin, String),
+    (cross_origin_toggle, crossOrigin, bool),
+    (error_overlay_url, errorOverlayUrl, String),
+    (z_index, zIndex, f64),
+    (class_name, className, String),
     // Interactive layer
-    object_property_set!(bubbling_mouse_events, bubblingMouseEvents, bool);
+    (bubbling_mouse_events, bubblingMouseEvents, bool),
     // Layer options
-    object_property_set!(pane, &str);
-    object_property_set!(attribution, &str);
-}
+    (pane, pane, String),
+    (attribution, attribution, String)
+);
 
 impl Default for ImageOverlayOptions {
     fn default() -> Self {

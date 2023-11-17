@@ -5,17 +5,12 @@ use wasm_bindgen::prelude::*;
 
 use crate::evented::{LeafletEventHandler, MouseEvents, PopupEvents, TooltipEvents};
 use crate::{
-    object_constructor, object_property_set, Evented, LatLng, LatLngBounds, Layer, LayerEvents,
-    Path, PathOptions, Point,
+    create_object_with_properties, Evented, LatLng, LatLngBounds, Layer, LayerEvents, Path,
+    PathOptions, Point,
 };
 
 #[wasm_bindgen]
 extern "C" {
-
-    #[wasm_bindgen(extends = PathOptions, js_name = PolylineOptions)]
-    #[derive(Debug, Clone, PartialEq)]
-    pub type PolylineOptions;
-
     #[wasm_bindgen(extends = Path)]
     #[derive(Debug, Clone)]
     pub type Polyline;
@@ -51,11 +46,11 @@ extern "C" {
     pub fn add_lat_lng(this: &Polyline, lat_lng: &LatLng) -> Polyline;
 }
 
-impl PolylineOptions {
-    object_constructor!();
-    object_property_set!(smooth_factor, smoothFactor, f64);
-    object_property_set!(no_clip, noClip, bool);
-}
+create_object_with_properties!(
+    (PolylineOptions, PolylineOptions, PathOptions),
+    (smooth_factor, smoothFactor, f64),
+    (no_clip, noClip, bool)
+);
 
 impl Default for PolylineOptions {
     fn default() -> Self {

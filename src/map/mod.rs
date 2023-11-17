@@ -8,7 +8,7 @@ use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
 
 use crate::{
-    object_constructor, object_property_set, object_property_set_with, Control, Evented, LatLng,
+    create_object_with_properties, object_property_set_with, Control, Evented, LatLng,
     LatLngBounds, Layer, Point, Popup, Tooltip,
 };
 pub use events::*;
@@ -17,10 +17,6 @@ pub use location_event::*;
 
 #[wasm_bindgen]
 extern "C" {
-    #[wasm_bindgen(extends = Object , js_name = MapOptions)]
-    #[derive(Debug, Clone, Eq, PartialEq)]
-    pub type MapOptions;
-
     #[wasm_bindgen(extends=Evented)]
     #[derive(Debug, Clone)]
     pub type Map;
@@ -247,59 +243,65 @@ extern "C" {
 
     #[wasm_bindgen(method, js_name = latLngToLayerPoint)]
     pub fn lat_lng_to_layer_point(this: &Map, latlng: &LatLng) -> Point;
+
+    #[wasm_bindgen(method, js_name = getSize)]
+    pub fn get_size(this: &Map) -> Point;
 }
 
-impl MapOptions {
-    object_constructor!();
+create_object_with_properties!(
+    (MapOptions, MapOptions),
     // Options
-    object_property_set!(prefer_canvas, preferCanvas, bool);
+    (prefer_canvas, preferCanvas, bool),
     // Control options
-    object_property_set!(attribution_control, attributionControl, bool);
-    object_property_set!(zoom_control, zoomControl, bool);
+    (attribution_control, attributionControl, bool),
+    (zoom_control, zoomControl, bool),
     // Interaction Options
-    object_property_set!(close_popup_on_click, closePopupOnClick, bool);
-    object_property_set!(box_zoom, boxZoom, bool);
-    object_property_set!(double_click_zoom, doubleClickZoom, JsValue);
-    object_property_set!(dragging, bool);
-    object_property_set!(zoom_snap, zoomSnap, f64);
-    object_property_set!(zoom_delta, zoomDelta, f64);
-    object_property_set!(track_resize, trackResize, bool);
+    (close_popup_on_click, closePopupOnClick, bool),
+    (box_zoom, boxZoom, bool),
+    (double_click_zoom, doubleClickZoom, JsValue),
+    (dragging, dragging, bool),
+    (zoom_snap, zoomSnap, f64),
+    (zoom_delta, zoomDelta, f64),
+    (track_resize, trackResize, bool),
     // Panning Inertia Options
-    object_property_set!(inertia, bool);
-    object_property_set!(inertia_deceleration, inertiaDeceleration, f64);
-    object_property_set!(inertia_max_speed, inertiaMaxSpeed, f64);
-    object_property_set!(ease_linearity, easeLinearity, f64);
-    object_property_set!(world_copy_jump, worldCopyJump, bool);
-    object_property_set!(max_bounds_viscosity, maxBoundsViscosity, f64);
+    (inertia, inertia, bool),
+    (inertia_deceleration, inertiaDeceleration, f64),
+    (inertia_max_speed, inertiaMaxSpeed, f64),
+    (ease_linearity, easeLinearity, f64),
+    (world_copy_jump, worldCopyJump, bool),
+    (max_bounds_viscosity, maxBoundsViscosity, f64),
     // Keyboard Navigation Options
-    object_property_set!(keyboard, bool);
-    object_property_set!(keyboard_pan_delta, keyboardPanDelta, f64);
+    (keyboard, keyboard, bool),
+    (keyboard_pan_delta, keyboardPanDelta, f64),
     // Mouse wheel options
-    object_property_set!(scroll_wheel_zoom, scrollWheelZoom, bool);
-    object_property_set_with!(scroll_wheel_zoom_center, scrollWheelZoom, "center");
-    object_property_set!(wheel_debounce_time, wheelDebounceTime, f64);
-    object_property_set!(wheel_px_per_zoom_level, wheelPxPerZoomLevel, f64);
+    (scroll_wheel_zoom, scrollWheelZoom, bool),
+    (wheel_debounce_time, wheelDebounceTime, f64),
+    (wheel_px_per_zoom_level, wheelPxPerZoomLevel, f64),
     // Touch interaction options
-    object_property_set!(tap_hold, tapHold, bool);
-    object_property_set!(tap_tolerance, tapTolerance, f64);
-    object_property_set!(touch_zoom, touchZoom, bool);
-    object_property_set_with!(touch_zoom_center, touchZoom, "center");
-    object_property_set!(bounce_at_zoom_limits, bounceAtZoomLimits, bool);
+    (tap_hold, tapHold, bool),
+    (tap_tolerance, tapTolerance, f64),
+    (touch_zoom, touchZoom, bool),
+    (bounce_at_zoom_limits, bounceAtZoomLimits, bool),
     // Map State Options
-    object_property_set!(crs, &JsValue);
-    object_property_set!(center, &LatLng);
-    object_property_set!(zoom, f64);
-    object_property_set!(min_zoom, minZoom, f64);
-    object_property_set!(max_zoom, maxZoom, f64);
-    object_property_set!(layers, &Array);
-    object_property_set!(max_bounds, maxBounds, &LatLngBounds);
-    object_property_set!(renderer, &JsValue);
+    (crs, crs, JsValue),
+    (center, center, LatLng),
+    (zoom, zoom, f64),
+    (min_zoom, minZoom, f64),
+    (max_zoom, maxZoom, f64),
+    (layers, layers, Array),
+    (max_bounds, maxBounds, LatLngBounds),
+    (renderer, renderer, JsValue),
     // Animation Options
-    object_property_set!(zoom_animation, zoomAnimation, bool);
-    object_property_set!(zoom_animation_threshold, zoomAnimationThreshold, f64);
-    object_property_set!(fade_animation, fadeAnimation, bool);
-    object_property_set!(marker_zoom_animation, markerZoomAnimation, bool);
-    object_property_set!(transform3d_limit, transform3DLimit, f64);
+    (zoom_animation, zoomAnimation, bool),
+    (zoom_animation_threshold, zoomAnimationThreshold, f64),
+    (fade_animation, fadeAnimation, bool),
+    (marker_zoom_animation, markerZoomAnimation, bool),
+    (transform3d_limit, transform3DLimit, f64)
+);
+
+impl MapOptions {
+    object_property_set_with!(scroll_wheel_zoom_center, scrollWheelZoom, "center");
+    object_property_set_with!(touch_zoom_center, touchZoom, "center");
 }
 
 impl Default for MapOptions {
