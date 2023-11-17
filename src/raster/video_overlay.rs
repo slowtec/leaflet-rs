@@ -1,13 +1,9 @@
-use crate::{object_constructor, object_property_set, ImageOverlay, LatLngBounds, Layer};
+use crate::{create_object_with_properties, ImageOverlay, LatLngBounds, Layer};
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 extern "C" {
-    #[derive(Debug, Clone)]
-    #[wasm_bindgen(extends = Object, js_name = ImageOverlayOptions)]
-    pub type VideoOverlayOptions;
-
     #[wasm_bindgen(extends = ImageOverlay, js_name = ImageOverlay, js_namespace = L)]
     #[derive(Debug, Clone)]
     pub type VideoOverlay;
@@ -23,27 +19,27 @@ extern "C" {
     ) -> VideoOverlay;
 }
 
-impl VideoOverlayOptions {
-    object_constructor!();
-    object_property_set!(opacity, f64);
-    object_property_set!(alt, &str);
-    object_property_set!(interactive, bool);
-    object_property_set!(cross_origin, crossOrigin, &str);
-    object_property_set!(cross_origin_toggle, crossOrigin, bool);
-    object_property_set!(error_overlay_url, errorOverlayUrl, &str);
-    object_property_set!(z_index, zIndex, f64);
-    object_property_set!(class_name, className, &str);
+create_object_with_properties!(
+    (VideoOverlayOptions, VideoOverlayOptions),
+    (opacity, opacity, f64),
+    (alt, alt, String),
+    (interactive, interactive, bool),
+    (cross_origin, crossOrigin, String),
+    (cross_origin_toggle, crossOrigin, bool),
+    (error_overlay_url, errorOverlayUrl, String),
+    (z_index, zIndex, f64),
+    (class_name, className, String),
     // Interactive layer
-    object_property_set!(bubbling_mouse_events, bubblingMouseEvents, bool);
+    (bubbling_mouse_events, bubblingMouseEvents, bool),
     // Layer options
-    object_property_set!(pane, &str);
-    object_property_set!(attribution, &str);
-    object_property_set!(autoplay, bool);
-    object_property_set!(looped, loop, bool);
-    object_property_set!(keep_aspect_ratio, keepAspectRatio, bool);
-    object_property_set!(muted, bool);
-    object_property_set!(plays_inline, playsInline, bool);
-}
+    (pane, pane, String),
+    (attribution, attribution, String),
+    (autoplay, autoplay, bool),
+    (looped, loop, bool),
+    (keep_aspect_ratio, keepAspectRatio, bool),
+    (muted, muted, bool),
+    (plays_inline, playsInline, bool)
+);
 
 impl Default for VideoOverlayOptions {
     fn default() -> Self {

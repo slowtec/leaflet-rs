@@ -2,18 +2,13 @@ use crate::evented::{
     DragEvents, LeafletEventHandler, MouseEvents, MoveEvents, PopupEvents, TooltipEvents,
 };
 use crate::{
-    object_constructor, object_property_set, Evented, Handler, Icon, LatLng, Layer, LayerEvents,
-    Point,
+    create_object_with_properties, Evented, Handler, Icon, LatLng, Layer, LayerEvents, Point,
 };
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 extern "C" {
-    #[wasm_bindgen(extends = Object, js_name = MarkerOptions)]
-    #[derive(Debug, Clone)]
-    pub type MarkerOptions;
-
     // Marker
     #[derive(Debug, Clone, PartialEq)]
     #[wasm_bindgen(extends = Layer)]
@@ -54,46 +49,46 @@ extern "C" {
     pub fn set_z_index_offset(this: &Marker, offset: f64) -> Marker;
 }
 
-impl MarkerOptions {
-    object_constructor!();
+create_object_with_properties!(
+    (MarkerOptions, MarkerOptions),
     // [`icon`](https://leafletjs.com/reference.html#marker-icon)
-    object_property_set!(icon, Icon);
+    (icon, icon, Icon),
     // ['keyboard'](https://leafletjs.com/reference.html#marker-keyboard)
-    object_property_set!(keyboard, bool);
+    (keyboard, keyboard, bool),
     // ['title'](https://leafletjs.com/reference.html#marker-title)
-    object_property_set!(title, &str);
+    (title, title, String),
     // ['alt'](https://leafletjs.com/reference.html#marker-alt)
-    object_property_set!(alt, &str);
+    (alt, alt, String),
     // ['zIndexOffset'](https://leafletjs.com/reference.html#marker-zindexoffset)
-    object_property_set!(z_index_offset, zIndexOffset, f64);
+    (z_index_offset, zIndexOffset, f64),
     // ['opacity'](https://leafletjs.com/reference.html#marker-opacity)
-    object_property_set!(opacity, f64);
+    (opacity, opacity, f64),
     // ['riseOnHover'](https://leafletjs.com/reference.html#marker-riseonhover)
-    object_property_set!(rise_on_hover, riseOnHover, bool);
+    (rise_on_hover, riseOnHover, bool),
     // ['riseOffset'](https://leafletjs.com/reference.html#marker-riseoffset)
-    object_property_set!(rise_offset, riseOffset, f64);
+    (rise_offset, riseOffset, f64),
     // ['pane'](https://leafletjs.com/reference.html#marker-pane)
-    object_property_set!(pane, &str);
+    (pane, pane, String),
     // ['shadowPane'](https://leafletjs.com/reference.html#marker-shadowpane)
-    object_property_set!(shadow_pane, shadowPane, &str);
+    (shadow_pane, shadowPane, String),
     // ['bubblingMouseEvents'](https://leafletjs.com/reference.html#marker-bubblingmouseevents)
-    object_property_set!(bubbling_mouse_events, bubblingMouseEvents, bool);
+    (bubbling_mouse_events, bubblingMouseEvents, bool),
     // Draggable marker options
     // ['draggable'](https://leafletjs.com/reference.html#marker-draggable)
-    object_property_set!(draggable, bool);
+    (draggable, draggable, bool),
     // ['autoPan'](https://leafletjs.com/reference.html#marker-autopan)
-    object_property_set!(auto_pan, autoPan, bool);
+    (auto_pan, autoPan, bool),
     // ['autoPanPadding'](https://leafletjs.com/reference.html#marker-autopanpadding)
-    object_property_set!(auto_pan_padding, autoPanPadding, Point);
+    (auto_pan_padding, autoPanPadding, Point),
     // ['autoPanSpeed'](https://leafletjs.com/reference.html#marker-autopanspeed)
-    object_property_set!(auto_pan_speed, autoPanSpeed, f64);
+    (auto_pan_speed, autoPanSpeed, f64),
     // Interactive layer
     // ['interactive'](https://leafletjs.com/reference.html#marker-interactive)
-    object_property_set!(interactive, bool);
+    (interactive, interactive, bool),
     // Layer
     // ['attribution'](https://leafletjs.com/reference.html#marker-attribution)
-    object_property_set!(attribution, &str);
-}
+    (attribution, attribution, String)
+);
 
 impl Default for MarkerOptions {
     fn default() -> Self {

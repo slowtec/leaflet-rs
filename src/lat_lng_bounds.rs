@@ -18,6 +18,9 @@ extern "C" {
 
     #[wasm_bindgen(method)]
     pub fn contains(this: &LatLngBounds, latlng: &LatLng) -> bool;
+
+    #[wasm_bindgen(method, js_name = toBBoxString)]
+    pub fn to_bbox_string(this: &LatLngBounds) -> String;
 }
 
 impl From<(LatLng, LatLng)> for LatLngBounds {

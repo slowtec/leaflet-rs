@@ -3,16 +3,10 @@ use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
 
 use crate::evented::{LayerEvents, LeafletEventHandler, PopupEvents, TooltipEvents};
-use crate::{
-    object_constructor, object_property_set, Evented, LatLng, LayerGroup, Map, Popup, Tooltip,
-};
+use crate::{create_object_with_properties, Evented, LatLng, LayerGroup, Map, Popup, Tooltip};
 
 #[wasm_bindgen]
 extern "C" {
-    #[wasm_bindgen(extends = Object, js_name = LayerOptions)]
-    #[derive(Debug, Clone, PartialEq)]
-    pub type LayerOptions;
-
     #[wasm_bindgen(extends = Evented)]
     #[derive(Debug, Clone, PartialEq)]
     pub type Layer;
@@ -120,11 +114,11 @@ extern "C" {
     pub fn get_tooltip(this: &Layer) -> Tooltip;
 }
 
-impl LayerOptions {
-    object_constructor!();
-    object_property_set!(pane, &str);
-    object_property_set!(attribution, &str);
-}
+create_object_with_properties!(
+    (LayerOptions, LayerOptions),
+    (pane, pane, String),
+    (attribution, attribution, String)
+);
 
 impl LeafletEventHandler for Layer {
     fn on(&self, event: &str, callback: &JsValue) {

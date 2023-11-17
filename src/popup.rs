@@ -1,16 +1,11 @@
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 
-use crate::{object_constructor, object_property_set, DivOverlay, LatLng, Layer, Point};
+use crate::{create_object_with_properties, DivOverlay, LatLng, Layer, Point};
 
 #[wasm_bindgen]
 extern "C" {
     // Popup
-
-    # [wasm_bindgen (extends = Object , js_name = PopupOptions)]
-    #[derive(Debug, Clone, PartialEq, Eq)]
-    pub type PopupOptions;
-
     /// [`Popup`](https://leafletjs.com/reference.html#popup)
     #[derive(Debug, Clone)]
     #[wasm_bindgen(extends = DivOverlay)]
@@ -25,28 +20,28 @@ extern "C" {
     pub fn new_with_lat_lng(lat_lng: &LatLng, options: &PopupOptions) -> Popup;
 }
 
-impl PopupOptions {
-    object_constructor!();
-    object_property_set!(pane, &str);
-    object_property_set!(offset, Point);
-    object_property_set!(min_width, minWidth, f64);
-    object_property_set!(max_width, maxWidth, f64);
-    object_property_set!(max_height, maxHeight, f64);
-    object_property_set!(auto_pan, autoPan, bool);
-    object_property_set!(auto_pan_padding_top_left, autoPanPaddingTopLeft, Point);
-    object_property_set!(
+create_object_with_properties!(
+    (PopupOptions, PopupOptions),
+    (pane, pane, String),
+    (offset, offset, Point),
+    (min_width, minWidth, f64),
+    (max_width, maxWidth, f64),
+    (max_height, maxHeight, f64),
+    (auto_pan, autoPan, bool),
+    (auto_pan_padding_top_left, autoPanPaddingTopLeft, Point),
+    (
         auto_pan_padding_bottom_right,
         autoPanPaddingBottomRight,
         Point
-    );
-    object_property_set!(auto_pan_padding, autoPanPadding, Point);
-    object_property_set!(keep_in_view, keepInView, bool);
-    object_property_set!(close_button, closeButton, bool);
-    object_property_set!(auto_close, autoClose, bool);
-    object_property_set!(close_on_escape_key, closeOnEscapeKey, bool);
-    object_property_set!(close_on_click, closeOnClick, bool);
-    object_property_set!(class_name, className, &str);
-}
+    ),
+    (auto_pan_padding, autoPanPadding, Point),
+    (keep_in_view, keepInView, bool),
+    (close_button, closeButton, bool),
+    (auto_close, autoClose, bool),
+    (close_on_escape_key, closeOnEscapeKey, bool),
+    (close_on_click, closeOnClick, bool),
+    (class_name, className, String)
+);
 
 impl Default for PopupOptions {
     fn default() -> Self {

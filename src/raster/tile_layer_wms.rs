@@ -1,18 +1,13 @@
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 
-use crate::{object_constructor, object_property_set, Crs, LatLngBounds, Point, TileLayer};
+use crate::{create_object_with_properties, Crs, LatLng, Map, TileLayer, TileLayerOptions};
 
 #[wasm_bindgen]
 extern "C" {
 
-    #[wasm_bindgen (extends = Object , js_name = TileLayerWmsOptions)]
-    #[derive(Debug, Clone, PartialEq, Eq)]
-    #[wasm_bindgen(extends = TileLayer)]
-    pub type TileLayerWmsOptions;
-
     #[derive(Debug, Clone, PartialEq)]
-    #[wasm_bindgen(extends = TileLayer,js_namespace = ["L", "tileLayer"],  js_name = "TileLayerWMS")]
+    #[wasm_bindgen(extends = TileLayer, js_namespace = ["L", "tileLayer"], js_name = "TileLayerWMS")]
     pub type TileLayerWms;
 
     #[wasm_bindgen(js_namespace = ["L", "tileLayer"], js_name = "wms")]
@@ -27,46 +22,7 @@ extern "C" {
         params: &TileLayerWmsOptions,
         no_redraw: Option<bool>,
     ) -> TileLayerWms;
-}
 
-impl TileLayerWmsOptions {
-    object_constructor!();
-    // TileLayerWmsOptions
-    object_property_set!(layers, layers, &str);
-    object_property_set!(styles, styles, &str);
-    object_property_set!(format, format, &str);
-    object_property_set!(transparent, transparent, bool);
-    object_property_set!(version, version, &str);
-    object_property_set!(crs, crs, Crs);
-    object_property_set!(uppercase, uppercase, Crs);
-    // TileLayerOptions
-    object_property_set!(min_zoom, minZoom, f64);
-    object_property_set!(max_zoom, maxZoom, f64);
-    object_property_set!(subdomains, bool);
-    object_property_set!(error_tile_url, errorTileUrl, &str);
-    object_property_set!(zoom_offset, zoomOffset, f64);
-    object_property_set!(tms, bool);
-    object_property_set!(zoom_reverse, zoomReverse, bool);
-    object_property_set!(detect_retina, detectRetina, bool);
-    object_property_set!(cross_origin, crossOrigin, &str);
-    object_property_set!(referrer_policy, referrerPolicy, &str);
-    // GridLayerOptions
-    object_property_set!(tile_size, tileSize, u32);
-    object_property_set!(tile_size_with_point, tileSize, Point);
-    object_property_set!(opacity, opacity, f64);
-    object_property_set!(update_when_idle, updateWhenIdle, bool);
-    object_property_set!(update_when_zooming, updateWhenZooming, bool);
-    object_property_set!(update_interval, updateInterval, f64);
-    object_property_set!(z_index, zIndex, f64);
-    object_property_set!(bounds, bounds, LatLngBounds);
-    object_property_set!(max_native_zoom, maxNativeZoom, f64);
-    object_property_set!(min_native_zoom, minNativeZoom, f64);
-    object_property_set!(no_wrap, noWrap, bool);
-    object_property_set!(pane, &str);
-    object_property_set!(class_name, className, &str);
-    object_property_set!(keep_buffer, keepBuffer, u32);
-    // LayerOptions
-    object_property_set!(attribution, &str);
 }
 
 impl TileLayerWms {
@@ -77,10 +33,87 @@ impl TileLayerWms {
     pub fn new_options(url_template: &str, options: &TileLayerWmsOptions) -> TileLayerWms {
         new_wms_options(url_template, options)
     }
+
+    pub fn get_params(&self) -> TileLayerWmsOptions {
+        js_sys::Reflect::get(self.as_ref(), &wasm_bindgen::JsValue::from("wmsParams"))
+            .expect("Property wmsParams not available.")
+            .into()
+    }
+
+    /// Creates a feature info URL that can be used to query a feature from a WMS service.
+    /// Based on [BetterWMS](https://github.com/sazal-ns/BetterWMS).
+    pub fn get_feature_info_url(&self, map: &Map, latlng: &LatLng) -> String {
+        let wms_params = self.get_params();
+        let map_size = map.get_size();
+        let point = map.lat_lng_to_container_point(latlng);
+
+        let wms_request_parameter = WmsRequestParameter::new();
+        wms_request_parameter.set_request("GetFeatureInfo".to_string());
+        wms_request_parameter.set_service("WMS".to_string());
+        wms_request_parameter.set_srs("EPSG:4326".to_string());
+        wms_request_parameter.set_styles(wms_params.styles());
+        wms_request_parameter.set_transparent(wms_params.transparent());
+        wms_request_parameter.set_version(wms_params.version());
+        wms_request_parameter.set_format(wms_params.format());
+        wms_request_parameter.set_bbox(map.get_bounds().to_bbox_string());
+        wms_request_parameter.set_height(map_size.y());
+        wms_request_parameter.set_width(map_size.x());
+        wms_request_parameter.set_layers(wms_params.layers());
+        wms_request_parameter.set_query_layers(wms_params.layers());
+        wms_request_parameter.set_info_format("geojson".to_string());
+        match &wms_params.version()[..] {
+            "1.3.0" => {
+                wms_request_parameter.set_i(point.x().floor());
+                wms_request_parameter.set_j(point.y().floor());
+            }
+            _ => {
+                wms_request_parameter.set_x(point.x().floor());
+                wms_request_parameter.set_y(point.y().floor());
+            }
+        }
+        self.url()
+            + &crate::Util::get_param_string_url_uppercase(
+                wms_request_parameter.into(),
+                &self.url(),
+                true,
+            )
+    }
 }
+
+create_object_with_properties!(
+    (TileLayerWmsOptions, TileLayerWmsOptions, TileLayerOptions),
+    (layers, layers, String),
+    (styles, styles, String),
+    (format, format, String),
+    (transparent, transparent, bool),
+    (version, version, String),
+    (crs, crs, Crs),
+    (uppercase, uppercase, bool)
+);
 
 impl Default for TileLayerWmsOptions {
     fn default() -> Self {
         TileLayerWmsOptions::new()
     }
 }
+
+create_object_with_properties!(
+    (WmsRequestParameter, WmsRequestParameter),
+    (request, request, String),
+    (service, service, String),
+    (srs, srs, String),
+    (styles, styles, String),
+    (transparent, transparent, bool),
+    (version, version, String),
+    (format, format, String),
+    (bbox, bbox, String),
+    (height, height, f64),
+    (width, width, f64),
+    (layers, layers, String),
+    (query_layers, query_layers, String),
+    (info_format, info_format, String),
+    (x, x, f64),
+    (y, y, f64),
+    (i, i, f64),
+    (j, j, f64)
+);
