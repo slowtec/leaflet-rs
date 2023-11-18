@@ -20,14 +20,17 @@ pub struct Util;
 
 impl Util {
     /// [`getParamString`](https://leafletjs.com/reference.html#util-getparamstring).
+    #[must_use]
     pub fn get_param_string(params: Object) -> String {
         get_param_string(params)
     }
     /// [`getParamString`](https://leafletjs.com/reference.html#util-getparamstring).
+    #[must_use]
     pub fn get_param_string_url(params: Object, url: &str) -> String {
         get_param_string_url(params, url)
     }
     /// [`getParamString`](https://leafletjs.com/reference.html#util-getparamstring).
+    #[must_use]
     pub fn get_param_string_url_uppercase(params: Object, url: &str, uppercase: bool) -> String {
         get_param_string_url_uppercase(params, url, uppercase)
     }

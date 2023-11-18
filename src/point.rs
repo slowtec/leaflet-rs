@@ -56,7 +56,7 @@ extern "C" {
 
 impl From<(u32, u32)> for Point {
     fn from((x, y): (u32, u32)) -> Point {
-        Point::new(x as f64, y as f64)
+        Point::new(f64::from(x), f64::from(y))
     }
 }
 

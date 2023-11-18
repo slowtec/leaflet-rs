@@ -96,7 +96,7 @@ impl LocateOptions {
         self
     }
 
-    /// Enables high accuracy, see (description in the W3C spec)[https://w3c.github.io/geolocation-api/#enablehighaccuracy-member].
+    /// Enables high accuracy, see [description in the W3C spec](https://w3c.github.io/geolocation-api/#enablehighaccuracy-member).
     ///
     /// [Leaflet Documentation](https://leafletjs.com/reference.html#locate-options-enableHighAccuracy)
     pub fn enable_high_accuracy(&mut self, val: bool) -> &mut Self {

@@ -111,7 +111,7 @@ macro_rules! create_object_with_properties {
         }
         impl $t {
             #[allow(clippy::new_without_default)]
-            pub fn new() -> Self {
+            #[must_use] pub fn new() -> Self {
                 #[allow(unused_mut)]
                 let mut r = JsCast::unchecked_into(Object::new());
                 r
@@ -139,7 +139,7 @@ macro_rules! create_object_with_properties {
         }
         impl $t {
             #[allow(clippy::new_without_default)]
-            pub fn new() -> Self {
+            #[must_use] pub fn new() -> Self {
                 #[allow(unused_mut)]
                 let mut r = JsCast::unchecked_into(Object::new());
                 r
@@ -187,6 +187,7 @@ macro_rules! object_property_set_with {
 macro_rules! object_constructor {
     () => {
         #[allow(clippy::new_without_default)]
+        #[must_use]
         pub fn new() -> Self {
             #[allow(unused_mut)]
             let mut r = JsCast::unchecked_into(Object::new());

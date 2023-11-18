@@ -8,7 +8,7 @@ homepage = "https://github.com/slowtec/leaflet-rs"
 repository = "https://github.com/slowtec/leaflet-rs"
 edition = "2021"
 readme = "README.md"
-rustc-version = "1.73"
+rustc-version = "1.74"
 
 [dependencies]
 wasm-bindgen = "0.2"
@@ -21,3 +21,15 @@ features = ["Event", "HtmlElement", "MouseEvent"]
 
 [badges]
 maintenance = { status = "actively-developed" }
+
+[lints.clippy]
+pedantic = "warn"
+missing_const_for_fn = "warn"
+
+# The error types returned should be self-explanatory.
+missing_errors_doc = "allow"
+
+# Repetitions of module/type names occur frequently when using many
+# modules for keeping the size of the source files handy.
+# Often types have the same name as their parent module.
+module_name_repetitions = "allow"

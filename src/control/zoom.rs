@@ -20,6 +20,7 @@ extern "C" {
 
 impl Zoom {
     /// Creates a new `Zoom` control.
+    #[must_use]
     pub fn new(options: &ZoomOptions) -> Self {
         constructor_zoom(options)
     }

@@ -159,6 +159,7 @@ pub struct EventedHandle<T: FromLeafletEvent> {
 }
 
 impl<T: FromLeafletEvent> EventedHandle<T> {
+    #[must_use]
     pub fn callback(&self) -> &Closure<dyn FnMut(T)> {
         &self.callback
     }

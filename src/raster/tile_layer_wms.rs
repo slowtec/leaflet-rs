@@ -26,14 +26,18 @@ extern "C" {
 }
 
 impl TileLayerWms {
+    #[must_use]
     pub fn new(url_template: &str) -> TileLayerWms {
         new_wms(url_template)
     }
 
+    #[must_use]
     pub fn new_options(url_template: &str, options: &TileLayerWmsOptions) -> TileLayerWms {
         new_wms_options(url_template, options)
     }
 
+    #[must_use]
+    #[allow(clippy::missing_panics_doc)]
     pub fn get_params(&self) -> TileLayerWmsOptions {
         js_sys::Reflect::get(self.as_ref(), &wasm_bindgen::JsValue::from("wmsParams"))
             .expect("Property wmsParams not available.")
@@ -42,6 +46,7 @@ impl TileLayerWms {
 
     /// Creates a feature info URL that can be used to query a feature from a WMS service.
     /// Based on [BetterWMS](https://github.com/sazal-ns/BetterWMS).
+    #[must_use]
     pub fn get_feature_info_url(&self, map: &Map, latlng: &LatLng) -> String {
         let wms_params = self.get_params();
         let map_size = map.get_size();
@@ -61,15 +66,16 @@ impl TileLayerWms {
         wms_request_parameter.set_layers(wms_params.layers());
         wms_request_parameter.set_query_layers(wms_params.layers());
         wms_request_parameter.set_info_format("geojson".to_string());
-        match &wms_params.version()[..] {
-            "1.3.0" => {
-                wms_request_parameter.set_i(point.x().floor());
-                wms_request_parameter.set_j(point.y().floor());
-            }
-            _ => {
-                wms_request_parameter.set_x(point.x().floor());
-                wms_request_parameter.set_y(point.y().floor());
-            }
+
+        let x = point.x().floor();
+        let y = point.y().floor();
+
+        if &wms_params.version()[..] == "1.3.0" {
+            wms_request_parameter.set_i(x);
+            wms_request_parameter.set_j(y);
+        } else {
+            wms_request_parameter.set_x(x);
+            wms_request_parameter.set_y(y);
         }
         self.url()
             + &crate::Util::get_param_string_url_uppercase(

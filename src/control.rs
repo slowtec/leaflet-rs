@@ -45,12 +45,14 @@ impl Default for ControlOptions {
 
 impl Control {
     /// Creates a new [Control] instance.
+    #[must_use]
     pub fn new(options: &ControlOptions) -> Self {
         constructor_control(options)
     }
 
     /// The given closure is executed when the control
     /// is added to a map using [addTo](Control::addTo).
+    #[allow(clippy::missing_panics_doc)]
     pub fn on_add<C: Fn(&Map) -> HtmlElement + 'static>(&self, on_add: C) {
         let closure = Closure::wrap(Box::new(on_add) as Box<dyn Fn(&Map) -> HtmlElement>);
         js_sys::Reflect::set(self, &JsValue::from("onAdd"), closure.as_ref())
@@ -60,6 +62,7 @@ impl Control {
 
     /// The given closure is executed when the control
     /// is removed from a map using [onRemove](Control::onRemove).
+    #[allow(clippy::missing_panics_doc)]
     pub fn on_remove<C: Fn(&Map) + 'static>(&self, on_remove: C) {
         let closure = Closure::wrap(Box::new(on_remove) as Box<dyn Fn(&Map)>);
         js_sys::Reflect::set(self, &JsValue::from("onRemove"), closure.as_ref())
