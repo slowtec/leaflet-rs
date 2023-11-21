@@ -53,7 +53,7 @@ pub use point::Point;
 pub use popup::{Popup, PopupOptions};
 pub use raster::{
     ImageOverlay, ImageOverlayOptions, TileLayer, TileLayerOptions, TileLayerWms,
-    TileLayerWmsOptions, VideoOverlay, VideoOverlayOptions,
+    TileLayerWmsOptions, VideoOverlay, VideoOverlayOptions, WmsRequestBuilder,
 };
 pub use shapes::{
     Circle, CircleMarker, CircleOptions, Path, PathOptions, Polygon, Polyline, PolylineOptions,
