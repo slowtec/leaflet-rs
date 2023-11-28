@@ -99,24 +99,28 @@ pub struct WmsRequestBuilder {
 
 impl WmsRequestBuilder {
     /// Sets the service parameter.
+    #[must_use]
     pub fn with_service(self, service: &str) -> Self {
         self.params.set_service(service.to_string());
         self
     }
 
     /// Sets the request parameter.
+    #[must_use]
     pub fn with_request(self, request: &str) -> Self {
         self.params.set_request(request.to_string());
         self
     }
 
     /// Sets the srs parameter.
+    #[must_use]
     pub fn with_srs(self, srs: &str) -> Self {
         self.params.set_srs(srs.to_string());
         self
     }
 
     /// Sets the info format parameter.
+    #[must_use]
     pub fn with_info_format(self, info_format: &str) -> Self {
         self.params.set_info_format(info_format.to_string());
         self
@@ -142,16 +146,18 @@ impl WmsRequestBuilder {
         self.params.set_width(map_size.x());
         self.params.set_layers(wms_params.layers());
         self.params.set_query_layers(wms_params.layers());
-        match &wms_params.version()[..] {
-            "1.3.0" => {
-                self.params.set_i(point.x().floor());
-                self.params.set_j(point.y().floor());
-            }
-            _ => {
-                self.params.set_x(point.x().floor());
-                self.params.set_y(point.y().floor());
-            }
+
+        let x = point.x().floor();
+        let y = point.y().floor();
+
+        if &wms_params.version()[..] == "1.3.0" {
+            self.params.set_i(x);
+            self.params.set_j(y);
+        } else {
+            self.params.set_x(x);
+            self.params.set_y(y);
         }
+
         Url::parse(
             &(layer.url()
                 + &crate::Util::get_param_string_url_uppercase(
