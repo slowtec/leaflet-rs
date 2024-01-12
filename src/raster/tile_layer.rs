@@ -47,6 +47,7 @@ create_object_with_properties!(
     (tms, tms, bool),
     (zoom_reverse, zoomReverse, bool),
     (detect_retina, detectRetina, bool),
+    (attribution, attribution, String),
     (cross_origin, crossOrigin, String),
     (referrer_policy, referrerPolicy, String)
 );
