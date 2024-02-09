@@ -1,13 +1,11 @@
 use gloo_events::EventListener;
-use gloo_utils::format::JsValueSerdeExt;
-use js_sys::{Array, Function};
+use js_sys::Array;
 use leaflet::{
     Circle, CircleOptions, Control, ControlOptions, LatLng, LatLngBounds, Map, MapOptions, Polygon,
     Polyline, PolylineOptions, Rectangle, TileLayer,
 };
-use serde::{Deserialize, Serialize};
 use wasm_bindgen::{prelude::*, JsCast};
-use web_sys::{console, window, Element, HtmlAnchorElement};
+use web_sys::{console, window, HtmlAnchorElement};
 
 // Called when the wasm module is instantiated
 #[wasm_bindgen(start)]
@@ -76,14 +74,14 @@ fn add_circle(map: &Map) {
 }
 
 fn add_circle_with_options(map: &Map) {
-    let mut options = CircleOptions::default();
+    let options = CircleOptions::default();
     options.set_radius(4000.0);
     Circle::new_with_options(&LatLng::new(63.25, 13.35), &options).add_to(map);
 }
 
 fn add_control(map: &Map) {
-    let mut options = ControlOptions::default();
-    options.set_position("topleft");
+    let options = ControlOptions::default();
+    options.set_position("topleft".to_string());
     let control_button = Control::new(&options);
 
     // This callback must return a HTML div representing the control button.

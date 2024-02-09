@@ -8,7 +8,7 @@ homepage = "https://github.com/slowtec/leaflet-rs"
 repository = "https://github.com/slowtec/leaflet-rs"
 edition = "2021"
 readme = "README.md"
-rustc-version = "1.74"
+rust-version = "1.75"
 
 [dependencies]
 wasm-bindgen = "0.2"
