@@ -26,4 +26,4 @@ See:
 
 ## License
 
-Copyright (c) 2020 - 2023 [slowtec GmbH](https://slowtec.de)
+Copyright (c) 2020 - 2024 [slowtec GmbH](https://slowtec.de)
