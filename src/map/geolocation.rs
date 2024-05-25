@@ -33,7 +33,7 @@ impl LocateOptions {
     object_constructor!();
 
     /// If true, starts continuous watching of location changes (instead of detecting it once)
-    /// using W3C watchPosition method. You can later stop watching using map.stopLocate() method.
+    /// using W3C watchPosition method. You can later stop watching using `map.stopLocate()` method.
     ///
     /// [Leaflet Documentation](https://leafletjs.com/reference.html#locate-options-watch)
     pub fn watch(&mut self, val: bool) -> &mut Self {
