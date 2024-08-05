@@ -1,0 +1,18 @@
+[package]
+name = "leaflet-dioxus-example"
+version = "0.1.0"
+authors = ["The leaflet-rs Developers"]
+license = "MIT/Apache-2.0"
+description = "An example using leaflet-rs in yew.rs component"
+homepage = "https://github.com/slowtec/leaflet-rs"
+repository = "https://github.com/slowtec/leaflet-rs"
+edition = "2021"
+publish = false
+
+[dependencies]
+
+dioxus = { version = "0.5", features = ["web"] }
+dioxus-logger = "0.5.1"
+gloo-utils = "0.2.0"
+leaflet = { path = "../../" }
+web-sys = "0.3.69"
