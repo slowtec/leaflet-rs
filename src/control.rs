@@ -1,3 +1,4 @@
+mod layers;
 mod zoom;
 
 use crate::{create_object_with_properties, Map};
@@ -5,6 +6,7 @@ use js_sys::Object;
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
 
+pub use layers::LayersControl;
 pub use zoom::{Zoom, ZoomOptions};
 
 #[wasm_bindgen]
