@@ -12,7 +12,6 @@ mod icon;
 mod lat_lng;
 mod lat_lng_bounds;
 mod layer;
-mod layer_control;
 mod layer_group;
 mod map;
 mod marker;
@@ -26,7 +25,7 @@ mod util;
 use js_sys::Array;
 use paste::paste;
 
-pub use control::{Control, ControlOptions, Zoom, ZoomOptions};
+pub use control::{Control, ControlOptions, LayersControl, Zoom, ZoomOptions};
 pub use crs::Crs;
 pub use div_icon::{DivIcon, DivIconOptions};
 pub use div_overlay::DivOverlay;
