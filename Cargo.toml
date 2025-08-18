@@ -20,6 +20,9 @@ url = "2"
 version = "0.3"
 features = ["Event", "HtmlElement", "MouseEvent"]
 
+[dev-dependencies]
+wasm-bindgen-test = "0.3"
+
 [badges]
 maintenance = { status = "actively-developed" }
 
