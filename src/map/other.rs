@@ -16,6 +16,9 @@ extern "C" {
     #[wasm_bindgen(method, js_name = createPane)]
     pub fn create_pane(this: &Map, name: &str, container: &HtmlElement) -> HtmlElement;
 
+    #[wasm_bindgen(method, js_name = createPane)]
+    pub fn create_pane_by_name(this: &Map, name: &str) -> HtmlElement;
+
     #[wasm_bindgen(method, js_name = getPane)]
     pub fn get_pane(this: &Map, pane: &HtmlElement) -> HtmlElement;
 
