@@ -1,7 +1,7 @@
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 
-use crate::{create_object_with_properties, Layer};
+use crate::{create_object_with_properties, Layer, LayerOptions};
 
 #[wasm_bindgen]
 extern "C" {
@@ -28,7 +28,7 @@ extern "C" {
 }
 
 create_object_with_properties!(
-    (PathOptions, PathOptions),
+    (PathOptions, PathOptions, LayerOptions),
     (stroke, stroke, bool),
     (color, color, String),
     (weight, weight, f64),
