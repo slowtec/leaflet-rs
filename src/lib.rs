@@ -19,6 +19,7 @@ mod marker;
 mod point;
 mod popup;
 mod raster;
+mod renderer;
 mod shapes;
 mod tooltip;
 mod util;
@@ -55,6 +56,7 @@ pub use raster::{
     ImageOverlay, ImageOverlayOptions, TileLayer, TileLayerOptions, TileLayerWms,
     TileLayerWmsOptions, VideoOverlay, VideoOverlayOptions, WmsRequestBuilder,
 };
+pub use renderer::{Canvas, CanvasOptions, Renderer, Svg, SvgOptions};
 pub use shapes::{
     Circle, CircleMarker, CircleOptions, Path, PathOptions, Polygon, Polyline, PolylineOptions,
     Rectangle,

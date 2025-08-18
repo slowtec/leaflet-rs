@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Leaflet SVG and Canvas Renderer with Multiple Panes Example</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- Leaflet CSS -->
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossorigin=""
+        />
+
+        <style>
+            body {
+                margin: 0;
+                padding: 20px;
+                font-family: Arial, sans-serif;
+            }
+
+            h1 {
+                text-align: center;
+                color: #333;
+            }
+
+            .example-section {
+                margin: 20px 0;
+            }
+
+            .example-title {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #555;
+            }
+
+            .map {
+                height: 400px;
+                width: 100%;
+                border: 2px solid #ccc;
+                border-radius: 8px;
+                margin-bottom: 20px;
+            }
+
+            .description {
+                background-color: #f5f5f5;
+                padding: 15px;
+                border-radius: 5px;
+                margin-bottom: 15px;
+            }
+
+            .code-example {
+                background-color: #f8f8f8;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 10px;
+                font-family: "Courier New", monospace;
+                font-size: 14px;
+                overflow-x: auto;
+                line-height: 1.4;
+            }
+
+            .pane-info {
+                display: flex;
+                gap: 20px;
+                margin: 10px 0;
+            }
+
+            .pane-item {
+                flex: 1;
+                background-color: #f0f0f0;
+                padding: 10px;
+                border-radius: 4px;
+                border-left: 4px solid;
+            }
+
+            .pane-item.red {
+                border-left-color: #ff0000;
+            }
+
+            .pane-item.blue {
+                border-left-color: #0000ff;
+            }
+
+            .pane-item.green {
+                border-left-color: #00aa00;
+            }
+
+            .pane-item.purple {
+                border-left-color: #aa00aa;
+            }
+
+            .pane-item h4 {
+                margin: 0 0 5px 0;
+                color: #333;
+            }
+
+            .pane-item p {
+                margin: 0;
+                font-size: 12px;
+                color: #666;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Leaflet-rs SVG and Canvas Renderer with Multiple Panes Example</h1>
+
+        <div class="description">
+            <p>
+                This example demonstrates how to use multiple panes with different renderers in
+                leaflet-rs. Each map contains two separate panes, each using its own renderer
+                instance with different styling options.
+            </p>
+            <p>
+                Panes allow you to organize map layers into different rendering contexts, which is
+                useful for layering content with different visual properties or performance
+                characteristics.
+            </p>
+        </div>
+
+        <div class="example-section">
+            <div class="example-title">Example 1: SVG Map with Multiple Panes</div>
+            <div class="description">
+                <p>
+                    This map demonstrates two SVG renderers operating on separate panes with
+                    different styling configurations:
+                </p>
+
+                <div class="pane-info">
+                    <div class="pane-item red">
+                        <h4>Pane 1 (Red SVG Renderer)</h4>
+                        <p>
+                            Red styling with 4px weight, 80% opacity, light red fill. Shapes are
+                            positioned at base coordinates.
+                        </p>
+                    </div>
+                    <div class="pane-item blue">
+                        <h4>Pane 2 (Blue SVG Renderer)</h4>
+                        <p>
+                            Blue styling with 2px weight, 90% opacity, light blue fill. Shapes are
+                            slightly offset to show layering.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    // Create first SVG renderer for pane1<br />
+                    let svg_options_1 = SvgOptions::default();<br />
+                    svg_options_1.set_pane("pane1".to_string());<br />
+                    svg_options_1.set_color("#ff0000".to_string());<br />
+                    let svg_renderer_1 = Svg::with_options(&svg_options_1);<br />
+                    <br />
+                    // Create second SVG renderer for pane2<br />
+                    let svg_options_2 = SvgOptions::default();<br />
+                    svg_options_2.set_pane("pane2".to_string());<br />
+                    svg_options_2.set_color("#0000ff".to_string());<br />
+                    let svg_renderer_2 = Svg::with_options(&svg_options_2);
+                </div>
+            </div>
+            <div id="svg-map" class="map"></div>
+        </div>
+
+        <div class="example-section">
+            <div class="example-title">Example 2: Canvas Map with Multiple Panes</div>
+            <div class="description">
+                <p>
+                    This map demonstrates two Canvas renderers operating on separate panes with
+                    different performance and styling configurations:
+                </p>
+
+                <div class="pane-info">
+                    <div class="pane-item green">
+                        <h4>Canvas Pane 1 (Green Canvas Renderer)</h4>
+                        <p>
+                            Green styling with 3px weight, optimized for precision with low
+                            tolerance and padding.
+                        </p>
+                    </div>
+                    <div class="pane-item purple">
+                        <h4>Canvas Pane 2 (Purple Canvas Renderer)</h4>
+                        <p>
+                            Purple styling with 5px weight, optimized for performance with higher
+                            tolerance and padding.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    // Create first Canvas renderer for canvas-pane1<br />
+                    let canvas_options_1 = CanvasOptions::default();<br />
+                    canvas_options_1.set_pane("canvas-pane1".to_string());<br />
+                    canvas_options_1.set_color("#00aa00".to_string());<br />
+                    let canvas_renderer_1 = Canvas::with_options(&canvas_options_1);<br />
+                    <br />
+                    // Create second Canvas renderer for canvas-pane2<br />
+                    let canvas_options_2 = CanvasOptions::default();<br />
+                    canvas_options_2.set_pane("canvas-pane2".to_string());<br />
+                    canvas_options_2.set_color("#aa00aa".to_string());<br />
+                    let canvas_renderer_2 = Canvas::with_options(&canvas_options_2);
+                </div>
+            </div>
+            <div id="canvas-map" class="map"></div>
+        </div>
+
+        <!-- Leaflet JavaScript -->
+        <script
+            src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""
+        ></script>
+
+        <!-- Load the WASM module -->
+        <script type="module">
+            import init from "./pkg/renderers_example.js";
+
+            async function run() {
+                try {
+                    await init();
+                    console.log("Multi-pane renderers example loaded successfully!");
+                } catch (error) {
+                    console.error("Failed to load WASM module:", error);
+                }
+            }
+
+            run();
+        </script>
+    </body>
+</html>
