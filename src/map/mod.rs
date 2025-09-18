@@ -168,10 +168,13 @@ extern "C" {
     pub fn pan_by_with_options(this: &Map, point: &Point, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = flyTo)]
-    pub fn fly_to(this: &Map, lat_lng: &LatLng, zoom: f64) -> Map;
+    pub fn fly_to(this: &Map, lat_lng: &LatLng) -> Map;
 
     #[wasm_bindgen(method, js_name = flyTo)]
-    pub fn fly_to_with_options(this: &Map, latlng: &LatLng, zoom: f64, options: &JsValue) -> Map;
+    pub fn fly_to_with_zoom(this: &Map, lat_lng: &LatLng, zoom: f64) -> Map;
+
+    #[wasm_bindgen(method, js_name = flyTo)]
+    pub fn fly_to_with_zoom_and_options(this: &Map, latlng: &LatLng, zoom: f64, options: &JsValue) -> Map;
 
     #[wasm_bindgen(method, js_name = flyToBounds)]
     pub fn fly_to_bounds(this: &Map, bounds: &LatLngBounds) -> Map;
