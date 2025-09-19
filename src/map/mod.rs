@@ -21,11 +21,11 @@ extern "C" {
     #[derive(Debug, Clone)]
     pub type Map;
 
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new(id: &str, options: &MapOptions) -> Map;
+    #[wasm_bindgen(constructor, js_namespace = L, catch)]
+    pub fn new(id: &str, options: &MapOptions) -> Result<Map, JsValue>;
 
-    #[wasm_bindgen(constructor, js_namespace = L)]
-    pub fn new_with_element(el: &HtmlElement, options: &MapOptions) -> Map;
+    #[wasm_bindgen(constructor, js_namespace = L, catch)]
+    pub fn new_with_element(el: &HtmlElement, options: &MapOptions) -> Result<Map, JsValue>;
 
     // Methods for Layers and Controls
     #[wasm_bindgen(method, js_name = addControl)]
