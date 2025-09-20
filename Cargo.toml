@@ -6,22 +6,22 @@ license = "MIT/Apache-2.0"
 description = "A wasm-bindgen wrapper for Leaflet.js"
 homepage = "https://github.com/slowtec/leaflet-rs"
 repository = "https://github.com/slowtec/leaflet-rs"
-edition = "2021"
+edition = "2024"
 readme = "README.md"
-rust-version = "1.75"
+rust-version = "1.85"
 
 [dependencies]
-wasm-bindgen = "0.2"
-js-sys = "0.3"
-paste = "1"
-url = "2"
+wasm-bindgen = "0.2.103"
+js-sys = "0.3.80"
+paste = "1.0.15"
+url = "2.5.7"
 
 [dependencies.web-sys]
-version = "0.3"
+version = "0.3.80"
 features = ["Event", "HtmlElement", "MouseEvent"]
 
 [dev-dependencies]
-wasm-bindgen-test = "0.3"
+wasm-bindgen-test = "0.3.53"
 
 [badges]
 maintenance = { status = "actively-developed" }
