@@ -25,7 +25,7 @@ fn create_svg_map_with_multiple_panes() -> Result<(), JsValue> {
 
     // Create the map with default options first
     let map_options = MapOptions::default();
-    let map = Map::new("svg-map", &map_options);
+    let map = Map::new("svg-map", &map_options)?;
     map.set_view(&LatLng::new(51.505, -0.09), 13.0);
 
     // Add a tile layer
@@ -79,7 +79,7 @@ fn create_canvas_map_with_multiple_panes() -> Result<(), JsValue> {
 
     // Create the map with default options first
     let map_options = MapOptions::default();
-    let map = Map::new("canvas-map", &map_options);
+    let map = Map::new("canvas-map", &map_options)?;
     map.set_view(&LatLng::new(51.505, -0.09), 13.0);
 
     // Add a tile layer
