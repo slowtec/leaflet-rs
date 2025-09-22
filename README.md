@@ -13,7 +13,7 @@ wrapper for
 
 ```toml
 [dependencies]
-leaflet = "0.4"
+leaflet = "0.5"
 ```
 
 ## Example
@@ -28,4 +28,4 @@ See:
 
 ## License
 
-Copyright (c) 2020 - 2024 [slowtec GmbH](https://slowtec.de)
+Copyright (c) 2020 - 2025 [slowtec GmbH](https://slowtec.de)
