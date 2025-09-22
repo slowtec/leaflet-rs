@@ -6,7 +6,7 @@ license = "MIT/Apache-2.0"
 description = "An example using leaflet-rs"
 homepage = "https://github.com/slowtec/leaflet-rs"
 repository = "https://github.com/slowtec/leaflet-rs"
-edition = "2021"
+edition = "2024"
 publish = false
 
 [lib]
@@ -15,7 +15,7 @@ crate-type = ["cdylib"]
 [dependencies]
 leaflet = { path = "../.." }
 # Your project would instead do:
-# leaflet = "0.4.0"
+# leaflet = "0.5.0"
 
 gloo-events = "0.1"
 js-sys = "0.3"

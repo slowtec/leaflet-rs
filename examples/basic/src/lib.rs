@@ -4,8 +4,8 @@ use leaflet::{
     Circle, CircleOptions, Control, ControlOptions, LatLng, LatLngBounds, Map, MapOptions, Polygon,
     Polyline, PolylineOptions, Rectangle, TileLayer,
 };
-use wasm_bindgen::{prelude::*, JsCast};
-use web_sys::{console, window, HtmlAnchorElement};
+use wasm_bindgen::{JsCast, prelude::*};
+use web_sys::{HtmlAnchorElement, console, window};
 
 // Called when the wasm module is instantiated
 #[wasm_bindgen(start)]
@@ -13,7 +13,7 @@ pub fn main() -> Result<(), JsValue> {
     console::log_1(&"Running Leaflet example code in Rust.".into());
 
     let options = MapOptions::default();
-    let map = Map::new("map", &options);
+    let map = Map::new("map", &options)?;
     map.set_view(&LatLng::new(63.5, 10.5), 5.0);
 
     add_tile_layer(&map);
