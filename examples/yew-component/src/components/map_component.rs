@@ -45,7 +45,7 @@ impl Component for MapComponent {
         let container: Element = document().create_element("div").unwrap();
         let container: HtmlElement = container.dyn_into().unwrap();
         container.set_class_name("map");
-        let leaflet_map = Map::new_with_element(&container, &MapOptions::default());
+        let leaflet_map = Map::new_with_element(&container, &MapOptions::default()).unwrap();
         Self {
             map: leaflet_map,
             container,
