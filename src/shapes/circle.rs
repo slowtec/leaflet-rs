@@ -4,8 +4,8 @@ use wasm_bindgen::prelude::*;
 
 use crate::evented::{LeafletEventHandler, MouseEvents, MoveEvents, PopupEvents, TooltipEvents};
 use crate::{
-    create_object_with_properties, CircleMarker, Evented, LatLng, LatLngBounds, Layer, LayerEvents,
-    PathOptions,
+    CircleMarker, Evented, LatLng, LatLngBounds, Layer, LayerEvents, PathOptions,
+    create_object_with_properties,
 };
 
 #[wasm_bindgen]

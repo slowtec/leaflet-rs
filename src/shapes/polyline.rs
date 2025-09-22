@@ -5,8 +5,8 @@ use wasm_bindgen::prelude::*;
 
 use crate::evented::{LeafletEventHandler, MouseEvents, PopupEvents, TooltipEvents};
 use crate::{
-    create_object_with_properties, Evented, LatLng, LatLngBounds, Layer, LayerEvents, Path,
-    PathOptions, Point,
+    Evented, LatLng, LatLngBounds, Layer, LayerEvents, Path, PathOptions, Point,
+    create_object_with_properties,
 };
 
 #[wasm_bindgen]

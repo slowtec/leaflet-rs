@@ -2,7 +2,7 @@ use js_sys::Object;
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
 
-use crate::{create_object_with_properties, LatLngBounds, Layer, LayerOptions, Point};
+use crate::{LatLngBounds, Layer, LayerOptions, Point, create_object_with_properties};
 
 #[wasm_bindgen]
 extern "C" {

@@ -1,6 +1,6 @@
 mod zoom;
 
-use crate::{create_object_with_properties, Map};
+use crate::{Map, create_object_with_properties};
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;

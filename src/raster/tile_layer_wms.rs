@@ -2,7 +2,7 @@ use js_sys::Object;
 use url::{ParseError, Url};
 use wasm_bindgen::prelude::*;
 
-use crate::{create_object_with_properties, Crs, LatLng, Map, TileLayer, TileLayerOptions};
+use crate::{Crs, LatLng, Map, TileLayer, TileLayerOptions, create_object_with_properties};
 
 #[wasm_bindgen]
 extern "C" {

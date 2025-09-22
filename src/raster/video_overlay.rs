@@ -1,4 +1,4 @@
-use crate::{create_object_with_properties, ImageOverlay, LatLngBounds, Layer};
+use crate::{ImageOverlay, LatLngBounds, Layer, create_object_with_properties};
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 

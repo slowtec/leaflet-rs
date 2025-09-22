@@ -8,8 +8,8 @@ use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
 
 use crate::{
-    create_object_with_properties, object_property_set_with, Control, Evented, LatLng,
-    LatLngBounds, Layer, Point, Popup, Tooltip,
+    Control, Evented, LatLng, LatLngBounds, Layer, Point, Popup, Tooltip,
+    create_object_with_properties, object_property_set_with,
 };
 pub use events::*;
 pub use geolocation::*;
@@ -174,7 +174,12 @@ extern "C" {
     pub fn fly_to_with_zoom(this: &Map, lat_lng: &LatLng, zoom: f64) -> Map;
 
     #[wasm_bindgen(method, js_name = flyTo)]
-    pub fn fly_to_with_zoom_and_options(this: &Map, latlng: &LatLng, zoom: f64, options: &JsValue) -> Map;
+    pub fn fly_to_with_zoom_and_options(
+        this: &Map,
+        latlng: &LatLng,
+        zoom: f64,
+        options: &JsValue,
+    ) -> Map;
 
     #[wasm_bindgen(method, js_name = flyToBounds)]
     pub fn fly_to_bounds(this: &Map, bounds: &LatLngBounds) -> Map;

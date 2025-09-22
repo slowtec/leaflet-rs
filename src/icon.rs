@@ -1,4 +1,4 @@
-use crate::{create_object_with_properties, Point};
+use crate::{Point, create_object_with_properties};
 use js_sys::Object;
 use wasm_bindgen::prelude::*;
 

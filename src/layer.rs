@@ -3,7 +3,7 @@ use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
 
 use crate::evented::{LayerEvents, LeafletEventHandler, PopupEvents, TooltipEvents};
-use crate::{create_object_with_properties, Evented, LatLng, LayerGroup, Map, Popup, Tooltip};
+use crate::{Evented, LatLng, LayerGroup, Map, Popup, Tooltip, create_object_with_properties};
 
 #[wasm_bindgen]
 extern "C" {
