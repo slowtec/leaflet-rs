@@ -1,0 +1,44 @@
+# SPDX-FileCopyrightText: Copyright (c) 2021-2025 slowtec GmbH <post@slowtec.de>
+# SPDX-License-Identifier: CC0-1.0
+
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+
+name: build-and-test
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+    steps:
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt,clippy
+          targets: wasm32-unknown-unknown
+
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Generate Cargo.lock
+        run: cargo generate-lockfile
+
+      - name: Run tests
+        run: cargo test --locked --target wasm32-unknown-unknown -- --nocapture --quiet
+
+      - name: Build documentation
+        run: cargo doc --locked --target wasm32-unknown-unknown
+
+      - name: Build release
+        run: cargo build --locked --target wasm32-unknown-unknown --profile release
