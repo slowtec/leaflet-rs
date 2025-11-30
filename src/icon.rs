@@ -15,6 +15,7 @@ extern "C" {
 create_object_with_properties!(
     (IconOptions, IconOptions),
     (icon_url, iconUrl, String),
+    (icon_retina_url, iconRetinaUrl, String),
     (icon_size, iconSize, Point),
     (icon_anchor, iconAnchor, Point),
     (popup_anchor, popupAnchor, Point),
